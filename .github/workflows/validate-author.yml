@@ -1,0 +1,23 @@
+name: Validate Author
+
+on:
+  pull_request:
+    types: [opened, synchronize]  # Trigger when PR is opened or updated
+
+jobs:
+  validate-author:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch Pull Request Author
+        id: pr-author
+        run: echo "::set-output name=author::$(jq -r '.pull_request.user.login' < ${GITHUB_EVENT_PATH})"
+        
+      - name: Validate Author
+        run: |
+          ALLOWED_USERS=("user1" "user2")  # Add your whitelist here
+          echo "Author: ${{ steps.pr-author.outputs.author }}"
+          if [[ ! " ${ALLOWED_USERS[@]} " =~ " ${{ steps.pr-author.outputs.author }} " ]]; then
+            echo "User is not authorized to make changes."
+            exit 1
+          fi
+

@@ -1,9 +1,14 @@
 package org.example;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello world!");
-        System.out.println("Kishor was here 2nd time!");
+        try (Connection conn = DatabaseConnection.getConnection()) {
+            System.out.println("✅ Connected to MySQL successfully as guest!");
+        } catch (SQLException e) {
+            System.out.println("❌ Connection failed: " + e.getMessage());
+        }
     }
 }
-

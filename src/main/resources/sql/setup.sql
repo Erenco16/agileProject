@@ -29,8 +29,8 @@ CREATE TABLE IF NOT EXISTS DeliveryArea (
 -- Publications Table
 CREATE TABLE IF NOT EXISTS Publication (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    cust_id INTEGER,
-    price REAL NOT NULL,  -- SQLite uses REAL instead of DOUBLE
+    cust_id INTEGER NOT NULL,
+    price REAL NOT NULL,
     FOREIGN KEY (cust_id) REFERENCES Customers(id) ON DELETE CASCADE
 );
 

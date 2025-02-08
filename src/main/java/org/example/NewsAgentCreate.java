@@ -26,38 +26,31 @@ public class NewsAgentCreate {
         System.out.println("3. Delivery Area");
         System.out.println("4. Order");
         option = input.nextInt();
+        input.nextLine();
         return option;
     }
 
     public void customerPage(){
 
+        customerCreate c = new customerCreate();
+        customerInputValidation v = new customerInputValidation();
         System.out.println("Welcome to Create Customer!");
 
-        System.out.println("Enter Customer Name: ");
-        String name = input.nextLine();
-
-        System.out.println("Enter Customer Email: ");
-        String email = input.nextLine();
-
-        System.out.println("Enter Customer Address: ");
-        String address = input.nextLine();
-
-        System.out.println("Enter Customer Phone Number: ");
-        String phoneNumber = input.nextLine();
-
-        System.out.println("Enter Customer Delivery Area: ");
-        String deliveryArea = input.nextLine();
-
-        System.out.println("Enter Customer Eircode: ");
-        String eircode = input.nextLine();
-
-
+        v.checkName();
+        v.checkEmail();
+        v.checkAddress();
+        v.checkPhoneNumber();
+        v.checkDeliveryArea();
+        v.checkEircode();
 
     }
 
     public void publicationPage(int option){
         System.out.println("You chose " + option);
     }
+
+
+
 
 //    public void deliveryArea(){
 //

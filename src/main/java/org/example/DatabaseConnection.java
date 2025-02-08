@@ -29,10 +29,10 @@ public class DatabaseConnection {
             // Initialize database and run setup script
             try (Connection conn = getConnection()) {
                 runSQLFile(conn, SQL_FILE_PATH);
-                System.out.println("✅ SQLite database initialized in: " + DB_PATH);
+                System.out.println("SQLite database initialized in: " + DB_PATH);
             }
         } catch (SQLException e) {
-            throw new RuntimeException("❌ Failed to initialize SQLite: " + e.getMessage());
+            throw new RuntimeException("Failed to initialize SQLite: " + e.getMessage());
         }
     }
 
@@ -41,7 +41,7 @@ public class DatabaseConnection {
 
         // Check if the SQL file exists
         if (!sqlFile.exists()) {
-            System.out.println("❌ SQL file not found: " + filePath);
+            System.out.println("SQL file not found: " + filePath);
             return;
         }
 
@@ -57,16 +57,16 @@ public class DatabaseConnection {
                     sql.append(line).append(" ");
                     if (line.endsWith(";")) { // Execute when a full SQL command is read
                         statement.execute(sql.toString());
-                        System.out.println("✅ Executed: " + sql);
+                        System.out.println("Executed: " + sql);
                         sql.setLength(0); // Reset the StringBuilder
                     }
                 }
             }
 
-            System.out.println("✅ SQL setup file executed successfully!");
+            System.out.println("SQL setup file executed successfully!");
 
         } catch (IOException | SQLException e) {
-            System.out.println("❌ Failed to execute SQL file: " + e.getMessage());
+            System.out.println("Failed to execute SQL file: " + e.getMessage());
         }
     }
 }

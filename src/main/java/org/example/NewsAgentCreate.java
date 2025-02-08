@@ -8,13 +8,19 @@ public class NewsAgentCreate {
     public void mainPage(){
         mainPageOptions();
 
-        if (option == 1){
-            System.out.println("taking you to customer page...");
-            customerPage();
-        } else if (option == 2) {
-            System.out.println("taking you to publication page");
-            publicationPage(option);
-
+        switch (option) {
+            case 1:
+                System.out.println("taking you to customer page...");
+                customerPage();
+            break;
+            case 2:
+                System.out.println("taking you to publication page");
+                publicationPage(option);
+            break;
+            case 3:
+                System.out.println("taking you to delivery area page.....");
+                deliveryPage();
+            break;
         }
     }
 
@@ -50,6 +56,13 @@ public class NewsAgentCreate {
     }
 
     public void deliveryPage(){
+
+        deliveryCreate d = new deliveryCreate();
+        deliveryAreaValidation dv = new deliveryAreaValidation();
+        System.out.println("Welcome to Create Delivery Area Page!");
+
+        dv.checkAreaName();
+        dv.checkAreaDescription();
 
     }
 

@@ -56,7 +56,6 @@ public class customerCreate {
         this.eircode = eircode;
     }
 
-    // Getters
     public String getName() { return name; }
     public String getEmail() { return email; }
     public String getAddress() { return address; }
@@ -64,3 +63,5 @@ public class customerCreate {
     public String getDeliveryArea() { return deliveryArea; }
     public String getEircode() { return eircode; }
 }
+
+

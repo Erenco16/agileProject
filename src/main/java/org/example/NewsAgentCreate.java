@@ -10,7 +10,7 @@ public class NewsAgentCreate {
 
         if (option == 1){
             System.out.println("taking you to customer page...");
-            customerPage(option);
+            customerPage();
         } else if (option == 2) {
             System.out.println("taking you to publication page");
             publicationPage(option);
@@ -29,8 +29,30 @@ public class NewsAgentCreate {
         return option;
     }
 
-    public void customerPage(int option){
-        System.out.println("You choose " + option);
+    public void customerPage(){
+
+        System.out.println("Welcome to Create Customer!");
+
+        System.out.println("Enter Customer Name: ");
+        String name = input.nextLine();
+
+        System.out.println("Enter Customer Email: ");
+        String email = input.nextLine();
+
+        System.out.println("Enter Customer Address: ");
+        String address = input.nextLine();
+
+        System.out.println("Enter Customer Phone Number: ");
+        String phoneNumber = input.nextLine();
+
+        System.out.println("Enter Customer Delivery Area: ");
+        String deliveryArea = input.nextLine();
+
+        System.out.println("Enter Customer Eircode: ");
+        String eircode = input.nextLine();
+
+
+
     }
 
     public void publicationPage(int option){

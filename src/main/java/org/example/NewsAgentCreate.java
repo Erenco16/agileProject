@@ -49,16 +49,11 @@ public class NewsAgentCreate {
         System.out.println("You chose " + option);
     }
 
+    public void deliveryPage(){
+
+    }
 
 
-
-//    public void deliveryArea(){
-//
-//    }
-
-//    public void order(){
-//
-//    }
 
 }
 

@@ -1,7 +1,8 @@
 package org.example;
 
-public class Main {
+public class Test {
     public static void main(String[] args) {
-        new NewsAgentCreate().mainPage();
+
+        // this is for another test
     }
 }

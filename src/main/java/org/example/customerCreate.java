@@ -43,13 +43,10 @@ public class customerCreate {
         this.eircode = eircode;
     }
 
-    public customerCreate() {
-
-    }
-
     public void test(){
         System.out.println("hello world");
     }
+
 
     public String getName() { return name; }
     public String getEmail() { return email; }
@@ -58,3 +55,5 @@ public class customerCreate {
     public String getDeliverArea() { return deliveryArea; }
     public String getEircode() { return eircode; }
 }
+
+

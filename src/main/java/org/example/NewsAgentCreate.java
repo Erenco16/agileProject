@@ -30,7 +30,29 @@ public class NewsAgentCreate {
     }
 
     public void customerPage(){
-        customerCreate c = new customerCreate();
+
+        System.out.println("Welcome to Create Customer!");
+
+        System.out.println("Enter Customer Name: ");
+        String name = input.nextLine();
+
+        System.out.println("Enter Customer Email: ");
+        String email = input.nextLine();
+
+        System.out.println("Enter Customer Address: ");
+        String address = input.nextLine();
+
+        System.out.println("Enter Customer Phone Number: ");
+        String phoneNumber = input.nextLine();
+
+        System.out.println("Enter Customer Delivery Area: ");
+        String deliveryArea = input.nextLine();
+
+        System.out.println("Enter Customer Eircode: ");
+        String eircode = input.nextLine();
+
+
+
     }
 
     public void publicationPage(int option){

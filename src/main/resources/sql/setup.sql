@@ -3,14 +3,6 @@
 -- if a foreign key is stated as ON DELETE SET NULL, then the relevant record will just be set to null when the corresponding record in the main table is deleted
 PRAGMA foreign_keys = ON; -- Ensure foreign key enforcement
 
--- Drop tables if they exist
-DROP TABLE IF EXISTS Customers;
-DROP TABLE IF EXISTS Address;
-DROP TABLE IF EXISTS DeliveryArea;
-DROP TABLE IF EXISTS Publication;
-DROP TABLE IF EXISTS NewsAgent;
-DROP TABLE IF EXISTS OrdersStatus;
-
 -- Customers Table
 CREATE TABLE IF NOT EXISTS Customers (
      id INTEGER PRIMARY KEY AUTOINCREMENT,

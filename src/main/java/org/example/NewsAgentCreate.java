@@ -10,7 +10,7 @@ public class NewsAgentCreate {
 
         if (option == 1){
             System.out.println("taking you to customer page...");
-            customerPage(option);
+            customerPage();
         } else if (option == 2) {
             System.out.println("taking you to publication page");
             publicationPage(option);
@@ -29,8 +29,8 @@ public class NewsAgentCreate {
         return option;
     }
 
-    public void customerPage(int option){
-        System.out.println("You choose " + option);
+    public void customerPage(){
+        customerCreate c = new customerCreate();
     }
 
     public void publicationPage(int option){

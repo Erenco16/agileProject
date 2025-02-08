@@ -43,6 +43,14 @@ public class customerCreate {
         this.eircode = eircode;
     }
 
+    public customerCreate() {
+
+    }
+
+    public void test(){
+        System.out.println("hello world");
+    }
+
     public String getName() { return name; }
     public String getEmail() { return email; }
     public String getAddress() { return address; }

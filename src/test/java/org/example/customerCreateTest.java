@@ -6,98 +6,115 @@ import static org.junit.jupiter.api.Assertions.*;
 class customerCreateTest {
 
     @Test
-    void testValidCustomerCreation() {
-        customerCreate customer = new customerCreate("John Doe", "john@example.com", "123 Main St",
-                "0123456789", "1", "N12B123");
+    void testValidName() {
+        customerCreate customer = new customerCreate();
+        customer.setName("John Doe");
+        assertEquals("John Doe", customer.getName());
     }
 
     @Test
     void testEmptyNameThrowsException() {
+        customerCreate customer = new customerCreate();
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            new customerCreate("", "john@example.com", "123 Main St",
-                    "0123456789", "1", "N12B123");
+            customer.setName("");
         });
         assertEquals("Name cannot be empty", exception.getMessage());
     }
 
     @Test
-    void testInvalidEmailThrowsException() {
+    void testInvalidEmailAtThrowsException() {
+        customerCreate customer = new customerCreate();
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            new customerCreate("John Doe", "johnexample.com", "123 Main St",
-                    "0123456789", "1", "N12B123");
+            customer.setEmail("johnexample.com");
         });
-        assertEquals("Invalid email format, must include @ and .com", exception.getMessage());
+        assertEquals("Invalid email format, must include '@' and '.com'", exception.getMessage());
     }
 
     @Test
-    void testInvalidEmailNoDotComThrowsException() {
+    void testInvalidEmailDotComThrowsException() {
+        customerCreate customer = new customerCreate();
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            new customerCreate("John Doe", "john@example", null,
-                    "0123456789", "1", "N12B123");
+            customer.setEmail("john@example");
         });
-        assertEquals("Invalid email format, must include @ and .com", exception.getMessage());
+        assertEquals("Invalid email format, must include '@' and '.com'", exception.getMessage());
+    }
+
+    @Test
+    void testInvalidEmailEmptyThrowsException() {
+        customerCreate customer = new customerCreate();
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            customer.setEmail("");
+        });
+        assertEquals("Invalid email format, must include '@' and '.com'", exception.getMessage());
+    }
+    @Test
+    void testValidEmail() {
+        customerCreate customer = new customerCreate();
+        customer.setEmail("john@example.com");
+        assertEquals("john@example.com", customer.getEmail());
     }
 
     @Test
     void testEmptyAddressThrowsException() {
+        customerCreate customer = new customerCreate();
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            new customerCreate("John Doe", "john@example.com", "",
-                    "0123456789", "1", "N12B123");
+            customer.setAddress("");
         });
         assertEquals("Address cannot be empty", exception.getMessage());
     }
 
     @Test
-    void testEmptyPhoneNumThrowsException() {
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            new customerCreate("John Doe", "John@example.com", "123 Main St",
-                    null, "1", "N12B123");
-        });
-        assertEquals("Phone number cannot be empty", exception.getMessage());
+    void testValidAddress() {
+        customerCreate customer = new customerCreate();
+        customer.setAddress("123 Main St");
+        assertEquals("123 Main St", customer.getAddress());
     }
 
     @Test
-    void testEmptyPhoneNum2ThrowsException() {
+    void testInvalidPhoneNumberThrowsException() {
+        customerCreate customer = new customerCreate();
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            new customerCreate("John Doe", "John@example.com", "123 Main St",
-                    "", "1", "N12B123");
+            customer.setPhoneNumber("12345");
         });
-        assertEquals("Phone number cannot be empty", exception.getMessage());
+        assertEquals("Invalid phone number format, must be 10 digits", exception.getMessage());
     }
 
     @Test
-    void testInvalidPhoneNumThrowsException() {
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            new customerCreate("John Doe", "John@example.com", "123 Main St",
-                    "01234567890", "1", "N12B123");
-        });
-        assertEquals("Invalid phone number format, number must be 10 digits", exception.getMessage());
+    void testValidPhoneNumber() {
+        customerCreate customer = new customerCreate();
+        customer.setPhoneNumber("1234567890");
+        assertEquals("1234567890", customer.getPhoneNumber());
     }
 
     @Test
-    void testEmptyAreaThrowsException() {
+    void testEmptyDeliveryAreaThrowsException() {
+        customerCreate customer = new customerCreate();
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            new customerCreate("John Doe", "John@example.com", "123 Main St",
-                    "0123456789", null , "N12B123");
+            customer.setDeliveryArea("");
         });
         assertEquals("Delivery area cannot be empty", exception.getMessage());
     }
 
     @Test
-    void testEmptyEircodeThrowsException() {
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            new customerCreate("John Doe", "John@example.com", "123 Main St",
-                    "0123456789", "1", null);
-        });
-        assertEquals("Eircode cannot be empty", exception.getMessage());
+    void testValidDeliveryArea() {
+        customerCreate customer = new customerCreate();
+        customer.setDeliveryArea("1");
+        assertEquals("1", customer.getDeliveryArea());
     }
 
     @Test
     void testInvalidEircodeThrowsException() {
+        customerCreate customer = new customerCreate();
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            new customerCreate("John Doe", "John@example.com", "123 Main St",
-                    "0123456789", "1", "N12B123456");
+            customer.setEircode("D0123");
         });
-        assertEquals("Invalid Eircode format, must be 7 letters", exception.getMessage());
+        assertEquals("Invalid Eircode format, must be 7 characters", exception.getMessage());
+    }
+
+    @Test
+    void testValidEircode() {
+        customerCreate customer = new customerCreate();
+        customer.setEircode("D01AB2C");
+        assertEquals("D01AB2C", customer.getEircode());
     }
 }

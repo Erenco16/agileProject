@@ -16,7 +16,10 @@ public class customerCreate {
     }
 
     public void setEmail(String email) {
-        if (email == null || !email.contains("@") || !email.contains(".com")) {
+        if (email == null || email.isEmpty()) {
+            throw new IllegalArgumentException("Email cannot be empty");
+        }
+        if (!email.contains("@") || !email.contains(".com")) {
             throw new IllegalArgumentException("Invalid email format, must include '@' and '.com'");
         }
         this.email = email;

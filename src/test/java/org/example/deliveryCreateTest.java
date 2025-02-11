@@ -6,6 +6,8 @@ import static org.junit.jupiter.api.Assertions.*;
 public class deliveryCreateTest {
 
 
+    //Test 1
+    //Obj: to test valid delivery area name input
     @Test
     void testValidDeliveryAreaName() {
         // 当所有输入都合法时，构造方法应正常返回对象
@@ -14,6 +16,8 @@ public class deliveryCreateTest {
         assertEquals("shanghai", area.getName());
     }
 
+    //Test 2
+    //Obj: to test invalid empty name field
     @Test
     void testEmptyNameThrowsException() {
         // 模拟空名称输入，期望抛出异常
@@ -25,6 +29,8 @@ public class deliveryCreateTest {
         assertEquals("Delivery area name cannot be empty", exception.getMessage());
     }
 
+    //Test 3
+    //Obj: to test invalid name too long input
     @Test
     void testNameTooLongThrowsException() {
         deliveryCreate area = new deliveryCreate();
@@ -36,6 +42,8 @@ public class deliveryCreateTest {
       assertEquals("Name too long", exception.getMessage());
     }
 
+    //Test 4
+    //Obj: to test invalid delivery area description is empty input
     @Test
     void testEmptyDescriptionThrowsException() {
         // 模拟空描述输入，期望抛出异常
@@ -46,6 +54,8 @@ public class deliveryCreateTest {
         assertEquals("Delivery area description cannot be empty", exception.getMessage());
     }
 
+    //Test 5
+    //Obj: to test invalid delivery area description is too long input
     @Test
     void testDescriptionTooLongThrowsException() {
         deliveryCreate area = new deliveryCreate();

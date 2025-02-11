@@ -7,17 +7,24 @@ public class deliveryCreate {
     /**
      * 构造方法
      * @param name 配送区域名称，不能为空且长度在1-255个字符之间
-     * @param description 配送区域描述，不能为空且长度在1-1024个字符之间
+     * @param
      */
+
     public void setName(String name){
+        this.name = name;
+    }
+
+    public boolean ValidName(String name){
         if (name == null || name.isEmpty()) {
             throw new IllegalArgumentException("Delivery area name cannot be empty");
         }
         if (name.length() > 255) {
             throw new IllegalArgumentException("Invalid delivery area name, valid name is between 1-255 characters");
         }
-        this.name = name;
+        return true;
     }
+
+
 
     public void setDescription(String description){
         if (description == null || description.isEmpty()) {

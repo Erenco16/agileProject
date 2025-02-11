@@ -64,7 +64,7 @@ class customerCreateTest {
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             customer.setEmail("");
         });
-        assertEquals("Invalid email format, must include '@' and '.com'", exception.getMessage());
+        assertEquals("Email cannot be empty", exception.getMessage());
     }
     //Test successful
 

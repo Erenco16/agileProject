@@ -8,6 +8,7 @@ public class deliveryCreateTest {
 
     //Test 1
     //Obj: to test valid delivery area name input
+    //Expected Output: Pass
     @Test
     void testValidDeliveryAreaName() {
         // 当所有输入都合法时，构造方法应正常返回对象
@@ -15,9 +16,11 @@ public class deliveryCreateTest {
         area.setName("shanghai");
         assertEquals("shanghai", area.getName());
     }
+    //Test successful
 
     //Test 2
     //Obj: to test invalid empty name field
+    //Expected Output: Delivery area name cannot be empty
     @Test
     void testEmptyNameThrowsException() {
         // 模拟空名称输入，期望抛出异常
@@ -28,9 +31,11 @@ public class deliveryCreateTest {
     });
         assertEquals("Delivery area name cannot be empty", exception.getMessage());
     }
+    //Test successful
 
     //Test 3
     //Obj: to test invalid name too long input
+    //Expected Output: Name too long
     @Test
     void testNameTooLongThrowsException() {
         deliveryCreate area = new deliveryCreate();
@@ -41,9 +46,11 @@ public class deliveryCreateTest {
     });
       assertEquals("Name too long", exception.getMessage());
     }
+    //Test successful
 
     //Test 4
     //Obj: to test invalid delivery area description is empty input
+    //Expected Output: Delivery area description cannot be empty
     @Test
     void testEmptyDescriptionThrowsException() {
         // 模拟空描述输入，期望抛出异常
@@ -53,9 +60,11 @@ public class deliveryCreateTest {
                 area.setDescription(""));
         assertEquals("Delivery area description cannot be empty", exception.getMessage());
     }
+    //Test successful
 
     //Test 5
     //Obj: to test invalid delivery area description is too long input
+    //Expected Output: Invalid delivery area description, valid description is between 1-1024 characters
     @Test
     void testDescriptionTooLongThrowsException() {
         deliveryCreate area = new deliveryCreate();
@@ -65,4 +74,5 @@ public class deliveryCreateTest {
                 });
         assertEquals("Invalid delivery area description, valid description is between 1-1024 characters", exception.getMessage());
     }
+    //Test successful
 }

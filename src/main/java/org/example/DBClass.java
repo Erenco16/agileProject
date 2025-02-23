@@ -32,13 +32,16 @@ public class DBClass {
     // Customer table insert and select
 
     // Insert a record into the Customers table.
-    public static void insertCustomer(String name, String email, int addressId) {
-        String sql = "INSERT INTO Customers (name, email, address_id) VALUES (?, ?, ?)";
+    public static void insertCustomer(String name, String email, String address, String phone_number, int deliveryAreaID, String eircode) {
+        String sql = "INSERT INTO Customers (name, email, address, phone_number, delivery_area_id, eircode) VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, name);
             pstmt.setString(2, email);
-            pstmt.setInt(3, addressId);
+            pstmt.setString(3, address);
+            pstmt.setString(4, phone_number);
+            pstmt.setInt(5, deliveryAreaID);
+            pstmt.setString(6, eircode);
             int affectedRows = pstmt.executeUpdate();
             System.out.println("Inserted customer, affected rows: " + affectedRows);
         } catch (SQLException e) {
@@ -47,7 +50,7 @@ public class DBClass {
     }
 
     // Select and print all records from the Customers table.
-    public static ArrayList selectAllCustomers(int id) {
+    public static ArrayList selectCustomers(int id) {
         String sql = "SELECT * FROM Customers WHERE id = " + id;
         try (Connection conn = getConnection();
              Statement stmt = conn.createStatement();
@@ -81,7 +84,7 @@ public class DBClass {
     }
 
     // Select and print all records from the Address table.
-    public static ArrayList selectAllAddress(int id) {
+    public static ArrayList selectAddress(int id) {
         String sql = "SELECT * FROM Address WHERE id = " + id;
         try (Connection conn = getConnection();
              Statement stmt = conn.createStatement();
@@ -96,11 +99,12 @@ public class DBClass {
     // DeliveryArea table insert and select
 
     // Insert a record into the DeliveryArea table.
-    public static void insertDeliveryArea(String name) {
-        String sql = "INSERT INTO DeliveryArea (name) VALUES (?)";
+    public static void insertDeliveryArea(String name, String description) {
+        String sql = "INSERT INTO DeliveryArea (name, description) VALUES (?, ?)";
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, name);
+            pstmt.setString(2, description);
             int affectedRows = pstmt.executeUpdate();
             System.out.println("Inserted delivery area, affected rows: " + affectedRows);
         } catch (SQLException e) {
@@ -109,7 +113,7 @@ public class DBClass {
     }
 
     // Select and print all records from the DeliveryArea table.
-    public static ArrayList selectAllDeliveryArea(int id) {
+    public static ArrayList selectDeliveryArea(int id) {
         String sql = "SELECT * FROM DeliveryArea WHERE id = " + id;
         try (Connection conn = getConnection();
              Statement stmt = conn.createStatement();
@@ -137,7 +141,7 @@ public class DBClass {
     }
 
     // Select and print all records from the NewsAgent table.
-    public static ArrayList selectAllNewsAgent(int id) {
+    public static ArrayList selectNewsAgent(int id) {
         String sql = "SELECT * FROM NewsAgent WHERE id = " + id;
         try (Connection conn = getConnection();
              Statement stmt = conn.createStatement();
@@ -166,7 +170,7 @@ public class DBClass {
     }
 
     // Select and print all records from the Publication table.
-    public static ArrayList selectAllPublication(int id) {
+    public static ArrayList selectPublication(int id) {
         String sql = "SELECT * FROM Publication WHERE id = " + id;
         try (Connection conn = getConnection();
              Statement stmt = conn.createStatement();
@@ -197,7 +201,7 @@ public class DBClass {
     }
 
     // Select and print all records from the OrdersStatus table.
-    public static ArrayList selectAllOrdersStatus(int id) {
+    public static ArrayList selectOrdersStatus(int id) {
         String sql = "SELECT * FROM OrdersStatus WHERE id = " + id;
         try (Connection conn = getConnection();
              Statement stmt = conn.createStatement();
@@ -215,25 +219,25 @@ public class DBClass {
         // Ensure the directory for the database exists.
         // Insert sample data.
         // Note: Insert order of operations matters because of foreign key constraints.
-        insertDeliveryArea("Downtown");
+        insertDeliveryArea("Downtown", "test description");
         insertAddress("123 Main St", 1);     // Assuming delivery_area_id 1 exists.
-        insertCustomer("John Doe", "john@example.com", 1); // Assuming address_id 1 exists.
+        insertCustomer("John Doe", "john@example.com", "Some address", "12123123", 1, "n37 asdas"); // Assuming address_id 1 exists.
         insertNewsAgent("Jane Reporter");
         insertPublication(1, 9.99);            // Assuming customer id 1 exists.
         insertOrderStatus(1, 1, 2, "Pending"); // Assuming cust_id 1 and pub_id 1 exist.
 
         // Display data from each table.
         System.out.println("All the customers: ");
-        System.out.println(selectAllCustomers(1));
+        System.out.println(selectCustomers(1));
         System.out.println("All the addresses: ");
-        System.out.println(selectAllAddress(1));
+        System.out.println(selectAddress(1));
         System.out.println("All the DeliveryAreas: ");
-        System.out.println(selectAllDeliveryArea(1));
+        System.out.println(selectDeliveryArea(1));
         System.out.println("All the News Agents: ");
-        System.out.println(selectAllNewsAgent(1));
+        System.out.println(selectNewsAgent(1));
         System.out.println("All the Publications: ");
-        System.out.println(selectAllPublication(1));
+        System.out.println(selectPublication(1));
         System.out.println("All the OrdersStatus: ");
-        System.out.println( selectAllOrdersStatus(1));
+        System.out.println( selectOrdersStatus(1));
     }
 }

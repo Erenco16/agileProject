@@ -142,10 +142,20 @@ public class customerInputValidation {
         }
     }
 
-    // select customer function
+    // select customer function for an id
     public void selectCustomer(int id){
         try{
             DBClass.selectCustomers(id);
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
+
+    // select all customer function
+    public void selectAllCustomer(){
+        try{
+            DBClass.selectAllCustomers();
         }
         catch (Exception e){
             System.out.println(e.getMessage());

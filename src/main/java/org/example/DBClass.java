@@ -13,7 +13,7 @@ public class DBClass {
         return DriverManager.getConnection(DB_URL);
     }
 
-    // general class to convert sql result sets into arraylist
+    // General method to convert a ResultSet into an ArrayList of rows.
     public static ArrayList<ArrayList<String>> getValues(ResultSet rs) throws SQLException {
         ArrayList<ArrayList<String>> values = new ArrayList<>();
         ResultSetMetaData rsmd = rs.getMetaData();
@@ -29,7 +29,6 @@ public class DBClass {
         return values;
     }
 
-    // Customer table insert and select
 
     // Insert a record into the Customers table.
     public static void insertCustomer(String name, String email, String address, String phone_number, int deliveryAreaID, String eircode) {
@@ -49,8 +48,8 @@ public class DBClass {
         }
     }
 
-    // Select and print all records from the Customers table.
-    public static ArrayList selectCustomers(int id) {
+    // Select a record from the Customers table by id.
+    public static ArrayList<ArrayList<String>> selectCustomers(int id) {
         String sql = "SELECT * FROM Customers WHERE id = " + id;
         try (Connection conn = getConnection();
              Statement stmt = conn.createStatement();
@@ -59,11 +58,22 @@ public class DBClass {
         } catch (SQLException e) {
             System.err.println("Error selecting from Customers: " + e.getMessage());
         }
-        return new ArrayList();
+        return new ArrayList<>();
     }
 
+    // Select all records from the Customers table.
+    public static ArrayList<ArrayList<String>> selectAllCustomers() {
+        String sql = "SELECT * FROM Customers";
+        try (Connection conn = getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            return getValues(rs);
+        } catch (SQLException e) {
+            System.err.println("Error selecting all Customers: " + e.getMessage());
+        }
+        return new ArrayList<>();
+    }
 
-    // Address table insert and select
 
     // Insert a record into the Address table.
     public static void insertAddress(String address, Integer deliveryAreaId) {
@@ -83,20 +93,32 @@ public class DBClass {
         }
     }
 
-    // Select and print all records from the Address table.
-    public static ArrayList selectAddress(int id) {
+    // Select a record from the Address table by id.
+    public static ArrayList<ArrayList<String>> selectAddress(int id) {
         String sql = "SELECT * FROM Address WHERE id = " + id;
         try (Connection conn = getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             return getValues(rs);
         } catch (SQLException e) {
-            System.err.println("Error selecting from Customers: " + e.getMessage());
+            System.err.println("Error selecting from Address: " + e.getMessage());
         }
-        return new ArrayList();
+        return new ArrayList<>();
     }
 
-    // DeliveryArea table insert and select
+    // Select all records from the Address table.
+    public static ArrayList<ArrayList<String>> selectAllAddress() {
+        String sql = "SELECT * FROM Address";
+        try (Connection conn = getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            return getValues(rs);
+        } catch (SQLException e) {
+            System.err.println("Error selecting all Address: " + e.getMessage());
+        }
+        return new ArrayList<>();
+    }
+
 
     // Insert a record into the DeliveryArea table.
     public static void insertDeliveryArea(String name, String description) {
@@ -112,20 +134,32 @@ public class DBClass {
         }
     }
 
-    // Select and print all records from the DeliveryArea table.
-    public static ArrayList selectDeliveryArea(int id) {
+    // Select a record from the DeliveryArea table by id.
+    public static ArrayList<ArrayList<String>> selectDeliveryArea(int id) {
         String sql = "SELECT * FROM DeliveryArea WHERE id = " + id;
         try (Connection conn = getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             return getValues(rs);
         } catch (SQLException e) {
-            System.err.println("Error selecting from Customers: " + e.getMessage());
+            System.err.println("Error selecting from DeliveryArea: " + e.getMessage());
         }
-        return new ArrayList();
+        return new ArrayList<>();
     }
 
-    // NewsAgent table insert and select
+    // Select all records from the DeliveryArea table.
+    public static ArrayList<ArrayList<String>> selectAllDeliveryArea() {
+        String sql = "SELECT * FROM DeliveryArea";
+        try (Connection conn = getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            return getValues(rs);
+        } catch (SQLException e) {
+            System.err.println("Error selecting all DeliveryArea: " + e.getMessage());
+        }
+        return new ArrayList<>();
+    }
+
 
     // Insert a record into the NewsAgent table.
     public static void insertNewsAgent(String name) {
@@ -140,20 +174,32 @@ public class DBClass {
         }
     }
 
-    // Select and print all records from the NewsAgent table.
-    public static ArrayList selectNewsAgent(int id) {
+    // Select a record from the NewsAgent table by id.
+    public static ArrayList<ArrayList<String>> selectNewsAgent(int id) {
         String sql = "SELECT * FROM NewsAgent WHERE id = " + id;
         try (Connection conn = getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             return getValues(rs);
         } catch (SQLException e) {
-            System.err.println("Error selecting from Customers: " + e.getMessage());
+            System.err.println("Error selecting from NewsAgent: " + e.getMessage());
         }
-        return new ArrayList();
+        return new ArrayList<>();
     }
 
-    // Publication table insert and select
+    // Select all records from the NewsAgent table.
+    public static ArrayList<ArrayList<String>> selectAllNewsAgent() {
+        String sql = "SELECT * FROM NewsAgent";
+        try (Connection conn = getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            return getValues(rs);
+        } catch (SQLException e) {
+            System.err.println("Error selecting all NewsAgent: " + e.getMessage());
+        }
+        return new ArrayList<>();
+    }
+
 
     // Insert a record into the Publication table.
     public static void insertPublication(int custId, double price) {
@@ -169,20 +215,31 @@ public class DBClass {
         }
     }
 
-    // Select and print all records from the Publication table.
-    public static ArrayList selectPublication(int id) {
+    // Select a record from the Publication table by id.
+    public static ArrayList<ArrayList<String>> selectPublication(int id) {
         String sql = "SELECT * FROM Publication WHERE id = " + id;
         try (Connection conn = getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             return getValues(rs);
         } catch (SQLException e) {
-            System.err.println("Error selecting from Customers: " + e.getMessage());
+            System.err.println("Error selecting from Publication: " + e.getMessage());
         }
-        return new ArrayList();
+        return new ArrayList<>();
     }
 
-    // OrdersStatus table insert and select
+    // Select all records from the Publication table.
+    public static ArrayList<ArrayList<String>> selectAllPublication() {
+        String sql = "SELECT * FROM Publication";
+        try (Connection conn = getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            return getValues(rs);
+        } catch (SQLException e) {
+            System.err.println("Error selecting all Publication: " + e.getMessage());
+        }
+        return new ArrayList<>();
+    }
 
     // Insert a record into the OrdersStatus table.
     public static void insertOrderStatus(int custId, int pubId, int quantity, String status) {
@@ -200,44 +257,79 @@ public class DBClass {
         }
     }
 
-    // Select and print all records from the OrdersStatus table.
-    public static ArrayList selectOrdersStatus(int id) {
+    // Select a record from the OrdersStatus table by id.
+    public static ArrayList<ArrayList<String>> selectOrdersStatus(int id) {
         String sql = "SELECT * FROM OrdersStatus WHERE id = " + id;
         try (Connection conn = getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             return getValues(rs);
         } catch (SQLException e) {
-            System.err.println("Error selecting from Customers: " + e.getMessage());
+            System.err.println("Error selecting from OrdersStatus: " + e.getMessage());
         }
-        return new ArrayList();
+        return new ArrayList<>();
     }
 
-    // OrdersStatus table insert and select
+    // Select all records from the OrdersStatus table.
+    public static ArrayList<ArrayList<String>> selectAllOrdersStatus() {
+        String sql = "SELECT * FROM OrdersStatus";
+        try (Connection conn = getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            return getValues(rs);
+        } catch (SQLException e) {
+            System.err.println("Error selecting all OrdersStatus: " + e.getMessage());
+        }
+        return new ArrayList<>();
+    }
+
+    // -------------------- Main Method --------------------
 
     public static void main(String[] args) {
         // Ensure the directory for the database exists.
+        File dbDirectory = new File("database_files");
+        if (!dbDirectory.exists()) {
+            dbDirectory.mkdirs();
+        }
+
         // Insert sample data.
-        // Note: Insert order of operations matters because of foreign key constraints.
-        insertDeliveryArea("Downtown", "test description");
+        // Note: The order of insertion matters due to foreign key constraints.
+        insertDeliveryArea("Downtown", "Test description");
         insertAddress("123 Main St", 1);     // Assuming delivery_area_id 1 exists.
-        insertCustomer("John Doe", "john@example.com", "Some address", "12123123", 1, "n37 asdas"); // Assuming address_id 1 exists.
+        insertCustomer("John Doe", "john@example.com", "Some address", "12123123", 1, "N37 ASD");
         insertNewsAgent("Jane Reporter");
         insertPublication(1, 9.99);            // Assuming customer id 1 exists.
         insertOrderStatus(1, 1, 2, "Pending"); // Assuming cust_id 1 and pub_id 1 exist.
 
         // Display data from each table.
-        System.out.println("All the customers: ");
+        System.out.println("Select Customer with id 1: ");
         System.out.println(selectCustomers(1));
-        System.out.println("All the addresses: ");
+        System.out.println("Select All Customers: ");
+        System.out.println(selectAllCustomers());
+
+        System.out.println("Select Address with id 1: ");
         System.out.println(selectAddress(1));
-        System.out.println("All the DeliveryAreas: ");
+        System.out.println("Select All Addresses: ");
+        System.out.println(selectAllAddress());
+
+        System.out.println("Select DeliveryArea with id 1: ");
         System.out.println(selectDeliveryArea(1));
-        System.out.println("All the News Agents: ");
+        System.out.println("Select All DeliveryAreas: ");
+        System.out.println(selectAllDeliveryArea());
+
+        System.out.println("Select NewsAgent with id 1: ");
         System.out.println(selectNewsAgent(1));
-        System.out.println("All the Publications: ");
+        System.out.println("Select All NewsAgents: ");
+        System.out.println(selectAllNewsAgent());
+
+        System.out.println("Select Publication with id 1: ");
         System.out.println(selectPublication(1));
-        System.out.println("All the OrdersStatus: ");
-        System.out.println( selectOrdersStatus(1));
+        System.out.println("Select All Publications: ");
+        System.out.println(selectAllPublication());
+
+        System.out.println("Select OrdersStatus with id 1: ");
+        System.out.println(selectOrdersStatus(1));
+        System.out.println("Select All OrdersStatus: ");
+        System.out.println(selectAllOrdersStatus());
     }
 }

@@ -56,6 +56,8 @@ public class NewsAgentCreate {
         v.checkDeliveryArea();
         v.checkEircode();
 
+        v.insertCustomer(); // added to insert customer info to db
+
     }
 
     public void publicationPage(int option){

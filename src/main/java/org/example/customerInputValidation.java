@@ -4,11 +4,14 @@ import java.util.Scanner;
 
 public class customerInputValidation {
 
+
+    // DELIVERYAREA MUST BE CHANGED TO INT
+
     private String name;
     private String email;
     private String address;
     private String phoneNumber;
-    private String deliveryArea;
+    private int deliveryArea;
     private String eircode;
 
 
@@ -31,7 +34,6 @@ public class customerInputValidation {
 
 
         }
-
 
     }
 
@@ -92,24 +94,24 @@ public class customerInputValidation {
 
     }
 
-    public void checkDeliveryArea(){
 
-        while(true){
-
+    // Eren is updating this function as its gonna accept int values
+    public void checkDeliveryArea() {
+        while (true) {
             System.out.println("Enter Customer Delivery Area: ");
-            deliveryArea = input.nextLine().trim();
-            try{
-                c.setDeliveryArea(deliveryArea);
+            String inputValue = input.nextLine().trim();
+            try {
+                int deliveryAreaInt = Integer.parseInt(inputValue);
+                c.setDeliveryArea(deliveryAreaInt); // assuming setDeliveryArea now accepts an int
                 break;
-            }catch (IllegalArgumentException e){
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter an integer value.");
+            } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
             }
-
-
         }
-
-
     }
+
 
     public void checkEircode(){
 
@@ -126,11 +128,37 @@ public class customerInputValidation {
 
 
         }
-
-
     }
 
+    // currently the deliveryArea is a string value but both the db and its
+    // insert function are accepting int values
+    public void insertCustomer(){
+        DBClass db = new DBClass();
+        try{
+            db.insertCustomer(name, email, address, phoneNumber, deliveryArea, eircode);
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
 
+    // select customer function for an id
+    public void selectCustomer(int id){
+        try{
+            DBClass.selectCustomers(id);
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
 
-
+    // select all customer function
+    public void selectAllCustomer(){
+        try{
+            DBClass.selectAllCustomers();
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
 }

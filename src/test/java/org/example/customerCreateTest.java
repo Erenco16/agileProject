@@ -134,7 +134,7 @@ class customerCreateTest {
     void testEmptyDeliveryAreaThrowsException() {
         customerCreate customer = new customerCreate();
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            customer.setDeliveryArea("");
+            customer.setDeliveryArea(0);
         });
         assertEquals("Delivery area cannot be empty", exception.getMessage());
     }
@@ -146,8 +146,8 @@ class customerCreateTest {
     @Test
     void testValidDeliveryArea() {
         customerCreate customer = new customerCreate();
-        customer.setDeliveryArea("1");
-        assertEquals("1", customer.getDeliveryArea());
+        customer.setDeliveryArea(1);
+        assertEquals(1, customer.getDeliveryArea());
     }
     //Test successful
 

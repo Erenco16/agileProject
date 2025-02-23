@@ -5,7 +5,7 @@ public class customerCreate {
     private String email;
     private String address;
     private String phoneNumber;
-    private String deliveryArea;
+    private int deliveryArea;
     private String eircode;
 
     public void setName(String name) {
@@ -42,12 +42,13 @@ public class customerCreate {
         this.phoneNumber = phoneNumber;
     }
 
-    public void setDeliveryArea(String deliveryArea) {
-        if (deliveryArea == null || deliveryArea.isEmpty()) {
-            throw new IllegalArgumentException("Delivery area cannot be empty");
+    public void setDeliveryArea(int deliveryArea) {
+        if (deliveryArea <= 0) {
+            throw new IllegalArgumentException("Delivery area must be a positive integer");
         }
         this.deliveryArea = deliveryArea;
     }
+
 
     public void setEircode(String eircode) {
         if (eircode == null || eircode.isEmpty()) {
@@ -63,7 +64,7 @@ public class customerCreate {
     public String getEmail() { return email; }
     public String getAddress() { return address; }
     public String getPhoneNumber() { return phoneNumber; }
-    public String getDeliveryArea() { return deliveryArea; }
+    public int getDeliveryArea() { return deliveryArea; }
     public String getEircode() { return eircode; }
 }
 

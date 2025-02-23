@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="agile_project.db" uuid="e7dcc6a7-9916-44b0-b804-e7c5fd941ae2">
+    <data-source source="LOCAL" name="agile_project.db" uuid="7fb10403-435e-4bbd-8d3d-93c9034bffcf">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>

@@ -47,4 +47,34 @@ public class deliveryAreaValidation {
     }
 
 
+    // inserting a delivery area into the db
+    public void insertDeliveryArea(){
+        try{
+            DBClass.insertDeliveryArea(areaName, areaDescription);
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
+
+    // select delivery area function
+    public void selectDeliveryArea(int id){
+        try{
+            DBClass.selectDeliveryArea(id);
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
+
+    // select delivery area function
+    public void selectAllDeliveryArea(){
+        try{
+            DBClass.selectAllDeliveryArea();
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
+
 }

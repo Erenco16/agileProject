@@ -32,7 +32,6 @@ public class customerInputValidation {
 
         }
 
-
     }
 
     public void checkEmail(){

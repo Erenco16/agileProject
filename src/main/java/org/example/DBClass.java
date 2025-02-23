@@ -213,11 +213,6 @@ public class DBClass {
 
     public static void main(String[] args) {
         // Ensure the directory for the database exists.
-        File dbDirectory = new File("database_files");
-        if (!dbDirectory.exists()) {
-            dbDirectory.mkdirs();
-        }
-
         // Insert sample data.
         // Note: Insert order of operations matters because of foreign key constraints.
         insertDeliveryArea("Downtown");

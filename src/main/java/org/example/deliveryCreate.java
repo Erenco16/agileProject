@@ -7,7 +7,6 @@ public class deliveryCreate {
     /**
      * 构造方法
      * @param name 配送区域名称，不能为空且长度在1-255个字符之间
-     * @param description 配送区域描述，不能为空且长度在1-1024个字符之间
      */
     public void setName(String name){
         if (name == null || name.isEmpty()) {

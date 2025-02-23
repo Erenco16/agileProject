@@ -24,6 +24,13 @@ public class NewsAgentCreate {
         }
     }
 
+    public boolean ValidateOptionInput(Integer num){
+        if(num > 3){
+            throw new IllegalArgumentException("Option is out of bounds");
+        }
+        return true;
+    }
+
     public Integer mainPageOptions(){
         System.out.println("Welcome Newsagent!");
         System.out.println("Please select an option below:");

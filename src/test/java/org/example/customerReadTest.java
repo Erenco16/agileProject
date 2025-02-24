@@ -12,7 +12,7 @@ class customerReadTest {
     @Test
     void customerReadValid() {
         customerRead customer = new customerRead();
-        boolean result = customer.selectCustomerMod(1);
+        boolean result = customer.selectCustomerMod("1");
         assertTrue(result);
     }
     // success
@@ -23,7 +23,7 @@ class customerReadTest {
     @Test
     void customerReadInvalid() {
         customerRead customer = new customerRead();
-        int invalidInput = 99;
+        String invalidInput = "99";
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             customer.selectCustomerMod(invalidInput);
         });
@@ -41,4 +41,17 @@ class customerReadTest {
         assertTrue(result);
     }
     // success
+
+    //Test 4
+    //obj: non number inputs
+    //expected output: "Input must be a number"
+    @Test
+    void customerReadNonNumericalInvalid() {
+        customerRead customer = new customerRead();
+        String invalidInput = "six";
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            customer.selectCustomerMod(invalidInput);
+        });
+        assertEquals("Input must be a number", exception.getMessage());
+    }
 }

@@ -13,8 +13,8 @@ public class deliveryCreateTest {
     void testValidDeliveryAreaName() {
         // 当所有输入都合法时，构造方法应正常返回对象
         deliveryCreate area = new deliveryCreate();
-        area.setName("shanghai");
-        assertEquals("shanghai", area.getName());
+        boolean check1 = area.ValidName("shanghai");
+        assertTrue(check1);
     }
     //Test successful
 

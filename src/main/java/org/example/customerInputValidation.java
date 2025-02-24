@@ -6,6 +6,7 @@ public class customerInputValidation {
 
 
     // DELIVERYAREA MUST BE CHANGED TO INT
+    // not necessary, we parse the string to int during insertion (timmy)
 
     private String name;
     private String email;
@@ -142,23 +143,4 @@ public class customerInputValidation {
         }
     }
 
-    // select customer function for an id
-    public void selectCustomer(int id){
-        try{
-            DBClass.selectCustomers(id);
-        }
-        catch (Exception e){
-            System.out.println(e.getMessage());
-        }
-    }
-
-    // select all customer function
-    public void selectAllCustomer(){
-        try{
-            DBClass.selectAllCustomers();
-        }
-        catch (Exception e){
-            System.out.println(e.getMessage());
-        }
-    }
 }

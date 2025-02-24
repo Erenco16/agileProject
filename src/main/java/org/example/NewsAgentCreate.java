@@ -54,7 +54,7 @@ public class NewsAgentCreate {
         if(option == 1){
             createCustomerCLI();
         }else if (option == 2){
-//            readCustomerCLI();
+            readCustomerCLI();
         }else {
             System.out.println("Please enter a valid option 1 or 2!");
             //add while loop for this
@@ -90,6 +90,23 @@ public class NewsAgentCreate {
         System.out.println("Customer Added successfully");
         System.out.println("Taking you back to main page....");
         mainPage();
+    }
+
+    public void readCustomerCLI(){
+        customerRead cr = new customerRead();
+
+        System.out.println("Welcome to Customer Read!");
+        System.out.println("1.Find a Specific ID");
+        System.out.println("2.Display all Customers");
+        option = input.nextInt();
+        input.nextLine();
+
+        if (option == 1){
+            System.out.println("Enter a Customer ID");
+            option = input.nextInt();
+            input.nextLine();
+            cr.selectCustomerMod(option);
+        }
     }
 
 

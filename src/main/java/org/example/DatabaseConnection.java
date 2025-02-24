@@ -22,9 +22,6 @@ public class DatabaseConnection {
         try {
             // Ensure the database directory exists
             File dbDirectory = new File("database_files");
-            if (!dbDirectory.exists()) {
-                dbDirectory.mkdirs();
-            }
 
             // Initialize database and run setup script
             try (Connection conn = getConnection()) {
@@ -54,7 +51,7 @@ public class DatabaseConnection {
             while ((line = reader.readLine()) != null) {
                 line = line.trim();
                 if (!line.isEmpty() && !line.startsWith("--")) { // Ignore comments and empty lines
-                    sql.append(line).append(" ");
+                    sql.append(line).append("\n");
                     if (line.endsWith(";")) { // Execute when a full SQL command is read
                         statement.execute(sql.toString());
                         System.out.println("Executed: " + sql);

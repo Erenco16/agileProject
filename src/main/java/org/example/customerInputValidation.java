@@ -4,6 +4,10 @@ import java.util.Scanner;
 
 public class customerInputValidation {
 
+
+    // DELIVERYAREA MUST BE CHANGED TO INT
+    // not necessary, we parse the string to int during insertion (timmy)
+
     private String name;
     private String email;
     private String address;
@@ -23,7 +27,7 @@ public class customerInputValidation {
             System.out.println("Enter Customer Name: ");
             name = input.nextLine().trim();
             try{
-                c.setName(name);
+                c.validateName(name);
                 break;
             }catch (IllegalArgumentException e){
                 System.out.println(e.getMessage());
@@ -41,7 +45,7 @@ public class customerInputValidation {
             System.out.println("Enter Customer Email: ");
             email = input.nextLine().trim();
             try{
-                c.setEmail(email);
+                c.validateEmail(email);
                 break;
             }catch (IllegalArgumentException e){
                 System.out.println(e.getMessage());
@@ -60,7 +64,7 @@ public class customerInputValidation {
             System.out.println("Enter Customer Address: ");
             address = input.nextLine().trim();
             try{
-                c.setAddress(address);
+                c.validateAddress(address);
                 break;
             }catch (IllegalArgumentException e){
                 System.out.println(e.getMessage());
@@ -79,7 +83,7 @@ public class customerInputValidation {
             System.out.println("Enter Customer Phone Number: ");
             phoneNumber = input.nextLine().trim();
             try{
-                c.setPhoneNumber(phoneNumber);
+                c.validatePhoneNumber(phoneNumber);
                 break;
             }catch (IllegalArgumentException e){
                 System.out.println(e.getMessage());
@@ -91,24 +95,24 @@ public class customerInputValidation {
 
     }
 
-    public void checkDeliveryArea(){
 
-        while(true){
-
+    // Eren is updating this function as its gonna accept int values
+    public void checkDeliveryArea() {
+        while (true) {
             System.out.println("Enter Customer Delivery Area: ");
             deliveryArea = input.nextLine().trim();
-            try{
-                c.setDeliveryArea(deliveryArea);
+            try {
+                //int deliveryAreaInt = Integer.parseInt(inputValue);
+                c.validateDeliveryArea(deliveryArea); // assuming setDeliveryArea now accepts an int
                 break;
-            }catch (IllegalArgumentException e){
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter an integer value.");
+            } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
             }
-
-
         }
-
-
     }
+
 
     public void checkEircode(){
 
@@ -117,7 +121,7 @@ public class customerInputValidation {
             System.out.println("Enter Customer Eircode: ");
             eircode = input.nextLine().trim();
             try{
-                c.setEircode(eircode);
+                c.validateEircode(eircode);
                 break;
             }catch (IllegalArgumentException e){
                 System.out.println(e.getMessage());
@@ -125,11 +129,18 @@ public class customerInputValidation {
 
 
         }
-
-
     }
 
-
-
+    // currently the deliveryArea is a string value but both the db and its
+    // insert function are accepting int values
+    public void insertCustomer(){
+        DBClass db = new DBClass();
+        try{
+            db.insertCustomer(name, email, address, phoneNumber, Integer.parseInt(deliveryArea), eircode);
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
 
 }

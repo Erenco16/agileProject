@@ -3,9 +3,9 @@ package org.example;
 public class publicationCreate {
     private String name;
     private String description;
-    private String price;
+    private double price;
 
-    public void setPrice(String price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
@@ -26,7 +26,7 @@ public class publicationCreate {
         return description;
     }
 
-    public String getPrice(){
+    public double getPrice(){
         return price;
     }
 
@@ -51,9 +51,9 @@ public class publicationCreate {
 
     }
 
-    public boolean ValidPrice(String price){
-
-        if(price.isEmpty() || price.length() > 255){
+    public boolean ValidPrice(double price){
+        String priceStr = String.valueOf(price).replace(".", "");
+        if (priceStr.isEmpty() || priceStr.length() > 255) {
             throw new IllegalArgumentException("Price must be between 1-255 digits long");
         }
         return true;

@@ -308,7 +308,7 @@ public class DBClass {
         System.out.println(selectAllCustomers());
 
         System.out.println("Select Address with id 1: ");
-        System.out.println(selectAddress(1));
+        System.out.println(selectAddress(123));
         System.out.println("Select All Addresses: ");
         System.out.println(selectAllAddress());
 

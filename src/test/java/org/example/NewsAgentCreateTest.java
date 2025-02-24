@@ -14,5 +14,5 @@ class NewsAgentCreateTest {
         });
         assertEquals("Option is out of bounds", e.getMessage());
     }
-  
+
 }

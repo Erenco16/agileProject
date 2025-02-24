@@ -15,7 +15,7 @@ public class NewsAgentCreate {
             break;
             case 2:
                 System.out.println("taking you to publication page");
-                publicationPage(option);
+                publicationPage();
             break;
             case 3:
                 System.out.println("taking you to delivery area page.....");
@@ -73,7 +73,17 @@ public class NewsAgentCreate {
         System.out.println("Welcome to Create Delivery Area Page!");
         dv.checkAreaName();
         dv.checkAreaDescription();
+        mainPage();
+    }
 
+    public void publicationPage(){
+        publicationCreate p = new publicationCreate();
+        publicationValidation pv = new publicationValidation();
+        System.out.println("Welcome to Create Delivery Area Page!");
+        pv.checkPublicationName();
+        pv.checkPublicationDescription();
+        pv.checkPublicationPrice();
+        mainPage();
     }
 
     public void createCustomerCLI(){

@@ -15,7 +15,7 @@ public class deliveryAreaValidation {
             System.out.println("Enter Delivery Area: ");
             areaName = input.nextLine().trim();
             try{
-                d.setName(areaName);
+                d.validName(areaName);
                 break;
             }catch (IllegalArgumentException e){
                 System.out.println(e.getMessage());
@@ -34,7 +34,7 @@ public class deliveryAreaValidation {
             System.out.println("Enter Delivery Area Description: ");
             areaDescription = input.nextLine().trim();
             try{
-                d.setDescription(areaDescription);
+                d.validDescription(areaDescription);
                 break;
             }catch (IllegalArgumentException e){
                 System.out.println(e.getMessage());

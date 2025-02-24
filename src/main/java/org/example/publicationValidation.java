@@ -40,8 +40,12 @@ public class publicationValidation {
         while(true){
             System.out.println("Enter Publication Price: ");
             publicationPrice = input.nextLine();
+            try {
                 p.validPrice(publicationPrice);
                 break;
+            }catch (IllegalArgumentException e){
+                System.out.println(e.getMessage());
+            }
         }
     }
 

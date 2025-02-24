@@ -19,7 +19,7 @@ public class NewsAgentCreate {
             break;
             case 3:
                 System.out.println("taking you to delivery area page.....");
-                deliveryPage();
+                deliveryAreaPage();
             break;
         }
     }
@@ -45,38 +45,101 @@ public class NewsAgentCreate {
 
     public void customerPage(){
 
-        System.out.println("Welcome to Create Customer!");
-        System.out.println("1.Create a Customer");
-        System.out.println("2.Read a Customer");
-        option = input.nextInt();
-        input.nextLine();
+        while (true) {
+            System.out.println("Welcome to Create Customer!");
+            System.out.println("1.Create a Customer");
+            System.out.println("2.Read a Customer");
+            option = input.nextInt();
+            input.nextLine();
 
-        if(option == 1){
-            createCustomerCLI();
-        }else if (option == 2){
-            readCustomerCLI();
-        }else {
-            System.out.println("Please enter a valid option 1 or 2!");
-            //add while loop for this
+            if (option == 1) {
+                createCustomerCLI();
+                break;
+            } else if (option == 2) {
+                readCustomerCLI();
+                break;
+            } else {
+                System.out.println("Please enter a valid option 1 or 2!");
+                //add while loop for this
+            }
+
         }
 
     }
 
-    public void publicationPage(int option){
-        System.out.println("You chose " + option);
+    public void publicationPage(){
+        while (true) {
+            System.out.println("Welcome to the Publication Page!");
+            System.out.println("1.Create a Publication");
+            System.out.println("2.Read a Publication");
+            option = input.nextInt();
+            input.nextLine();
+
+            if (option == 1) {
+                createPublicationCLI();
+                break;
+            } else if (option == 2) {
+                readPublicationCLI();
+                break;
+            } else {
+                System.out.println("Please enter a valid option 1 or 2!");
+                //add while loop for this
+            }
+
+        }
     }
 
-    public void deliveryPage(){
+    public void deliveryAreaPage(){
+        while (true) {
+            System.out.println("Welcome to the Delivery Area Page!");
+            System.out.println("1.Create a Delivery Area");
+            System.out.println("2.Read a Delivery Area");
+            option = input.nextInt();
+            input.nextLine();
 
+            if (option == 1) {
+                createDeliveryAreaCLI();
+                break;
+            } else if (option == 2) {
+                readDeliveryAreaCLI();
+                break;
+            } else {
+                System.out.println("Please enter a valid option 1 or 2!");
+                //add while loop for this
+            }
+
+        }
+    }
+
+    public void createDeliveryAreaCLI(){
         deliveryCreate d = new deliveryCreate();
         deliveryAreaValidation dv = new deliveryAreaValidation();
         System.out.println("Welcome to Create Delivery Area Page!");
         dv.checkAreaName();
         dv.checkAreaDescription();
+        System.out.println("Delivery Area Added successfully!");
+        System.out.println("Taking you back to the main page!");
         mainPage();
     }
 
-    public void publicationPage(){
+    public void readDeliveryAreaCLI(){
+        deliveryAreaRead dr = new deliveryAreaRead();
+
+        System.out.println("Welcome to Delivery Area Read!");
+        System.out.println("1.Find a Specific Delivery Area");
+        System.out.println("2.Display all Delivery Areas");
+        option = input.nextInt();
+        input.nextLine();
+
+        if (option == 1){
+            System.out.println("Enter a Delivery Area ID");
+            option = input.nextInt();
+            input.nextLine();
+            //dr.selectCustomerMod(String.valueOf(option));
+        }
+    }
+
+    public void createPublicationCLI(){
         publicationCreate p = new publicationCreate();
         publicationValidation pv = new publicationValidation();
         System.out.println("Welcome to Create Delivery Area Page!");
@@ -84,6 +147,23 @@ public class NewsAgentCreate {
         pv.checkPublicationDescription();
         pv.checkPublicationPrice();
         mainPage();
+    }
+
+    public void readPublicationCLI(){
+        publicationRead pr = new publicationRead();
+
+        System.out.println("Welcome to Publication Read!");
+        System.out.println("1.Find a Specific Publication");
+        System.out.println("2.Display all Publications");
+        option = input.nextInt();
+        input.nextLine();
+
+        if (option == 1){
+            System.out.println("Enter a Publication ID");
+            option = input.nextInt();
+            input.nextLine();
+            //dr.selectCustomerMod(String.valueOf(option));
+        }
     }
 
     public void createCustomerCLI(){

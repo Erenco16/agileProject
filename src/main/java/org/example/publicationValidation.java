@@ -15,7 +15,7 @@ public class publicationValidation {
             System.out.println("Enter Publication Name: ");
             publicationName = input.nextLine().trim();
             try{
-                p.setName(publicationName);
+                p.validName(publicationName);
                 break;
             }catch (IllegalArgumentException e){
                 System.out.println(e.getMessage());
@@ -28,7 +28,7 @@ public class publicationValidation {
             System.out.println("Enter Publication Description: ");
             publicationDescription = input.nextLine().trim();
             try{
-                p.setDescription(publicationDescription);
+                p.validDescription(publicationDescription);
                 break;
             }catch (IllegalArgumentException e){
                 System.out.println(e.getMessage());
@@ -39,13 +39,9 @@ public class publicationValidation {
     public void checkPublicationPrice(){
         while(true){
             System.out.println("Enter Publication Price: ");
-            publicationDescription = input.nextLine().trim();
-            try{
-                p.setPrice(Double.parseDouble(publicationPrice));
+            publicationPrice = input.nextLine();
+                p.validPrice(publicationPrice);
                 break;
-            }catch (IllegalArgumentException e){
-                System.out.println(e.getMessage());
-            }
         }
     }
 

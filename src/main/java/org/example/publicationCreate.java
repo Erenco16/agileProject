@@ -3,9 +3,9 @@ package org.example;
 public class publicationCreate {
     private String name;
     private String description;
-    private double price;
+    private String price;
 
-    public void setPrice(double price) {
+    public void setPrice(String price) {
         this.price = price;
     }
 
@@ -26,11 +26,11 @@ public class publicationCreate {
         return description;
     }
 
-    public double getPrice(){
+    public String getPrice(){
         return price;
     }
 
-    public boolean ValidName(String name){
+    public boolean validName(String name){
         if (name == null || name.isEmpty()) {
             throw new IllegalArgumentException("Publication name cannot be empty");
         }
@@ -40,7 +40,7 @@ public class publicationCreate {
         return true;
     }
 
-    public boolean ValidDescription(String description){
+    public boolean validDescription(String description){
         if (description == null || description.isEmpty()) {
             throw new IllegalArgumentException("Publication description cannot be empty");
         }
@@ -51,10 +51,18 @@ public class publicationCreate {
 
     }
 
-    public boolean ValidPrice(double price){
-        String priceStr = String.valueOf(price).replace(".", "");
-        if (priceStr.isEmpty() || priceStr.length() > 255) {
-            throw new IllegalArgumentException("Price must be between 1-255 digits long");
+    public boolean validPrice(String price){
+
+        try{
+            Double.parseDouble(price);
+            if(price.isEmpty() || price == null){
+                throw new IllegalArgumentException("Price must not be empty");
+            }
+            if(price.length() > 255 ){
+                throw new IllegalArgumentException("Price must be between 1-255 digits long");
+            }
+        }catch (NumberFormatException e){
+            throw new IllegalArgumentException("Price must be a digit value");
         }
         return true;
     }

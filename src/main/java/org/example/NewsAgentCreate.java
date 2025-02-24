@@ -15,13 +15,20 @@ public class NewsAgentCreate {
             break;
             case 2:
                 System.out.println("taking you to publication page");
-                publicationPage(option);
+                publicationPage();
             break;
             case 3:
                 System.out.println("taking you to delivery area page.....");
                 deliveryPage();
             break;
         }
+    }
+
+    public boolean ValidateOptionInput(Integer num){
+        if(num > 3){
+            throw new IllegalArgumentException("Option is out of bounds");
+        }
+        return true;
     }
 
     public Integer mainPageOptions(){
@@ -38,18 +45,20 @@ public class NewsAgentCreate {
 
     public void customerPage(){
 
-        customerCreate c = new customerCreate();
-        customerInputValidation v = new customerInputValidation();
         System.out.println("Welcome to Create Customer!");
+        System.out.println("1.Create a Customer");
+        System.out.println("2.Read a Customer");
+        option = input.nextInt();
+        input.nextLine();
 
-        v.checkName();
-        v.checkEmail();
-        v.checkAddress();
-        v.checkPhoneNumber();
-        v.checkDeliveryArea();
-        v.checkEircode();
-
-        v.insertCustomer(); // added to insert customer info to db
+        if(option == 1){
+            createCustomerCLI();
+        }else if (option == 2){
+            readCustomerCLI();
+        }else {
+            System.out.println("Please enter a valid option 1 or 2!");
+            //add while loop for this
+        }
 
     }
 
@@ -62,10 +71,52 @@ public class NewsAgentCreate {
         deliveryCreate d = new deliveryCreate();
         deliveryAreaValidation dv = new deliveryAreaValidation();
         System.out.println("Welcome to Create Delivery Area Page!");
-
         dv.checkAreaName();
         dv.checkAreaDescription();
+        mainPage();
+    }
 
+    public void publicationPage(){
+        publicationCreate p = new publicationCreate();
+        publicationValidation pv = new publicationValidation();
+        System.out.println("Welcome to Create Delivery Area Page!");
+        pv.checkPublicationName();
+        pv.checkPublicationDescription();
+        pv.checkPublicationPrice();
+        mainPage();
+    }
+
+    public void createCustomerCLI(){
+        customerCreate c = new customerCreate();
+        customerInputValidation v = new customerInputValidation();
+
+        v.checkName();
+        v.checkEmail();
+        v.checkAddress();
+        v.checkPhoneNumber();
+        v.checkDeliveryArea();
+        v.checkEircode();
+        v.insertCustomer();         // added to insert customer info to db
+        System.out.println("Customer Added successfully");
+        System.out.println("Taking you back to main page....");
+        mainPage();
+    }
+
+    public void readCustomerCLI(){
+        customerRead cr = new customerRead();
+
+        System.out.println("Welcome to Customer Read!");
+        System.out.println("1.Find a Specific ID");
+        System.out.println("2.Display all Customers");
+        option = input.nextInt();
+        input.nextLine();
+
+        if (option == 1){
+            System.out.println("Enter a Customer ID");
+            option = input.nextInt();
+            input.nextLine();
+            cr.selectCustomerMod(String.valueOf(option));
+        }
     }
 
 

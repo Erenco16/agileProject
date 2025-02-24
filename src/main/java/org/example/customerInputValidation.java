@@ -17,6 +17,7 @@ public class customerInputValidation {
 
 
     customerCreate c = new customerCreate();
+    customerRead r = new customerRead();
     Scanner input = new Scanner(System.in);
 
 
@@ -129,6 +130,23 @@ public class customerInputValidation {
 
 
         }
+    }
+
+    public void customerReadID() {
+        while(true){
+            System.out.println("Enter Customer ID: ");
+            try {
+                int id = input.nextInt();
+                input.nextLine();
+                r.selectCustomerMod(String.valueOf(id));
+                break;
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());            }
+        }
+    }
+
+    public void customerReadAll() {
+        r.selectAllCustomerMod();
     }
 
     // currently the deliveryArea is a string value but both the db and its

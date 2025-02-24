@@ -6,21 +6,26 @@ public class NewsAgentCreate {
     private int option;
 
     public void mainPage(){
-        mainPageOptions();
+        while (true) {
+            mainPageOptions();
 
-        switch (option) {
-            case 1:
-                System.out.println("taking you to customer page...");
-                customerPage();
-            break;
-            case 2:
-                System.out.println("taking you to publication page");
-                publicationPage();
-            break;
-            case 3:
-                System.out.println("taking you to delivery area page.....");
-                deliveryPage();
-            break;
+            switch (option) {
+                case 1:
+                    System.out.println("taking you to customer page...");
+                    customerPage();
+                    break;
+                case 2:
+                    System.out.println("taking you to publication page");
+                    publicationPage();
+                    break;
+                case 3:
+                    System.out.println("taking you to delivery area page.....");
+                    deliveryPage();
+                    break;
+                default:
+                    System.out.println("Invalid option");
+                    break;
+            }
         }
     }
 
@@ -44,22 +49,24 @@ public class NewsAgentCreate {
     }
 
     public void customerPage(){
+        while (true) {
+            System.out.println("Welcome to Create Customer!");
+            System.out.println("1.Create a Customer");
+            System.out.println("2.Read a Customer");
+            option = input.nextInt();
+            input.nextLine();
 
-        System.out.println("Welcome to Create Customer!");
-        System.out.println("1.Create a Customer");
-        System.out.println("2.Read a Customer");
-        option = input.nextInt();
-        input.nextLine();
-
-        if(option == 1){
-            createCustomerCLI();
-        }else if (option == 2){
-            readCustomerCLI();
-        }else {
-            System.out.println("Please enter a valid option 1 or 2!");
-            //add while loop for this
+            if (option == 1) {
+                createCustomerCLI();
+                break;
+            } else if (option == 2) {
+                readCustomerCLI();
+                break;
+            } else {
+                System.out.println("Please enter a valid option 1 or 2!");
+                //add while loop for this
+            }
         }
-
     }
 
     public void publicationPage(int option){
@@ -68,7 +75,6 @@ public class NewsAgentCreate {
 
     public void deliveryPage(){
 
-        deliveryCreate d = new deliveryCreate();
         deliveryAreaValidation dv = new deliveryAreaValidation();
         System.out.println("Welcome to Create Delivery Area Page!");
         dv.checkAreaName();
@@ -77,7 +83,6 @@ public class NewsAgentCreate {
     }
 
     public void publicationPage(){
-        publicationCreate p = new publicationCreate();
         publicationValidation pv = new publicationValidation();
         System.out.println("Welcome to Create Delivery Area Page!");
         pv.checkPublicationName();
@@ -87,7 +92,6 @@ public class NewsAgentCreate {
     }
 
     public void createCustomerCLI(){
-        customerCreate c = new customerCreate();
         customerInputValidation v = new customerInputValidation();
 
         v.checkName();
@@ -102,25 +106,34 @@ public class NewsAgentCreate {
         mainPage();
     }
 
-    public void readCustomerCLI(){
-        customerRead cr = new customerRead();
+    public void readCustomerCLI() {
+        customerInputValidation v = new customerInputValidation();
 
-        System.out.println("Welcome to Customer Read!");
-        System.out.println("1.Find a Specific ID");
-        System.out.println("2.Display all Customers");
-        option = input.nextInt();
-        input.nextLine();
+        while (true) {
+            System.out.println("Welcome to Customer Read!");
+            System.out.println("1.Find a Specific ID");
+            System.out.println("2.Display all Customers");
+            if (input.hasNextInt()) {
+                option = input.nextInt();
+                input.nextLine();  // Consume the newline
 
-        if (option == 1){
-            System.out.println("Enter a Customer ID");
-            option = input.nextInt();
-            input.nextLine();
-            cr.selectCustomerMod(String.valueOf(option));
+                switch (option) {
+                    case 1:
+                        v.customerReadID();
+                        return;
+                    case 2:
+                        v.customerReadAll();
+                        return;
+                    default:
+                        System.out.println("Please enter a valid option 1 or 2!");
+                        break;
+                }
+            } else {
+                // If input is not an integer
+                System.out.println("Invalid input! Please enter a valid number.");
+                input.nextLine();
+            }
         }
     }
 
-
-
 }
-
-

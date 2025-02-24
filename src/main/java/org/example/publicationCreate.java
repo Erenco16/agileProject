@@ -54,10 +54,13 @@ public class publicationCreate {
     public boolean validPrice(String price){
 
         try{
-            Double.parseDouble(price);
-            if(price.isEmpty() || price == null){
-                throw new IllegalArgumentException("Price must not be empty");
+            double dnum = Double.parseDouble(price);
+            if (dnum < 0){
+                throw new IllegalArgumentException("Price can not be a negative number!");
             }
+//            if(price.isEmpty() || price == null){
+//                throw new IllegalArgumentException("Price must not be empty");
+//            }
             if(price.length() > 255 ){
                 throw new IllegalArgumentException("Price must be between 1-255 digits long");
             }

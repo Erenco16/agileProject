@@ -105,7 +105,7 @@ public class NewsAgentCreate {
             System.out.println("Enter a Customer ID");
             option = input.nextInt();
             input.nextLine();
-            cr.selectCustomerMod(option);
+            cr.selectCustomerMod(String.valueOf(option));
         }
     }
 

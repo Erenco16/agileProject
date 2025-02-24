@@ -38,7 +38,7 @@ public class deliveryCreate {
 
 
 
-    public void validDescription(String description){
+    public boolean validDescription(String description){
         if (description == null || description.isEmpty()) {
             throw new IllegalArgumentException("Delivery area description cannot be empty");
         }
@@ -46,7 +46,7 @@ public class deliveryCreate {
             throw new IllegalArgumentException("Invalid delivery area description, valid description is between 1-1024 characters");
         }
 
-        this.description = description;
+        return true;
     }
 
 

@@ -122,24 +122,39 @@ public class NewsAgentCreate {
         System.out.println("Welcome to Create Delivery Area Page!");
         dv.checkAreaName();
         dv.checkAreaDescription();
+        dv.insertDeliveryArea();
         System.out.println("Delivery Area Added successfully!");
         System.out.println("Taking you back to the main page!");
         mainPage();
     }
 
     public void readDeliveryAreaCLI(){
+        deliveryAreaValidation da = new deliveryAreaValidation();
 
-        System.out.println("Welcome to Delivery Area Read!");
-        System.out.println("1.Find a Specific Delivery Area");
-        System.out.println("2.Display all Delivery Areas");
-        option = input.nextInt();
-        input.nextLine();
+        while (true) {
+            System.out.println("Welcome to Delivery Area Read!");
+            System.out.println("1.Find a Specific ID");
+            System.out.println("2.Display all Delivery Areas");
+            if (input.hasNextInt()) {
+                option = input.nextInt();
+                input.nextLine();  // Consume the newline
 
-        if (option == 1){
-            System.out.println("Enter a Delivery Area ID");
-            option = input.nextInt();
-            input.nextLine();
-            //dr.selectCustomerMod(String.valueOf(option));
+                switch (option) {
+                    case 1:
+                        da.deliveryAreaReadID();
+                        return;
+                    case 2:
+                        da.deliveryAreaReadAll();
+                        return;
+                    default:
+                        System.out.println("Please enter a valid option 1 or 2!");
+                        break;
+                }
+            } else {
+                // If input is not an integer
+                System.out.println("Invalid input! Please enter a valid number.");
+                input.nextLine();
+            }
         }
     }
 
@@ -154,33 +169,32 @@ public class NewsAgentCreate {
     }
 
     public void readPublicationCLI(){
-        publicationValidation pr = new publicationValidation();
+        publicationValidation p = new publicationValidation();
 
-        System.out.println("Welcome to Publication Read!");
-        System.out.println("1.Find a Specific Publication");
-        System.out.println("2.Display all Publications");
-        option = input.nextInt();
-        input.nextLine();
+        while (true) {
+            System.out.println("Welcome to Publication Read!");
+            System.out.println("1.Find a Specific ID");
+            System.out.println("2.Display all Publications");
+            if (input.hasNextInt()) {
+                option = input.nextInt();
+                input.nextLine();  // Consume the newline
 
-        if (input.hasNextInt()) {
-            option = input.nextInt();
-            input.nextLine();  // Consume the newline
-
-            switch (option) {
-                case 1:
-                    pr.publicationReadID();
-                    return;
-                case 2:
-                    pr.publicationReadAll();
-                    return;
-                default:
-                    System.out.println("Please enter a valid option 1 or 2!");
-                    break;
+                switch (option) {
+                    case 1:
+                        p.publicationReadID();
+                        return;
+                    case 2:
+                        p.publicationReadAll();
+                        return;
+                    default:
+                        System.out.println("Please enter a valid option 1 or 2!");
+                        break;
+                }
+            } else {
+                // If input is not an integer
+                System.out.println("Invalid input! Please enter a valid number.");
+                input.nextLine();
             }
-        } else {
-            // If input is not an integer
-            System.out.println("Invalid input! Please enter a valid number.");
-            input.nextLine();
         }
     }
 

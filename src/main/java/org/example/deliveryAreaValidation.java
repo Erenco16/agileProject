@@ -7,6 +7,7 @@ public class deliveryAreaValidation {
     private String areaDescription;
     Scanner input = new Scanner(System.in);
     deliveryCreate d = new deliveryCreate();
+    deliveryAreaRead dr = new deliveryAreaRead();
 
     public void checkAreaName(){
 
@@ -47,34 +48,34 @@ public class deliveryAreaValidation {
     }
 
 
-    // inserting a delivery area into the db
-    public void insertDeliveryArea(){
+    public void deliveryAreaReadID() {
+        while(true){
+            System.out.println("Enter Delivery Area ID: ");
+            try {
+                int id = input.nextInt();
+                input.nextLine();
+                dr.deliveryReadByID(String.valueOf(id));
+                break;
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());            }
+        }
+    }
+
+    public void deliveryAreaReadAll() {
+        dr.selectAllDeliveryArea();
+    }
+
+    // currently the deliveryArea is a string value but both the db and its
+    // insert function are accepting int values
+    public void insertDeliveryArea() {
+        DBClass db = new DBClass();
         try{
-            DBClass.insertDeliveryArea(areaName, areaDescription);
+            db.insertDeliveryArea(areaName, areaDescription);
         }
         catch (Exception e){
             System.out.println(e.getMessage());
         }
     }
 
-    // select delivery area function
-    public void selectDeliveryArea(int id){
-        try{
-            DBClass.selectDeliveryArea(id);
-        }
-        catch (Exception e){
-            System.out.println(e.getMessage());
-        }
-    }
-
-    // select delivery area function
-    public void selectAllDeliveryArea(){
-        try{
-            DBClass.selectAllDeliveryArea();
-        }
-        catch (Exception e){
-            System.out.println(e.getMessage());
-        }
-    }
 
 }

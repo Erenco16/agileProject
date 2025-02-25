@@ -176,48 +176,38 @@ public class dbClassTest {
 
     @Test
     void testInsertPublicationAndSelect() {
-        // Insert a unique customer for the publication.
-        String uniqueCustomer = "PubCustomer_" + System.currentTimeMillis();
-        String email = uniqueCustomer + "@example.com";
-        DBClass.insertCustomer(uniqueCustomer, email, "Pub Address", "1112223333", 1, "EIRPUB");
+        // Generate unique publication details.
+        String pubName = "TestPublication_" + System.currentTimeMillis();
+        String pubDescription = "Test Description " + System.currentTimeMillis();
+        double pubPrice = (System.currentTimeMillis() % 1000) + 0.99;
 
-        // Retrieve the customer id by searching in selectAllCustomers.
-        ArrayList<ArrayList<String>> customers = DBClass.selectAllCustomers();
-        int custId = -1;
-        for (ArrayList<String> row : customers) {
-            if (row.size() >= 2 && row.get(1).equals(uniqueCustomer)) {
-                try {
-                    custId = Integer.parseInt(row.get(0));
-                } catch (NumberFormatException e) {
-                    // ignore parsing error
-                }
-                break;
-            }
-        }
-        assertTrue(custId != -1, "Inserted customer should have a valid id.");
+        // Insert the publication using the new method signature.
+        DBClass.insertPublication(pubName, pubDescription, pubPrice);
 
-        double uniquePrice = (System.currentTimeMillis() % 1000) + 0.99;
-        DBClass.insertPublication(custId, uniquePrice);
-
+        // Retrieve all publications.
         ArrayList<ArrayList<String>> pubs = DBClass.selectAllPublication();
         boolean found = false;
-        // Assuming column order: id, cust_id, price.
+
+        // Assuming the column order is: id, publication_name, publication_description, price.
         for (ArrayList<String> row : pubs) {
-            if (row.size() >= 3) {
+            if (row.size() >= 4) {
                 try {
-                    int rowCustId = Integer.parseInt(row.get(1));
-                    double rowPrice = Double.parseDouble(row.get(2));
-                    if (rowCustId == custId && Math.abs(rowPrice - uniquePrice) < 0.001) {
+                    String rowPubName = row.get(1);
+                    String rowPubDescription = row.get(2);
+                    double rowPubPrice = Double.parseDouble(row.get(3));
+                    if (rowPubName.equals(pubName) && rowPubDescription.equals(pubDescription)
+                            && Math.abs(rowPubPrice - pubPrice) < 0.001) {
                         found = true;
                         break;
                     }
                 } catch (NumberFormatException e) {
-                    // ignore parse errors
+                    // Ignore parse errors.
                 }
             }
         }
         assertTrue(found, "Inserted publication should be found in selectAllPublication.");
     }
+
 
     @Test
     void testSelectNonExistentPublication() {
@@ -231,6 +221,7 @@ public class dbClassTest {
 
     @Test
     void testInsertOrderStatusAndSelect() {
+        // Insert a customer.
         String uniqueCustomer = "OrderCustomer_" + System.currentTimeMillis();
         String email = uniqueCustomer + "@example.com";
         DBClass.insertCustomer(uniqueCustomer, email, "Order Address", "2223334444", 1, "EIRORD");
@@ -242,36 +233,48 @@ public class dbClassTest {
             if (row.size() >= 2 && row.get(1).equals(uniqueCustomer)) {
                 try {
                     custId = Integer.parseInt(row.get(0));
-                } catch (NumberFormatException e) {}
+                } catch (NumberFormatException e) {
+                    // ignore parse errors
+                }
                 break;
             }
         }
         assertTrue(custId != -1, "Inserted customer should have a valid id.");
 
-        double uniquePrice = (System.currentTimeMillis() % 1000) + 1.99;
-        DBClass.insertPublication(custId, uniquePrice);
+        // Insert a publication using the new method signature.
+        String pubName = "TestPublication_" + System.currentTimeMillis();
+        String pubDescription = "Test Description " + System.currentTimeMillis();
+        double pubPrice = (System.currentTimeMillis() % 1000) + 0.99;
+        DBClass.insertPublication(pubName, pubDescription, pubPrice);
 
-        // Retrieve publication id.
+        // Retrieve the publication id.
         ArrayList<ArrayList<String>> pubs = DBClass.selectAllPublication();
         int pubId = -1;
         for (ArrayList<String> row : pubs) {
-            if (row.size() >= 3) {
+            // Assuming column order: id, publication_name, publication_description, price.
+            if (row.size() >= 4) {
                 try {
-                    int rowCustId = Integer.parseInt(row.get(1));
-                    double rowPrice = Double.parseDouble(row.get(2));
-                    if (rowCustId == custId && Math.abs(rowPrice - uniquePrice) < 0.001) {
+                    String rowPubName = row.get(1);
+                    String rowPubDescription = row.get(2);
+                    double rowPubPrice = Double.parseDouble(row.get(3));
+                    if (rowPubName.equals(pubName) && rowPubDescription.equals(pubDescription)
+                            && Math.abs(rowPubPrice - pubPrice) < 0.001) {
                         pubId = Integer.parseInt(row.get(0));
                         break;
                     }
-                } catch (NumberFormatException e) {}
+                } catch (NumberFormatException e) {
+                    // ignore parse errors
+                }
             }
         }
         assertTrue(pubId != -1, "Inserted publication should have a valid id.");
 
+        // Insert order status.
         int quantity = 5;
         String status = "Completed_" + System.currentTimeMillis();
         DBClass.insertOrderStatus(custId, pubId, quantity, status);
 
+        // Retrieve and verify the inserted order status.
         ArrayList<ArrayList<String>> orders = DBClass.selectAllOrdersStatus();
         boolean found = false;
         // Assuming column order: id, cust_id, pub_id, quantity, status.
@@ -286,11 +289,14 @@ public class dbClassTest {
                         found = true;
                         break;
                     }
-                } catch (NumberFormatException e) {}
+                } catch (NumberFormatException e) {
+                    // ignore parse errors
+                }
             }
         }
         assertTrue(found, "Inserted order status should be found in selectAllOrdersStatus.");
     }
+
 
     @Test
     void testSelectNonExistentOrderStatus() {

@@ -202,12 +202,13 @@ public class DBClass {
 
 
     // Insert a record into the Publication table.
-    public static void insertPublication(int custId, double price) {
-        String sql = "INSERT INTO Publication (cust_id, price) VALUES (?, ?)";
+    public static void insertPublication(String name, String description, double price) {
+        String sql = "INSERT INTO Publication (name, description, price) VALUES (?, ?, ?)";
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setInt(1, custId);
-            pstmt.setDouble(2, price);
+            pstmt.setString(1, name);
+            pstmt.setString(2, description);
+            pstmt.setDouble(3, price);
             int affectedRows = pstmt.executeUpdate();
             System.out.println("Inserted publication, affected rows: " + affectedRows);
         } catch (SQLException e) {
@@ -298,7 +299,7 @@ public class DBClass {
         insertAddress("123 Main St", 1);     // Assuming delivery_area_id 1 exists.
         insertCustomer("John Doe", "john@example.com", "Some address", "12123123", 1, "N37 ASD");
         insertNewsAgent("Jane Reporter");
-        insertPublication(1, 9.99);            // Assuming customer id 1 exists.
+        insertPublication("test", "test", 9.99);            // Assuming customer id 1 exists.
         insertOrderStatus(1, 1, 2, "Pending"); // Assuming cust_id 1 and pub_id 1 exist.
 
         // Display data from each table.

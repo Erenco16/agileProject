@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="com.obiscr.chatgpt.settings.EasyCodeState">
+    <option name="projectFiles" value="$PROJECT_DIR$/src/main/java/org/example/customerCreate.java;/Users/kishor/IdeaProjects/agileProject2/src/main/java/org/example/customerInputValidation.java;/Users/kishor/IdeaProjects/agileProject2/src/main/java/org/example/DatabaseConnection.java;/Users/kishor/IdeaProjects/agileProject2/src/main/java/org/example/DBClass.java;/Users/kishor/IdeaProjects/agileProject2/src/main/java/org/example/deliveryAreaValidation.java;/Users/kishor/IdeaProjects/agileProject2/src/main/java/org/example/deliveryCreate.java;/Users/kishor/IdeaProjects/agileProject2/src/main/java/org/example/Main.java;/Users/kishor/IdeaProjects/agileProject2/src/main/java/org/example/NewsAgentCreate.java;/Users/kishor/IdeaProjects/agileProject2/src/main/java/org/example/task1.java;/Users/kishor/IdeaProjects/agileProject2/src/main/java/org/example/Test.java;/Users/kishor/IdeaProjects/agileProject2/src/main/resources/sql/setup.sql;/Users/kishor/IdeaProjects/agileProject2/src/test/java/org/example/customerCreateTest.java;/Users/kishor/IdeaProjects/agileProject2/src/test/java/org/example/deliveryCreateTest.java;/Users/kishor/IdeaProjects/agileProject2/src/test/java/org/example/NewsAgentCreateTest.java" />
+  </component>
+</project>

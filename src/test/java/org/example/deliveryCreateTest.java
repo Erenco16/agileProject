@@ -74,8 +74,9 @@ public class deliveryCreateTest {
                 });
         assertEquals("Invalid delivery area description, valid description is between 1-1024 characters", exception.getMessage());
     }
+    //Test successful
 
-    //Test 5
+    //Test 6
     //Obj: to test valid delivery area description
     //Expected Output: True
     @Test

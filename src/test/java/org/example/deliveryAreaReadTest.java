@@ -16,7 +16,7 @@ class deliveryAreaReadTest {
         boolean result = dar.deliveryReadByID("1");
         assertTrue(result);
     }
-    //success
+    //Test successful
 
     //test 2
     // obj: empty input
@@ -29,7 +29,7 @@ class deliveryAreaReadTest {
         });
         assertEquals("Invalid ID: " + input , exception.getMessage());
     }
-    //success
+    //Test successful
 
     //Test 3
     //obj : non numerical input
@@ -42,6 +42,7 @@ class deliveryAreaReadTest {
         });
         assertEquals("Invalid ID: " + input , exception.getMessage());
     }
+    //Test successful
 
     //Test 4
     //obj: null item from DB
@@ -54,7 +55,7 @@ class deliveryAreaReadTest {
         });
         assertEquals("Error occurred: " + "No delivery area found with ID: " + input , exception.getMessage());
     }
-    //success
+    //Test successful
 
     //Test 5
     //obj: test read all publication from db
@@ -64,6 +65,6 @@ class deliveryAreaReadTest {
         dar.selectAllDeliveryArea();
         assertTrue(true);
     }
-    //success
+    //Test successful
 
 }

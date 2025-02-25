@@ -14,6 +14,7 @@ class NewsAgentCreateTest {
     private NewsAgentCreate newsAgent;
     private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
 
+    //Setup before tests are run
     @BeforeEach
     void setUp() {
         newsAgent = new NewsAgentCreate();
@@ -25,13 +26,20 @@ class NewsAgentCreateTest {
         newsAgent.input = new Scanner(System.in); // Reinitialize scanner with new input
     }
 
+    //Test 1
+    //obj: test valid user input options
+    //expected output: "Valid input should be returned correctly"
     @Test
     void testValidInput() {
         provideInput("2\n"); // Simulating user entering "2"
         int result = newsAgent.getValidIntegerInput(1, 3);
         assertEquals(2, result, "Valid input should be returned correctly");
     }
+    //Test successful
 
+    //Test 2
+    //obj: test invalid input out of range
+    //expected output: "Invalid option! Please enter a number between 1 and 3"
     @Test
     void testOutOfRangeInput() {
         provideInput("4\n2\n"); // First input is out of range (4), second is valid (2)
@@ -40,7 +48,11 @@ class NewsAgentCreateTest {
         assertTrue(output.contains("Invalid option! Please enter a number between 1 and 3"),
                 "Should display out-of-range message");
     }
+    //Test successful
 
+    //Test 3
+    //obj: test invalid input out of range
+    //expected output: "Input cannot be empty. Please enter a number."
     @Test
     void testEmptyInput() {
         provideInput("\n2\n"); // First input is empty, second input is valid
@@ -49,7 +61,11 @@ class NewsAgentCreateTest {
         assertTrue(output.contains("Input cannot be empty. Please enter a number."),
                 "Should display empty input message");
     }
+    //Test successful
 
+    //Test 4
+    //obj: test invalid input out of range
+    //expected output: "Input cannot be empty. Please enter a number."
     @Test
     void testNonNumericInput() {
         provideInput("abcd\n2\n"); // First input is invalid, second input is valid
@@ -58,4 +74,5 @@ class NewsAgentCreateTest {
         assertTrue(output.contains("Invalid input! Please enter a valid number."),
                 "Should display invalid input message");
     }
+    //Test successful
 }

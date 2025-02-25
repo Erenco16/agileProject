@@ -74,6 +74,7 @@ class publicationCreateTest {
         });
         assertEquals("Invalid publication description, valid description is between 1-1024 characters", exception.getMessage());
     }
+    //Test successful
 
     //Test 6
     //Obj: to test invalid publication description is too long input
@@ -98,6 +99,7 @@ class publicationCreateTest {
         });
         assertEquals("Price can not be a negative number!", exception.getMessage());
     }
+    //Test successful
 
     //Test 8
     //Obj: to test invalid publication price too long
@@ -111,6 +113,7 @@ class publicationCreateTest {
         });
         assertEquals("Price must be between 1-255 digits long", exception.getMessage());
     }
+    //Test successful
 
     //Test 9
     //Obj: to test invalid publication price value is not a double
@@ -124,6 +127,7 @@ class publicationCreateTest {
         });
         assertEquals("Price must be a digit value", exception.getMessage());
     }
+    //Test successful
 
     //Test 10
     //Obj: to test valid publication price value
@@ -134,5 +138,6 @@ class publicationCreateTest {
         boolean check3 = pubc.validPrice("12.00");
         assertTrue(check3);
     }
+    //Test successful
 
 }

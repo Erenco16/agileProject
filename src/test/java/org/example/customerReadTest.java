@@ -15,7 +15,7 @@ class customerReadTest {
         boolean result = customer.selectCustomerMod("1");
         assertTrue(result);
     }
-    // success
+    //Test successful
 
     //Test 2
     //obj: test non existed row from Customer table
@@ -29,7 +29,7 @@ class customerReadTest {
         });
         assertEquals("Error occurred: " + "No customer found with ID: " + invalidInput, exception.getMessage());
     }
-    // success
+    //Test successful
 
     //test 3
     //obj: test empty input
@@ -43,6 +43,7 @@ class customerReadTest {
         });
         assertEquals("Input must be a number" + invalidInput, exception.getMessage());
     }
+    //Test successful
 
     //Test 4
     //obj: test display all customer function
@@ -53,7 +54,7 @@ class customerReadTest {
         boolean result = customer.selectAllCustomerMod();
         assertTrue(result);
     }
-    // success
+    //Test successful
 
     //Test 5
     //obj: non number inputs
@@ -67,4 +68,5 @@ class customerReadTest {
         });
         assertEquals("Input must be a number", exception.getMessage());
     }
+    //Test successful
 }

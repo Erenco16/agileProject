@@ -15,7 +15,7 @@ class publicationReadTest {
         boolean result = pr.publicationReadByID("1");
         assertTrue(result);
     }
-    //success
+    //Test successful
 
     //test 2
     // obj: empty input
@@ -28,7 +28,7 @@ class publicationReadTest {
         });
         assertEquals("Invalid ID: " + input , exception.getMessage());
     }
-    //success
+    //Test successful
 
     //Test 3
     //obj : non numerical input
@@ -41,6 +41,7 @@ class publicationReadTest {
         });
         assertEquals("Invalid ID: " + input , exception.getMessage());
     }
+    //Test successful
 
     //Test 4
     //obj: null item from DB
@@ -53,7 +54,7 @@ class publicationReadTest {
         });
         assertEquals("Error occurred: " + "No publication found with ID: " + input , exception.getMessage());
     }
-    //success
+    //Test successful
 
     //Test 5
     //obj: test read all publication from db
@@ -63,5 +64,5 @@ class publicationReadTest {
         pr.selectAllPublication();
         assertTrue(true);
     }
-    //success
+    //Test successful
 }

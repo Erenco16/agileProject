@@ -95,7 +95,7 @@ public class NewsAgentCreate {
             if (option == 1) {
                 createPublicationCLI();
             } else {
-                readCustomerCLI();
+                readPublicationCLI();
             }
 
         }
@@ -145,15 +145,16 @@ public class NewsAgentCreate {
 
     public void createPublicationCLI(){
         publicationValidation pv = new publicationValidation();
-        System.out.println("Welcome to Create Delivery Area Page!");
+        System.out.println("Welcome to Create Publication Page!");
         pv.checkPublicationName();
         pv.checkPublicationDescription();
         pv.checkPublicationPrice();
+        pv.insertPublication();
         mainPage();
     }
 
     public void readPublicationCLI(){
-        publicationRead pr = new publicationRead();
+        publicationValidation pr = new publicationValidation();
 
         System.out.println("Welcome to Publication Read!");
         System.out.println("1.Find a Specific Publication");
@@ -161,11 +162,25 @@ public class NewsAgentCreate {
         option = input.nextInt();
         input.nextLine();
 
-        if (option == 1){
-            System.out.println("Enter a Publication ID");
+        if (input.hasNextInt()) {
             option = input.nextInt();
+            input.nextLine();  // Consume the newline
+
+            switch (option) {
+                case 1:
+                    pr.publicationReadID();
+                    return;
+                case 2:
+                    pr.publicationReadAll();
+                    return;
+                default:
+                    System.out.println("Please enter a valid option 1 or 2!");
+                    break;
+            }
+        } else {
+            // If input is not an integer
+            System.out.println("Invalid input! Please enter a valid number.");
             input.nextLine();
-            //dr.selectCustomerMod(String.valueOf(option));
         }
     }
 

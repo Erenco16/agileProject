@@ -31,7 +31,20 @@ class customerReadTest {
     }
     // success
 
-    //Test 3
+    //test 3
+    //obj: test empty input
+    //obj:
+    @Test
+    void customerReadInvalidEmpty() {
+        customerRead customer = new customerRead();
+        String invalidInput = "";
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            customer.selectCustomerMod(invalidInput);
+        });
+        assertEquals("Input must be a number" + invalidInput, exception.getMessage());
+    }
+
+    //Test 4
     //obj: test display all customer function
     //expected output: true
     @Test
@@ -42,7 +55,7 @@ class customerReadTest {
     }
     // success
 
-    //Test 4
+    //Test 5
     //obj: non number inputs
     //expected output: "Input must be a number"
     @Test

@@ -116,7 +116,6 @@ public class NewsAgentCreate {
     }
 
     public void createDeliveryAreaCLI(){
-        deliveryCreate d = new deliveryCreate();
         deliveryAreaValidation dv = new deliveryAreaValidation();
         System.out.println("Welcome to Create Delivery Area Page!");
         dv.checkAreaName();
@@ -127,7 +126,6 @@ public class NewsAgentCreate {
     }
 
     public void readDeliveryAreaCLI(){
-        deliveryAreaRead dr = new deliveryAreaRead();
 
         System.out.println("Welcome to Delivery Area Read!");
         System.out.println("1.Find a Specific Delivery Area");
@@ -144,7 +142,6 @@ public class NewsAgentCreate {
     }
 
     public void createPublicationCLI(){
-        publicationCreate p = new publicationCreate();
         publicationValidation pv = new publicationValidation();
         System.out.println("Welcome to Create Delivery Area Page!");
         pv.checkPublicationName();

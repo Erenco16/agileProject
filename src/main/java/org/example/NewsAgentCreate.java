@@ -7,34 +7,55 @@ public class NewsAgentCreate {
 
     public void mainPage(){
         while (true) {
-            mainPageOptions();
+            option = mainPageOptions();
+                switch (option) {
+                    case 1:
+                        System.out.println("taking you to customer page...");
+                        customerPage();
+                        break;
+                    case 2:
+                        System.out.println("taking you to publication page");
+                        publicationPage();
+                        break;
+                    case 3:
+                        System.out.println("taking you to delivery area page.....");
+                        deliveryAreaPage();
+                        break;
+                    default:
+                        System.out.println("Invalid option");
+                        break;
+                }
+        }
+    }
 
-            switch (option) {
-                case 1:
-                    System.out.println("taking you to customer page...");
-                    customerPage();
-                    break;
-                case 2:
-                    System.out.println("taking you to publication page");
-                    publicationPage();
-                    break;
-                case 3:
-                    System.out.println("taking you to delivery area page.....");
-                    deliveryAreaPage();
-                    break;
-                default:
-                    System.out.println("Invalid option");
-                    break;
+
+    public int getValidIntegerInput(int min, int max) {
+        while (true) {
+            System.out.print("Enter your option: ");
+            String userInput = input.nextLine().trim(); // Read input as a string
+
+            if (userInput.isEmpty()) {
+                System.out.println("Input cannot be empty. Please enter a number.");
+                continue;
+            }
+
+            try {
+                int num = Integer.parseInt(userInput); // Try converting to int
+
+                if (num < min || num > max) {
+                    System.out.println("Invalid option! Please enter a number between " + min + " and " + max);
+                    continue;
+                }
+
+                return num; // Return valid number
+
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input! Please enter a valid number.");
             }
         }
     }
 
-    public boolean ValidateOptionInput(Integer num){
-        if(num > 3){
-            throw new IllegalArgumentException("Option is out of bounds");
-        }
-        return true;
-    }
+
 
     public Integer mainPageOptions(){
         System.out.println("Welcome Newsagent!");
@@ -42,9 +63,8 @@ public class NewsAgentCreate {
         System.out.println("1. Customer page");
         System.out.println("2. Publication page");
         System.out.println("3. Delivery Area");
-        System.out.println("4. Order");
-        option = input.nextInt();
-        input.nextLine();
+        option = getValidIntegerInput(1, 3);
+
         return option;
     }
 
@@ -53,20 +73,14 @@ public class NewsAgentCreate {
             System.out.println("Welcome to Create Customer!");
             System.out.println("1.Create a Customer");
             System.out.println("2.Read a Customer");
-            option = input.nextInt();
-            input.nextLine();
+            option = getValidIntegerInput(1, 2); // Allows only 1 or 2
+
 
             if (option == 1) {
                 createCustomerCLI();
-                break;
-            } else if (option == 2) {
-                readCustomerCLI();
-                break;
             } else {
-                System.out.println("Please enter a valid option 1 or 2!");
-                //add while loop for this
+                readCustomerCLI();
             }
-
         }
 
     }
@@ -76,18 +90,12 @@ public class NewsAgentCreate {
             System.out.println("Welcome to the Publication Page!");
             System.out.println("1.Create a Publication");
             System.out.println("2.Read a Publication");
-            option = input.nextInt();
-            input.nextLine();
+            option = getValidIntegerInput(1, 2); // Allows only 1 or 2
 
             if (option == 1) {
                 createPublicationCLI();
-                break;
-            } else if (option == 2) {
-                readPublicationCLI();
-                break;
             } else {
-                System.out.println("Please enter a valid option 1 or 2!");
-                //add while loop for this
+                readCustomerCLI();
             }
 
         }
@@ -98,18 +106,12 @@ public class NewsAgentCreate {
             System.out.println("Welcome to the Delivery Area Page!");
             System.out.println("1.Create a Delivery Area");
             System.out.println("2.Read a Delivery Area");
-            option = input.nextInt();
-            input.nextLine();
+            option = getValidIntegerInput(1, 2); // Allows only 1 or 2
 
             if (option == 1) {
                 createDeliveryAreaCLI();
-                break;
-            } else if (option == 2) {
+            } else{
                 readDeliveryAreaCLI();
-                break;
-            } else {
-                System.out.println("Please enter a valid option 1 or 2!");
-                //add while loop for this
             }
 
         }

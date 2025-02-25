@@ -142,9 +142,11 @@ public class NewsAgentCreate {
                 switch (option) {
                     case 1:
                         da.deliveryAreaReadID();
+                        mainPage();
                         return;
                     case 2:
                         da.deliveryAreaReadAll();
+                        mainPage();
                         return;
                     default:
                         System.out.println("Please enter a valid option 1 or 2!");
@@ -182,9 +184,11 @@ public class NewsAgentCreate {
                 switch (option) {
                     case 1:
                         p.publicationReadID();
+                        mainPage();
                         return;
                     case 2:
                         p.publicationReadAll();
+                        mainPage();
                         return;
                     default:
                         System.out.println("Please enter a valid option 1 or 2!");

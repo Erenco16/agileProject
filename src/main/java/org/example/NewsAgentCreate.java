@@ -232,9 +232,11 @@ public class NewsAgentCreate {
                 switch (option) {
                     case 1:
                         v.customerReadID();
+                        mainPage();
                         return;
                     case 2:
                         v.customerReadAll();
+                        mainPage();
                         return;
                     default:
                         System.out.println("Please enter a valid option 1 or 2!");

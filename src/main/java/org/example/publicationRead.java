@@ -10,7 +10,7 @@ public class publicationRead {
             if (publication.isEmpty()) {
                 throw new IllegalArgumentException("No publication found with ID: " + id);
             } else {
-                System.out.println("Customer found: " + publication);
+                System.out.println("Publication found: " + publication);
             }
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("Invalid ID: " + id);

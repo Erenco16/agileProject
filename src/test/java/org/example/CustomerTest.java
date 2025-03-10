@@ -1,16 +1,17 @@
 package org.example;
 
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
-class customerCreateTest {
+class CustomerTest {
 
     //Test #1
     //Obj: to test valid customer name input
     //Excpected Output: true
-    @Test
+    @org.junit.jupiter.api.Test
     void testValidName() {
-        customerCreate customer = new customerCreate();
+        Customer customer = new Customer();
         boolean result = customer.validateName("John Doe");
         assertTrue(result);
     }
@@ -19,9 +20,9 @@ class customerCreateTest {
     //Test 2
     //Obj: to test invalid customer name field is empty
     //Excpected Output: Name connot be empty
-    @Test
+    @org.junit.jupiter.api.Test
     void testEmptyNameThrowsException() {
-        customerCreate customer = new customerCreate();
+        Customer customer = new Customer();
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             customer.validateName("");
         });
@@ -29,9 +30,9 @@ class customerCreateTest {
     }
     //Test succesful
 
-    @Test
+    @org.junit.jupiter.api.Test
     void testNameExcessLimitThrowsException() {
-        customerCreate customer = new customerCreate();
+        Customer customer = new Customer();
         String test = "a".repeat(256);
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             customer.validateName(test);
@@ -42,9 +43,9 @@ class customerCreateTest {
     //Test 3
     //Obj: to test invalid email input
     //Excpected Output: Invalid email format, must include '@' and '.com'
-    @Test
+    @org.junit.jupiter.api.Test
     void testInvalidEmailAtThrowsException() {
-        customerCreate customer = new customerCreate();
+        Customer customer = new Customer();
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             customer.validateEmail("johnexample.com");
         });
@@ -55,9 +56,9 @@ class customerCreateTest {
     //Test 4
     //Obj: to test invalid email includes .com
     //Excpected Output: Invalid email format, must include '@' and '.com'
-    @Test
+    @org.junit.jupiter.api.Test
     void testInvalidEmailDotComThrowsException() {
-        customerCreate customer = new customerCreate();
+        Customer customer = new Customer();
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             customer.validateEmail("john@example");
         });
@@ -68,9 +69,9 @@ class customerCreateTest {
     //Test 5
     //Obj : to test invalid blank email input
     //Excpected Output: Invalid email format, must include '@' and '.com'
-    @Test
+    @org.junit.jupiter.api.Test
     void testInvalidEmailEmptyThrowsException() {
-        customerCreate customer = new customerCreate();
+        Customer customer = new Customer();
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             customer.validateEmail("");
         });
@@ -81,9 +82,9 @@ class customerCreateTest {
     //Test 6
     //Obj: to test valid email input
     //Excpected Output: true
-    @Test
+    @org.junit.jupiter.api.Test
     void testValidEmail() {
-        customerCreate customer = new customerCreate();
+        Customer customer = new Customer();
         boolean result = customer.validateEmail("john@example.com");
         assertTrue(result);
     }
@@ -92,9 +93,9 @@ class customerCreateTest {
     //Test 7
     //Obj: to test empty address field input
     //Expected Output: Address cannot be empty
-    @Test
+    @org.junit.jupiter.api.Test
     void testEmptyAddressThrowsException() {
-        customerCreate customer = new customerCreate();
+        Customer customer = new Customer();
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             customer.validateAddress("");
         });
@@ -105,9 +106,9 @@ class customerCreateTest {
     //Test 8
     //Obj: test input characters limits
     //Expected Output: Address cannot exceed 255 characters
-    @Test
+    @org.junit.jupiter.api.Test
     void testCharLimitAddressThrowsException() {
-        customerCreate customer = new customerCreate();
+        Customer customer = new Customer();
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             customer.validateAddress("W".repeat(256));
         });
@@ -117,9 +118,9 @@ class customerCreateTest {
     //Test 9
     //Obj: to test valid address input
     //Expected Output: true
-    @Test
+    @org.junit.jupiter.api.Test
     void testValidAddress() {
-        customerCreate customer = new customerCreate();
+        Customer customer = new Customer();
         boolean result = customer.validateAddress("123 Main St");
         assertTrue(result);
     }
@@ -128,9 +129,9 @@ class customerCreateTest {
     //Test 10
     //Obj: to test invalid phone number input
     //Expected Output: Invalid phone number format, must be 10 digits
-    @Test
+    @org.junit.jupiter.api.Test
     void testInvalidPhoneNumberThrowsException() {
-        customerCreate customer = new customerCreate();
+        Customer customer = new Customer();
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             customer.validatePhoneNumber("12345");
         });
@@ -141,9 +142,9 @@ class customerCreateTest {
     //Test 11
     //Obj: to test valid phone number input
     //Expected Output: true
-    @Test
+    @org.junit.jupiter.api.Test
     void testValidPhoneNumber() {
-        customerCreate customer = new customerCreate();
+        Customer customer = new Customer();
         boolean result = customer.validatePhoneNumber("1234567890");
         assertTrue(result);
     }
@@ -152,9 +153,9 @@ class customerCreateTest {
     //Test 12
     //Obj: to test invalid empty delivery area field
     //Expected Output: Delivery area cannot be empty
-    @Test
+    @org.junit.jupiter.api.Test
     void testEmptyDeliveryAreaThrowsException() {
-        customerCreate customer = new customerCreate();
+        Customer customer = new Customer();
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             customer.validateDeliveryArea("");
         });
@@ -165,9 +166,9 @@ class customerCreateTest {
     //test 12
     //Obj: test negative delivery area field
     //expected output: Delivery area must be a positive number
-    @Test
+    @org.junit.jupiter.api.Test
     void testNegativeDeliveryAreaThrowsException() {
-        customerCreate customer = new customerCreate();
+        Customer customer = new Customer();
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             customer.validateDeliveryArea("-1");
         });
@@ -177,9 +178,9 @@ class customerCreateTest {
     //Test 13
     //Obj: test non-numeric user input
     //Expected output: Input must be a number
-    @Test
+    @org.junit.jupiter.api.Test
     void testInvalidDeliveryAreaThrowsException() {
-        customerCreate customer = new customerCreate();
+        Customer customer = new Customer();
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             customer.validateDeliveryArea("Willow Park");
         });
@@ -191,9 +192,9 @@ class customerCreateTest {
     //Test 14
     //Obj: to test valid delivery area input
     //Expected Output: Pass
-    @Test
+    @org.junit.jupiter.api.Test
     void testValidDeliveryArea() {
-        customerCreate customer = new customerCreate();
+        Customer customer = new Customer();
         boolean result = customer.validateDeliveryArea("1");
         assertTrue(result);
     }
@@ -202,9 +203,9 @@ class customerCreateTest {
     //Test 15
     //Obj: to test invalid eircode input
     //Expected Output: Invalid Eircode format, must be 7 characters
-    @Test
+    @org.junit.jupiter.api.Test
     void testInvalidEircodeThrowsException() {
-        customerCreate customer = new customerCreate();
+        Customer customer = new Customer();
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             customer.validateEircode("D0123");
         });
@@ -217,9 +218,71 @@ class customerCreateTest {
     //Expected Output: Pass
     @Test
     void testValidEircode() {
-        customerCreate customer = new customerCreate();
+        Customer customer = new Customer();
         boolean result = customer.validateEircode("D01AB2C");
         assertTrue(result);
     }
     //Test successful
+
+    // Test 15
+    // obj: valid read from customer
+    // expected output: true
+    @Test
+    void customerReadValid() {
+        Customer customer = new Customer();
+        boolean result = customer.selectCustomerMod("1");
+        assertTrue(result);
+    }
+    // success
+
+    //Test 16
+    //obj: test non existed row from Customer table
+    // expected output: Error occurred: No customer found with ID: (ID)
+    @Test
+    void customerReadInvalid() {
+        Customer customer = new Customer();
+        String invalidInput = "99";
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            customer.selectCustomerMod(invalidInput);
+        });
+        assertEquals("Error occurred: " + "No customer found with ID: " + invalidInput, exception.getMessage());
+    }
+    // success
+
+    //test 17
+    //obj: test empty input
+    //obj:
+    @Test
+    void customerReadInvalidEmpty() {
+        Customer customer = new Customer();
+        String invalidInput = "";
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            customer.selectCustomerMod(invalidInput);
+        });
+        assertEquals("Input must be a number" + invalidInput, exception.getMessage());
+    }
+
+    //Test 18
+    //obj: test display all customer function
+    //expected output: true
+    @Test
+    void customerReadAllValid() {
+        Customer customer = new Customer();
+        boolean result = customer.selectAllCustomerMod();
+        assertTrue(result);
+    }
+    // success
+
+    //Test 19
+    //obj: non number inputs
+    //expected output: "Input must be a number"
+    @Test
+    void customerReadNonNumericalInvalid() {
+        Customer customer = new Customer();
+        String invalidInput = "six";
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            customer.selectCustomerMod(invalidInput);
+        });
+        assertEquals("Input must be a number", exception.getMessage());
+    }
 }

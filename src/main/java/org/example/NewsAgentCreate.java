@@ -25,8 +25,8 @@ public class NewsAgentCreate {
                         System.out.println("Invalid option");
                         break;
                 }
+            }
         }
-    }
 
 
     public int getValidIntegerInput(int min, int max) {
@@ -203,8 +203,7 @@ public class NewsAgentCreate {
     }
 
     public void createCustomerCLI(){
-        customerCreate c = new customerCreate();
-        customerInputValidation v = new customerInputValidation();
+        Customer v = new Customer();
 
         v.checkName();
         v.checkEmail();
@@ -219,7 +218,7 @@ public class NewsAgentCreate {
     }
 
     public void readCustomerCLI() {
-        customerInputValidation v = new customerInputValidation();
+        Customer v = new Customer();
 
         while (true) {
             System.out.println("Welcome to Customer Read!");

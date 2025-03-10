@@ -118,7 +118,7 @@ public class NewsAgentCreate {
     }
 
     public void createDeliveryAreaCLI(){
-        deliveryAreaValidation dv = new deliveryAreaValidation();
+        deliveryArea dv = new deliveryArea();
         System.out.println("Welcome to Create Delivery Area Page!");
         dv.checkAreaName();
         dv.checkAreaDescription();
@@ -129,7 +129,7 @@ public class NewsAgentCreate {
     }
 
     public void readDeliveryAreaCLI(){
-        deliveryAreaValidation da = new deliveryAreaValidation();
+        deliveryArea da = new deliveryArea();
 
         while (true) {
             System.out.println("Welcome to Delivery Area Read!");
@@ -161,7 +161,7 @@ public class NewsAgentCreate {
     }
 
     public void createPublicationCLI(){
-        publicationValidation pv = new publicationValidation();
+        Publication pv = new Publication();
         System.out.println("Welcome to Create Publication Page!");
         pv.checkPublicationName();
         pv.checkPublicationDescription();
@@ -171,7 +171,7 @@ public class NewsAgentCreate {
     }
 
     public void readPublicationCLI(){
-        publicationValidation p = new publicationValidation();
+        Publication p = new Publication();
 
         while (true) {
             System.out.println("Welcome to Publication Read!");
@@ -248,8 +248,6 @@ public class NewsAgentCreate {
             }
         }
     }
-
-
 
 }
 

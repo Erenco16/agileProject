@@ -133,6 +133,30 @@ public class DatabaseConnection {
         return new ArrayList<>();
     }
 
+    public void updateCustomer(int id, String name, String email, String address, String phone_number, int deliveryAreaID, String eircode) {
+        String sql = "UPDATE Customers SET name = ?, email = ?, address = ?, phone_number = ?, delivery_area_id = ?, eircode = ? WHERE id = ?";
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, name);
+            pstmt.setString(2, email);
+            pstmt.setString(3, address);
+            pstmt.setString(4, phone_number);
+            pstmt.setInt(5, deliveryAreaID);
+            pstmt.setString(6, eircode);
+            pstmt.setInt(7, id);
+
+            int affectedRows = pstmt.executeUpdate();
+            if (affectedRows > 0) {
+                System.out.println("Customer updated successfully.");
+            } else {
+                System.out.println("No customer found with the given ID.");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error updating customer: " + e.getMessage());
+        }
+    }
+
+
     // --------------------- Address Table Methods ---------------------
 
     // Insert a record into the Address table.

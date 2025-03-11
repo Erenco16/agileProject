@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 public class Customer {
 
+    // --------------------- Create ---------------------
     private String name;
     private String email;
     private String address;
@@ -164,6 +165,8 @@ public class Customer {
 
     // input validation
 
+
+    // --------------------- Read&Validation ---------------------
     // DELIVERYAREA MUST BE CHANGED TO INT
     // not necessary, we parse the string to int during insertion (timmy)
 
@@ -173,6 +176,7 @@ public class Customer {
     private String inputPhoneNumber;
     private String inputDeliveryArea;
     private String inputEircode;
+    private String inputID;
 
     Scanner input = new Scanner(System.in);
 
@@ -253,7 +257,6 @@ public class Customer {
     }
 
 
-    // Eren is updating this function as its gonna accept int values
     public void checkDeliveryArea() {
         while (true) {
             System.out.println("Enter Customer Delivery Area: ");
@@ -312,6 +315,35 @@ public class Customer {
         }
         catch (Exception e){
             System.out.println(e.getMessage());
+        }
+    }
+
+    // --------------------- Update ---------------------
+
+    public void customerUpdate() {
+        while(true){
+            System.out.println("Enter Customer ID to update: ");
+            try {
+                int id = input.nextInt();
+                input.nextLine();
+                selectCustomerMod(String.valueOf(id));
+                inputID = String.valueOf(id);
+                break;
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());            }
+
+            try {
+                checkName();
+                checkEmail();
+                checkAddress();
+                checkPhoneNumber();
+                checkDeliveryArea();
+                checkEircode();
+                databaseConnection.updateCustomer(Integer.parseInt(inputID), inputName, inputEmail, inputAddress, inputPhoneNumber, Integer.parseInt(inputDeliveryArea), inputEircode);
+                System.out.println("Customer update successful, returning to main page");
+            } catch (IllegalArgumentException e)    {
+                System.out.println(e.getMessage());
+            }
         }
     }
 }

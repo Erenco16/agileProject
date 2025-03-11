@@ -4,15 +4,15 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class publicationCreateTest {
-
+class PublicationTest {
+    
     //Test 1
     //Obj: to test valid publication name input
     //Expected Output: Pass
     @Test
     void validTestPublicationName() {
         // 当所有输入都合法时，构造方法应正常返回对象
-        publicationCreate pubc = new publicationCreate();
+        Publication pubc = new Publication();
         boolean check1 = pubc.validName("The Irish Times");
         assertTrue(check1);
     }
@@ -24,7 +24,7 @@ class publicationCreateTest {
     @Test
     void invalidTestEmptyNameThrowsException() {
         // 模拟空名称输入，期望抛出异常
-        publicationCreate pubc = new publicationCreate();
+        Publication pubc = new Publication();
 
         Exception exception = assertThrows(IllegalArgumentException.class, () ->{
             pubc.validName("");
@@ -38,7 +38,7 @@ class publicationCreateTest {
     //Expected Output: Name too long
     @Test
     void invalidTestNameTooLongThrowsException() {
-        publicationCreate pubc = new publicationCreate();
+        Publication pubc = new Publication();
         String longName = "a".repeat(256);
         // 当传入超过合法长度的名称时，构造方法应抛出 IllegalArgumentException 异常
         Exception exception = assertThrows(IllegalArgumentException.class, () ->{
@@ -54,7 +54,7 @@ class publicationCreateTest {
     @Test
     void invalidTestEmptyDescriptionThrowsException() {
         // 模拟空描述输入，期望抛出异常
-        publicationCreate pubc = new publicationCreate();
+        Publication pubc = new Publication();
         pubc.setDescription("");
         Exception exception = assertThrows(IllegalArgumentException.class, () ->
                 pubc.validDescription(""));
@@ -67,7 +67,7 @@ class publicationCreateTest {
     //Expected Output: Invalid publication description, valid description is between 1-1024 characters
     @Test
     void invalidTestDescriptionTooLongThrowsException() {
-        publicationCreate pubc = new publicationCreate();
+        Publication pubc = new Publication();
         String longDescription = "a".repeat(1025);
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             pubc.validDescription(longDescription);
@@ -81,7 +81,7 @@ class publicationCreateTest {
     //Expected Output: True
     @Test
     void validTestPublicationDescription(){
-        publicationCreate pubc = new publicationCreate();
+        Publication pubc = new Publication();
         boolean check2 = pubc.validDescription("The capital of Dublin");
         assertTrue(check2);
     }
@@ -92,7 +92,7 @@ class publicationCreateTest {
     //Expected Output: Price can not be a negative number!
     @Test
     void invalidTestPublicationPriceNegative(){
-        publicationCreate pubc = new publicationCreate();
+        Publication pubc = new Publication();
         String num = "-12.00";
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             pubc.validPrice(num);
@@ -106,7 +106,7 @@ class publicationCreateTest {
     //Expected Output: Price must be between 1-255 digits long
     @Test
     void invalidTestPriceLength(){
-        publicationCreate pubc = new publicationCreate();
+        Publication pubc = new Publication();
         String longVal = "1".repeat(1025);
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             pubc.validPrice(longVal);
@@ -120,7 +120,7 @@ class publicationCreateTest {
     //Expected Output: Price must be a digit value
     @Test
     void invalidTestPublicationPriceValue(){
-        publicationCreate pubc = new publicationCreate();
+        Publication pubc = new Publication();
         String num = "abcde";
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             pubc.validPrice(num);
@@ -134,10 +134,70 @@ class publicationCreateTest {
     //Expected Output: True
     @Test
     void validTestPublicationPriceValue(){
-        publicationCreate pubc = new publicationCreate();
+        Publication pubc = new Publication();
         boolean check3 = pubc.validPrice("12.00");
         assertTrue(check3);
     }
     //Test successful
+
+    Publication pr = new Publication();
+
+    //test 1
+    //obj : valid user input
+    //expected output: true
+    @Test
+    void PublicationValid() {
+        boolean result = pr.publicationReadByID("1");
+        assertTrue(result);
+    }
+    //success
+
+    //test 2
+    // obj: empty input
+    // expected output: Invalid ID: (input)
+    @Test
+    void PublicationInvalidEmpty() {
+        String input = "";
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            pr.publicationReadByID(input);
+        });
+        assertEquals("Invalid ID: " + input , exception.getMessage());
+    }
+    //success
+
+    //Test 3
+    //obj : non numerical input
+    //expected output: Invalid ID: (input)
+    @Test
+    void PublicationInvalidNonNumeric() {
+        String input = "Irish Time";
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            pr.publicationReadByID(input);
+        });
+        assertEquals("Invalid ID: " + input , exception.getMessage());
+    }
+
+    //Test 4
+    //obj: null item from DB
+    //expected output: Error occurred: No publication found with ID: (input)
+    @Test
+    void PublicationInvalidNull() {
+        String input = "999";
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            pr.publicationReadByID(input);
+        });
+        assertEquals("Error occurred: " + "No publication found with ID: " + input , exception.getMessage());
+    }
+    //success
+
+    //Test 5
+    //obj: test read all publication from db
+    //expected output: [(all items publication in arraylist format)]
+    @Test
+    void PublicationAll() {
+        pr.selectAllPublication();
+        assertTrue(true);
+    }
+    //success
 
 }

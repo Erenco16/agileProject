@@ -62,8 +62,13 @@ public class NewsAgentCreate {
         System.out.println("Please select an option below:");
         System.out.println("1. Customer page");
         System.out.println("2. Publication page");
-        System.out.println("3. Delivery Area");
-        option = getValidIntegerInput(1, 3);
+        System.out.println("3. Delivery Area page");
+        System.out.println("4. Order page");
+        System.out.println("5. Invoice page");
+        System.out.println("6. Delivery Man page");
+        System.out.println("7. Delivery Docket page");
+        System.out.println("8. Report page ");
+        option = getValidIntegerInput(1, 8);
 
         return option;
     }
@@ -73,7 +78,9 @@ public class NewsAgentCreate {
             System.out.println("Welcome to Create Customer!");
             System.out.println("1.Create a Customer");
             System.out.println("2.Read a Customer");
-            option = getValidIntegerInput(1, 2); // Allows only 1 or 2
+            System.out.println("3.Update a Customer");
+            System.out.println("4.Delete a Customer");
+            option = getValidIntegerInput(1, 4); // Allows only 1 or 2
 
 
             if (option == 1) {
@@ -90,7 +97,9 @@ public class NewsAgentCreate {
             System.out.println("Welcome to the Publication Page!");
             System.out.println("1.Create a Publication");
             System.out.println("2.Read a Publication");
-            option = getValidIntegerInput(1, 2); // Allows only 1 or 2
+            System.out.println("3.Update a Publication");
+            System.out.println("4.Delete a Publication");
+            option = getValidIntegerInput(1, 4); // Allows only 1 or 2
 
             if (option == 1) {
                 createPublicationCLI();
@@ -106,7 +115,9 @@ public class NewsAgentCreate {
             System.out.println("Welcome to the Delivery Area Page!");
             System.out.println("1.Create a Delivery Area");
             System.out.println("2.Read a Delivery Area");
-            option = getValidIntegerInput(1, 2); // Allows only 1 or 2
+            System.out.println("3.Update a Delivery Area");
+            System.out.println("4.Delete a Delivery Area");
+            option = getValidIntegerInput(1, 4); // Allows only 1 or 2
 
             if (option == 1) {
                 createDeliveryAreaCLI();
@@ -117,8 +128,72 @@ public class NewsAgentCreate {
         }
     }
 
+    public void orderPage(){
+        while (true) {
+            System.out.println("Welcome to the Order Page!");
+            System.out.println("1.Create an Order");
+            System.out.println("2.Read an Order");
+            System.out.println("3.Update an Order");
+            System.out.println("4.Delete an Order");
+            option = getValidIntegerInput(1, 4); // Allows only 1 or 2
+
+        }
+
+    }
+
+    public void invoicePage(){
+        while (true) {
+            System.out.println("Welcome to the Invoice Page!");
+            System.out.println("1.Create an Invoice");
+            System.out.println("2.Read an Invoice");
+            System.out.println("3.Update an Invoice");
+            System.out.println("4.Delete an Invoice");
+            option = getValidIntegerInput(1, 4); // Allows only 1 or 2
+
+        }
+
+    }
+
+    public void deliveryManPage(){
+        while (true) {
+            System.out.println("Welcome to the Delivery Man Page!");
+            System.out.println("1.Create a Delivery Man");
+            System.out.println("2.Read a Delivery Man");
+            System.out.println("3.Update a Delivery Man");
+            System.out.println("4.Delete a Delivery Man");
+            option = getValidIntegerInput(1, 4); // Allows only 1 or 2
+
+        }
+
+    }
+
+    public void deliveryDocketPage(){
+        while (true) {
+            System.out.println("Welcome to the Delivery Docket Page!");
+            System.out.println("1.Create a Delivery Docket");
+            System.out.println("2.Read a Delivery Docket");
+            System.out.println("3.Update a Delivery Docket");
+            System.out.println("4.Delete a Delivery Docket");
+            option = getValidIntegerInput(1, 4); // Allows only 1 or 2
+
+        }
+
+    }
+
+    public void reportPage(){
+        while (true) {
+            System.out.println("Welcome to the Report Page!");
+            System.out.println("1.View total amount of revenue by month");
+            System.out.println("2.View total amount of revenue by delivery area");
+            System.out.println("3.View total amount of revenue by customer");
+            option = getValidIntegerInput(1, 4); // Allows only 1 or 2
+
+        }
+
+    }
+
     public void createDeliveryAreaCLI(){
-        deliveryArea dv = new deliveryArea();
+        DeliveryArea dv = new DeliveryArea();
         System.out.println("Welcome to Create Delivery Area Page!");
         dv.checkAreaName();
         dv.checkAreaDescription();
@@ -129,7 +204,7 @@ public class NewsAgentCreate {
     }
 
     public void readDeliveryAreaCLI(){
-        deliveryArea da = new deliveryArea();
+        DeliveryArea da = new DeliveryArea();
 
         while (true) {
             System.out.println("Welcome to Delivery Area Read!");
@@ -247,6 +322,12 @@ public class NewsAgentCreate {
                 input.nextLine();
             }
         }
+    }
+
+    public void updateCustomerCLI(){
+        Customer c =  new Customer();
+
+        c.customerUpdate();
     }
 
 }

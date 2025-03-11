@@ -3,13 +3,13 @@ package org.example;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class deliveryArea {
+public class DeliveryArea {
     private String name;
     private String description;
     private DatabaseConnection databaseConnection;
 
     // Constructor to initialize the DatabaseConnection
-    public deliveryArea() {
+    public DeliveryArea() {
         this.databaseConnection = new DatabaseConnection();
     }
 

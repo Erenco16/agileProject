@@ -128,6 +128,70 @@ public class NewsAgentCreate {
         }
     }
 
+    public void orderPage(){
+        while (true) {
+            System.out.println("Welcome to the Order Page!");
+            System.out.println("1.Create an Order");
+            System.out.println("2.Read an Order");
+            System.out.println("3.Update an Order");
+            System.out.println("4.Delete an Order");
+            option = getValidIntegerInput(1, 4); // Allows only 1 or 2
+
+        }
+
+    }
+
+    public void invoicePage(){
+        while (true) {
+            System.out.println("Welcome to the Invoice Page!");
+            System.out.println("1.Create an Invoice");
+            System.out.println("2.Read an Invoice");
+            System.out.println("3.Update an Invoice");
+            System.out.println("4.Delete an Invoice");
+            option = getValidIntegerInput(1, 4); // Allows only 1 or 2
+
+        }
+
+    }
+
+    public void deliveryManPage(){
+        while (true) {
+            System.out.println("Welcome to the Delivery Man Page!");
+            System.out.println("1.Create a Delivery Man");
+            System.out.println("2.Read a Delivery Man");
+            System.out.println("3.Update a Delivery Man");
+            System.out.println("4.Delete a Delivery Man");
+            option = getValidIntegerInput(1, 4); // Allows only 1 or 2
+
+        }
+
+    }
+
+    public void deliveryDocketPage(){
+        while (true) {
+            System.out.println("Welcome to the Delivery Docket Page!");
+            System.out.println("1.Create a Delivery Docket");
+            System.out.println("2.Read a Delivery Docket");
+            System.out.println("3.Update a Delivery Docket");
+            System.out.println("4.Delete a Delivery Docket");
+            option = getValidIntegerInput(1, 4); // Allows only 1 or 2
+
+        }
+
+    }
+
+    public void reportPage(){
+        while (true) {
+            System.out.println("Welcome to the Report Page!");
+            System.out.println("1.View total amount of revenue by month");
+            System.out.println("2.View total amount of revenue by delivery area");
+            System.out.println("3.View total amount of revenue by customer");
+            option = getValidIntegerInput(1, 4); // Allows only 1 or 2
+
+        }
+
+    }
+
     public void createDeliveryAreaCLI(){
         DeliveryArea dv = new DeliveryArea();
         System.out.println("Welcome to Create Delivery Area Page!");

@@ -324,6 +324,12 @@ public class NewsAgentCreate {
         }
     }
 
+    public void updateCustomerCLI(){
+        Customer c =  new Customer();
+
+        c.customerUpdate();
+    }
+
 }
 
 

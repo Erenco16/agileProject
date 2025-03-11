@@ -11,6 +11,13 @@ public class Customer {
     private String phoneNumber;
     private String deliveryArea;
     private String eircode;
+    private DatabaseConnection databaseConnection;
+
+    // Constructor to initialize the DatabaseConnection
+    public Customer() {
+        this.databaseConnection = new DatabaseConnection();
+    }
+
 
     public boolean validateName(String name) {
         if (name == null || name.isEmpty()) {
@@ -80,7 +87,7 @@ public class Customer {
     public boolean selectCustomerMod(String id){
         try {
             // Assume selectCustomers returns a Customer object or null if not found
-            ArrayList<ArrayList<String>> customer = DBClass.selectCustomers(Integer.parseInt(id));
+            ArrayList<ArrayList<String>> customer = databaseConnection.selectCustomers(Integer.parseInt(id));
 
             if (customer.isEmpty()) {
                 throw new IllegalArgumentException("No customer found with ID: " + id);
@@ -98,7 +105,7 @@ public class Customer {
 
     public boolean selectAllCustomerMod(){
         try{
-            ArrayList<ArrayList<String>> allCustomers = DBClass.selectAllCustomers();
+            ArrayList<ArrayList<String>> allCustomers = databaseConnection.selectAllCustomers();
             System.out.println("Displaying all customers: " + allCustomers);
         }
         catch (Exception e){
@@ -300,9 +307,8 @@ public class Customer {
     // currently the deliveryArea is a string value but both the db and its
     // insert function are accepting int values
     public void insertCustomer(){
-        DBClass db = new DBClass();
         try{
-            db.insertCustomer(inputName, inputEmail, inputAddress, inputPhoneNumber, Integer.parseInt(inputDeliveryArea), inputEircode);
+            databaseConnection.insertCustomer(inputName, inputEmail, inputAddress, inputPhoneNumber, Integer.parseInt(inputDeliveryArea), inputEircode);
         }
         catch (Exception e){
             System.out.println(e.getMessage());

@@ -6,8 +6,9 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class dbClassTest {
+public class dbTest {
 
+    DatabaseConnection db = new DatabaseConnection();
     //(These are only used within the tests to search for a row in a list.
     private boolean containsValue(ArrayList<ArrayList<String>> rows, int columnIndex, String expected) {
         for (ArrayList<String> row : rows) {
@@ -20,7 +21,7 @@ public class dbClassTest {
 
     @Test
     void testGetConnection() {
-        try (Connection conn = DBClass.getConnection()) {
+        try (Connection conn = db.getConnection()) {
             assertNotNull(conn, "getConnection() should return a non-null connection.");
         } catch (SQLException e) {
             fail("getConnection() threw SQLException: " + e.getMessage());
@@ -29,10 +30,10 @@ public class dbClassTest {
 
     @Test
     void testGetValues() {
-        try (Connection conn = DBClass.getConnection();
+        try (Connection conn = db.getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery("SELECT 1 AS col")) {
-            ArrayList<ArrayList<String>> values = DBClass.getValues(rs);
+            ArrayList<ArrayList<String>> values = db.getValues(rs);
             assertEquals(1, values.size(), "There should be exactly one row.");
             assertEquals("1", values.get(0).get(0), "The value in the first column should be '1'.");
         } catch (SQLException e) {
@@ -46,16 +47,16 @@ public class dbClassTest {
         // Use an existing DeliveryArea id (assumed to be 1)
         String uniqueName = "UniqueCustomer_" + System.currentTimeMillis();
         String email = uniqueName + "@example.com";
-        DBClass.insertCustomer(uniqueName, email, "Test Address", "1234567890", 1, "EIR1234");
+        db.insertCustomer(uniqueName, email, "Test Address", "1234567890", 1, "EIR1234");
 
         // Search in all customers for our unique customer name (column order assumed: id, name, email, ...)
-        ArrayList<ArrayList<String>> customers = DBClass.selectAllCustomers();
+        ArrayList<ArrayList<String>> customers = db.selectAllCustomers();
         assertTrue(containsValue(customers, 1, uniqueName), "Inserted customer should be found in selectAllCustomers.");
     }
 
     @Test
     void testSelectNonExistentCustomer() {
-        ArrayList<ArrayList<String>> customers = DBClass.selectCustomers(999999);
+        ArrayList<ArrayList<String>> customers = db.selectCustomers(999999);
         assertEquals(0, customers.size(), "Selecting a non-existent customer id should return an empty list.");
     }
 
@@ -63,9 +64,9 @@ public class dbClassTest {
     void testSelectAllCustomers() {
         String uniqueName = "AllCustomer_" + System.currentTimeMillis();
         String email = uniqueName + "@example.com";
-        DBClass.insertCustomer(uniqueName, email, "All Address", "3334445555", 1, "EIRALL");
+        db.insertCustomer(uniqueName, email, "All Address", "3334445555", 1, "EIRALL");
 
-        ArrayList<ArrayList<String>> customers = DBClass.selectAllCustomers();
+        ArrayList<ArrayList<String>> customers = db.selectAllCustomers();
         assertTrue(containsValue(customers, 1, uniqueName), "selectAllCustomers should return the inserted customer.");
     }
 
@@ -74,16 +75,16 @@ public class dbClassTest {
     @Test
     void testInsertAddressAndSelect() {
         String uniqueAddress = "UniqueAddress_" + System.currentTimeMillis();
-        DBClass.insertAddress(uniqueAddress, 1);
+        db.insertAddress(uniqueAddress, 1);
 
-        ArrayList<ArrayList<String>> addresses = DBClass.selectAllAddress();
+        ArrayList<ArrayList<String>> addresses = db.selectAllAddress();
         // Assuming column order: id, address, delivery_area_id.
         assertTrue(containsValue(addresses, 1, uniqueAddress), "Inserted address should be found in selectAllAddress.");
     }
 
     @Test
     void testSelectNonExistentAddress() {
-        ArrayList<ArrayList<String>> addresses = DBClass.selectAddress(999999);
+        ArrayList<ArrayList<String>> addresses = db.selectAddress(999999);
         assertEquals(0, addresses.size(), "Selecting a non-existent address id should return an empty list.");
     }
 
@@ -91,10 +92,10 @@ public class dbClassTest {
     void testSelectAllAddress() {
         String uniqueAddress1 = "AllAddress1_" + System.currentTimeMillis();
         String uniqueAddress2 = "AllAddress2_" + System.currentTimeMillis();
-        DBClass.insertAddress(uniqueAddress1, 1);
-        DBClass.insertAddress(uniqueAddress2, 1);
+        db.insertAddress(uniqueAddress1, 1);
+        db.insertAddress(uniqueAddress2, 1);
 
-        ArrayList<ArrayList<String>> addresses = DBClass.selectAllAddress();
+        ArrayList<ArrayList<String>> addresses = db.selectAllAddress();
         assertTrue(containsValue(addresses, 1, uniqueAddress1)
                         && containsValue(addresses, 1, uniqueAddress2),
                 "Both inserted addresses should be found in selectAllAddress.");
@@ -105,9 +106,9 @@ public class dbClassTest {
     @Test
     void testInsertDeliveryAreaAndSelect() {
         String uniqueArea = "UniqueArea_" + System.currentTimeMillis();
-        DBClass.insertDeliveryArea(uniqueArea, "Test Description");
+        db.insertDeliveryArea(uniqueArea, "Test Description");
 
-        ArrayList<ArrayList<String>> areas = DBClass.selectAllDeliveryArea();
+        ArrayList<ArrayList<String>> areas = db.selectAllDeliveryArea();
         // Assuming column order: id, name, description.
         assertTrue(containsValue(areas, 1, uniqueArea), "Inserted delivery area should be found in selectAllDeliveryArea.");
     }
@@ -115,11 +116,11 @@ public class dbClassTest {
     @Test
     void testDuplicateDeliveryArea() {
         String uniqueArea = "DuplicateArea_" + System.currentTimeMillis();
-        DBClass.insertDeliveryArea(uniqueArea, "First Description");
+        db.insertDeliveryArea(uniqueArea, "First Description");
         // Attempt duplicate insertion.
-        DBClass.insertDeliveryArea(uniqueArea, "Second Description");
+        db.insertDeliveryArea(uniqueArea, "Second Description");
 
-        ArrayList<ArrayList<String>> areas = DBClass.selectAllDeliveryArea();
+        ArrayList<ArrayList<String>> areas = db.selectAllDeliveryArea();
         int count = 0;
         for (ArrayList<String> row : areas) {
             if (row.size() >= 2 && row.get(1).equals(uniqueArea)) {
@@ -131,7 +132,7 @@ public class dbClassTest {
 
     @Test
     void testSelectNonExistentDeliveryArea() {
-        ArrayList<ArrayList<String>> areas = DBClass.selectDeliveryArea(999999);
+        ArrayList<ArrayList<String>> areas = db.selectDeliveryArea(999999);
         assertEquals(0, areas.size(), "Selecting a non-existent delivery area id should return an empty list.");
     }
 
@@ -140,9 +141,9 @@ public class dbClassTest {
     @Test
     void testInsertNewsAgentAndSelect() {
         String uniqueAgent = "UniqueAgent_" + System.currentTimeMillis();
-        DBClass.insertNewsAgent(uniqueAgent);
+        db.insertNewsAgent(uniqueAgent);
 
-        ArrayList<ArrayList<String>> agents = DBClass.selectAllNewsAgent();
+        ArrayList<ArrayList<String>> agents = db.selectAllNewsAgent();
         // Assuming column order: id, name.
         assertTrue(containsValue(agents, 1, uniqueAgent), "Inserted news agent should be found in selectAllNewsAgent.");
     }
@@ -150,11 +151,11 @@ public class dbClassTest {
     @Test
     void testDuplicateNewsAgent() {
         String uniqueAgent = "DuplicateAgent_" + System.currentTimeMillis();
-        DBClass.insertNewsAgent(uniqueAgent);
+        db.insertNewsAgent(uniqueAgent);
         // Attempt duplicate insertion.
-        DBClass.insertNewsAgent(uniqueAgent);
+        db.insertNewsAgent(uniqueAgent);
 
-        ArrayList<ArrayList<String>> agents = DBClass.selectAllNewsAgent();
+        ArrayList<ArrayList<String>> agents = db.selectAllNewsAgent();
         int count = 0;
         for (ArrayList<String> row : agents) {
             if (row.size() >= 2 && row.get(1).equals(uniqueAgent)) {
@@ -166,7 +167,7 @@ public class dbClassTest {
 
     @Test
     void testSelectNonExistentNewsAgent() {
-        ArrayList<ArrayList<String>> agents = DBClass.selectNewsAgent(999999);
+        ArrayList<ArrayList<String>> agents = db.selectNewsAgent(999999);
         assertEquals(0, agents.size(), "Selecting a non-existent news agent id should return an empty list.");
     }
 
@@ -182,10 +183,10 @@ public class dbClassTest {
         double pubPrice = (System.currentTimeMillis() % 1000) + 0.99;
 
         // Insert the publication using the new method signature.
-        DBClass.insertPublication(pubName, pubDescription, pubPrice);
+        db.insertPublication(pubName, pubDescription, pubPrice);
 
         // Retrieve all publications.
-        ArrayList<ArrayList<String>> pubs = DBClass.selectAllPublication();
+        ArrayList<ArrayList<String>> pubs = db.selectAllPublication();
         boolean found = false;
 
         // Assuming the column order is: id, publication_name, publication_description, price.
@@ -211,7 +212,7 @@ public class dbClassTest {
 
     @Test
     void testSelectNonExistentPublication() {
-        ArrayList<ArrayList<String>> pubs = DBClass.selectPublication(999999);
+        ArrayList<ArrayList<String>> pubs = db.selectPublication(999999);
         assertEquals(0, pubs.size(), "Selecting a non-existent publication id should return an empty list.");
     }
 
@@ -224,10 +225,10 @@ public class dbClassTest {
         // Insert a customer.
         String uniqueCustomer = "OrderCustomer_" + System.currentTimeMillis();
         String email = uniqueCustomer + "@example.com";
-        DBClass.insertCustomer(uniqueCustomer, email, "Order Address", "2223334444", 1, "EIRORD");
+        db.insertCustomer(uniqueCustomer, email, "Order Address", "2223334444", 1, "EIRORD");
 
         // Retrieve the customer id.
-        ArrayList<ArrayList<String>> customers = DBClass.selectAllCustomers();
+        ArrayList<ArrayList<String>> customers = db.selectAllCustomers();
         int custId = -1;
         for (ArrayList<String> row : customers) {
             if (row.size() >= 2 && row.get(1).equals(uniqueCustomer)) {
@@ -245,10 +246,10 @@ public class dbClassTest {
         String pubName = "TestPublication_" + System.currentTimeMillis();
         String pubDescription = "Test Description " + System.currentTimeMillis();
         double pubPrice = (System.currentTimeMillis() % 1000) + 0.99;
-        DBClass.insertPublication(pubName, pubDescription, pubPrice);
+        db.insertPublication(pubName, pubDescription, pubPrice);
 
         // Retrieve the publication id.
-        ArrayList<ArrayList<String>> pubs = DBClass.selectAllPublication();
+        ArrayList<ArrayList<String>> pubs = db.selectAllPublication();
         int pubId = -1;
         for (ArrayList<String> row : pubs) {
             // Assuming column order: id, publication_name, publication_description, price.
@@ -272,10 +273,10 @@ public class dbClassTest {
         // Insert order status.
         int quantity = 5;
         String status = "Completed_" + System.currentTimeMillis();
-        DBClass.insertOrderStatus(custId, pubId, quantity, status);
+        db.insertOrderStatus(custId, pubId, quantity, status);
 
         // Retrieve and verify the inserted order status.
-        ArrayList<ArrayList<String>> orders = DBClass.selectAllOrdersStatus();
+        ArrayList<ArrayList<String>> orders = db.selectAllOrdersStatus();
         boolean found = false;
         // Assuming column order: id, cust_id, pub_id, quantity, status.
         for (ArrayList<String> row : orders) {
@@ -300,7 +301,7 @@ public class dbClassTest {
 
     @Test
     void testSelectNonExistentOrderStatus() {
-        ArrayList<ArrayList<String>> orders = DBClass.selectOrdersStatus(999999);
+        ArrayList<ArrayList<String>> orders = db.selectOrdersStatus(999999);
         assertEquals(0, orders.size(), "Selecting a non-existent order status id should return an empty list.");
     }
 

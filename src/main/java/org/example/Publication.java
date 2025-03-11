@@ -7,6 +7,12 @@ public class Publication {
     private String name;
     private String description;
     private String price;
+    private DatabaseConnection databaseConnection;
+
+    // Constructor to initialize the DatabaseConnection
+    public Publication() {
+        this.databaseConnection = new DatabaseConnection();
+    }
 
     public void setPrice(String price) {
         this.price = price;
@@ -75,7 +81,7 @@ public class Publication {
 
     public boolean publicationReadByID(String id) {
         try {
-            ArrayList<ArrayList<String>> publication = DBClass.selectPublication(Integer.parseInt(id));
+            ArrayList<ArrayList<String>> publication = databaseConnection.selectPublication(Integer.parseInt(id));
             if (publication.isEmpty()) {
                 throw new IllegalArgumentException("No publication found with ID: " + id);
             } else {
@@ -92,7 +98,7 @@ public class Publication {
 
     public boolean selectAllPublication() {
         try{
-            ArrayList<ArrayList<String>> allPublication = DBClass.selectAllPublication();
+            ArrayList<ArrayList<String>> allPublication = databaseConnection.selectAllPublication();
             System.out.println("Displaying all Publications: " + allPublication);
         }
         catch (Exception e){
@@ -148,9 +154,8 @@ public class Publication {
     // currently the deliveryArea is a string value but both the db and its
     // insert function are accepting int values
     public void insertPublication(){
-        DBClass db = new DBClass();
         try{
-            db.insertPublication(publicationName, publicationDescription, Double.parseDouble(publicationPrice));
+            databaseConnection.insertPublication(publicationName, publicationDescription, Double.parseDouble(publicationPrice));
         }
         catch (Exception e){
             System.out.println(e.getMessage());

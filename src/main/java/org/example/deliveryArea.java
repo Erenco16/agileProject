@@ -6,6 +6,13 @@ import java.util.Scanner;
 public class deliveryArea {
     private String name;
     private String description;
+    private DatabaseConnection databaseConnection;
+
+    // Constructor to initialize the DatabaseConnection
+    public deliveryArea() {
+        this.databaseConnection = new DatabaseConnection();
+    }
+
 
     /**
      * 构造方法
@@ -54,7 +61,7 @@ public class deliveryArea {
 
     public boolean deliveryReadByID(String id) {
         try {
-            ArrayList<ArrayList<String>> deliveryArea = DBClass.selectDeliveryArea(Integer.parseInt(id));
+            ArrayList<ArrayList<String>> deliveryArea = databaseConnection.selectDeliveryArea(Integer.parseInt(id));
             if (deliveryArea.isEmpty()) {
                 throw new IllegalArgumentException("No delivery area found with ID: " + id);
             } else {
@@ -71,7 +78,7 @@ public class deliveryArea {
 
     public boolean selectAllDeliveryArea() {
         try{
-            ArrayList<ArrayList<String>> allDeliveryArea = DBClass.selectAllDeliveryArea();
+            ArrayList<ArrayList<String>> allDeliveryArea = databaseConnection.selectAllDeliveryArea();
             System.out.println("Displaying all delivery areas: " + allDeliveryArea);
         }
         catch (Exception e){
@@ -142,9 +149,8 @@ public class deliveryArea {
     // currently the deliveryArea is a string value but both the db and its
     // insert function are accepting int values
     public void insertDeliveryArea() {
-        DBClass db = new DBClass();
         try{
-            db.insertDeliveryArea(areaName, areaDescription);
+            databaseConnection.insertDeliveryArea(areaName, areaDescription);
         }
         catch (Exception e){
             System.out.println(e.getMessage());

@@ -62,8 +62,13 @@ public class NewsAgentCreate {
         System.out.println("Please select an option below:");
         System.out.println("1. Customer page");
         System.out.println("2. Publication page");
-        System.out.println("3. Delivery Area");
-        option = getValidIntegerInput(1, 3);
+        System.out.println("3. Delivery Area page");
+        System.out.println("4. Order page");
+        System.out.println("5. Invoice page");
+        System.out.println("6. Delivery Man page");
+        System.out.println("7. Delivery Docket page");
+        System.out.println("8. Report page ");
+        option = getValidIntegerInput(1, 8);
 
         return option;
     }
@@ -73,7 +78,9 @@ public class NewsAgentCreate {
             System.out.println("Welcome to Create Customer!");
             System.out.println("1.Create a Customer");
             System.out.println("2.Read a Customer");
-            option = getValidIntegerInput(1, 2); // Allows only 1 or 2
+            System.out.println("3.Update a Customer");
+            System.out.println("4.Delete a Customer");
+            option = getValidIntegerInput(1, 4); // Allows only 1 or 2
 
 
             if (option == 1) {
@@ -90,7 +97,9 @@ public class NewsAgentCreate {
             System.out.println("Welcome to the Publication Page!");
             System.out.println("1.Create a Publication");
             System.out.println("2.Read a Publication");
-            option = getValidIntegerInput(1, 2); // Allows only 1 or 2
+            System.out.println("3.Update a Publication");
+            System.out.println("4.Delete a Publication");
+            option = getValidIntegerInput(1, 4); // Allows only 1 or 2
 
             if (option == 1) {
                 createPublicationCLI();
@@ -106,7 +115,9 @@ public class NewsAgentCreate {
             System.out.println("Welcome to the Delivery Area Page!");
             System.out.println("1.Create a Delivery Area");
             System.out.println("2.Read a Delivery Area");
-            option = getValidIntegerInput(1, 2); // Allows only 1 or 2
+            System.out.println("3.Update a Delivery Area");
+            System.out.println("4.Delete a Delivery Area");
+            option = getValidIntegerInput(1, 4); // Allows only 1 or 2
 
             if (option == 1) {
                 createDeliveryAreaCLI();
@@ -118,7 +129,7 @@ public class NewsAgentCreate {
     }
 
     public void createDeliveryAreaCLI(){
-        deliveryArea dv = new deliveryArea();
+        DeliveryArea dv = new DeliveryArea();
         System.out.println("Welcome to Create Delivery Area Page!");
         dv.checkAreaName();
         dv.checkAreaDescription();
@@ -129,7 +140,7 @@ public class NewsAgentCreate {
     }
 
     public void readDeliveryAreaCLI(){
-        deliveryArea da = new deliveryArea();
+        DeliveryArea da = new DeliveryArea();
 
         while (true) {
             System.out.println("Welcome to Delivery Area Read!");

@@ -85,8 +85,10 @@ public class NewsAgentCreate {
 
             if (option == 1) {
                 createCustomerCLI();
-            } else {
+            } else if (option==2) {
                 readCustomerCLI();
+            } else if (option==3) {
+                updateCustomerCLI();
             }
         }
 
@@ -326,8 +328,15 @@ public class NewsAgentCreate {
 
     public void updateCustomerCLI(){
         Customer c =  new Customer();
-
         c.customerUpdate();
+        c.checkName();
+        c.checkEmail();
+        c.checkAddress();
+        c.checkPhoneNumber();
+        c.checkDeliveryArea();
+        c.checkEircode();
+        c.updateCustomerDB();
+        mainPage();
     }
 
 }

@@ -331,19 +331,15 @@ public class Customer {
                 break;
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());            }
+        }
+    }
 
-            try {
-                checkName();
-                checkEmail();
-                checkAddress();
-                checkPhoneNumber();
-                checkDeliveryArea();
-                checkEircode();
-                databaseConnection.updateCustomer(Integer.parseInt(inputID), inputName, inputEmail, inputAddress, inputPhoneNumber, Integer.parseInt(inputDeliveryArea), inputEircode);
-                System.out.println("Customer update successful, returning to main page");
-            } catch (IllegalArgumentException e)    {
-                System.out.println(e.getMessage());
-            }
+    public void updateCustomerDB() {
+        try {
+            databaseConnection.updateCustomer(Integer.parseInt(inputID), inputName, inputEmail, inputAddress, inputPhoneNumber, Integer.parseInt(inputDeliveryArea), inputEircode);
+            System.out.println("Customer update successful, returning to main page");
+        } catch (IllegalArgumentException e)    {
+            System.out.println(e.getMessage());
         }
     }
 }

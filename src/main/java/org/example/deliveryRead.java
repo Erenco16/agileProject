@@ -2,45 +2,50 @@ package org.example;
 
 import java.util.ArrayList;
 
-public class DeliveryAreaRead {
+public class deliveryRead {
 
     /**
-     * 通过配送区域名称查询具体的配送区域，并显示详情。
+     * Reads a specific delivery area based on the provided ID.
+     * Verifies that the delivery area exists and displays its details.
      *
-     * @param name 配送区域的名称
-     * @return 如果成功查询到配送区域则返回 true
+     * @param id the delivery area ID as a string.
+     * @return true if the delivery area is successfully retrieved.
      */
-    public boolean selectDeliveryAreaMod(String name) {
+    public boolean selectDeliveryAreaMod(String id) {
         try {
-            // 假设 DBClass.selectDeliveryArea(String name) 返回一个包含配送区域详情的二维 ArrayList，
-            // 如果没有找到匹配的配送区域，则返回一个空的列表或 null。
-            ArrayList<ArrayList<String>> deliveryArea = DBClass.selectDeliveryArea(name);
+            // Assume DBClass.selectDeliveryArea returns an ArrayList of ArrayLists of Strings
+            // representing delivery area details, or an empty list if not found.
+            ArrayList<ArrayList<String>> deliveryArea = DBClass.selectDeliveryArea(Integer.parseInt(id));
 
             if (deliveryArea == null || deliveryArea.isEmpty()) {
-                throw new IllegalArgumentException("No name founded: " + name + " delivery area");
+                throw new IllegalArgumentException("No delivery area found with ID: " + id);
             } else {
-                System.out.println("delivery area founded: " + deliveryArea);
+                System.out.println("Delivery area found: " + deliveryArea);
             }
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Input must be a number");
         } catch (Exception e) {
+            // Handle other exceptions such as database connection issues
             throw new IllegalArgumentException("Error occurred: " + e.getMessage());
         }
         return true;
     }
 
     /**
-     * 查询所有配送区域，并验证返回的配送区域列表有效（不为 null）。
-     * 同时输出数据库中配送区域的详细信息。
+     * Reads all delivery areas.
+     * Verifies that a valid delivery area list is provided (i.e., is not null)
+     * and displays the delivery area details (which should match the database records).
      *
-     * @return 如果成功查询则返回 true
+     * @return true if the operation is successful.
      */
     public boolean selectAllDeliveryAreaMod() {
         try {
             ArrayList<ArrayList<String>> allDeliveryAreas = DBClass.selectAllDeliveryAreas();
 
             if (allDeliveryAreas == null) {
-                throw new IllegalArgumentException("delivery area list is null");
+                throw new IllegalArgumentException("Delivery area list is null");
             } else {
-                System.out.println("delivery area list: " + allDeliveryAreas);
+                System.out.println("Displaying all delivery areas: " + allDeliveryAreas);
             }
         } catch (Exception e) {
             throw new IllegalArgumentException("Error occurred: " + e.getMessage());
@@ -49,20 +54,20 @@ public class DeliveryAreaRead {
     }
 
     /**
-     * 根据配送区域名称查询配送区域，但不返回状态，只打印出异常信息。
+     * Retrieves a specific delivery area by its ID without returning a status.
      *
-     * @param name 配送区域名称
+     * @param id the delivery area ID.
      */
-    public void selectDeliveryArea(String name) {
+    public void selectDeliveryArea(int id) {
         try {
-            DBClass.selectDeliveryArea(name);
+            DBClass.selectDeliveryArea(id);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
 
     /**
-     * 查询所有配送区域，不返回状态，只打印出异常信息。
+     * Retrieves all delivery areas without returning a status.
      */
     public void selectAllDeliveryArea() {
         try {

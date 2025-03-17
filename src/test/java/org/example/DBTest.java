@@ -363,4 +363,71 @@ public class DBTest {
         assertFalse(containsValue(invoices, 0, "999999"), "Selecting a non-existent invoice should return an empty list.");
     }
 
+    // junit tests for the update and delete methods for the sprint 1 entities
+
+    @Test
+    void testUpdateCustomer() {
+        String uniqueName = "UpdatedCustomer_" + System.currentTimeMillis();
+        db.insertCustomer(uniqueName, "testupdate@example.com", "Old Address", "123456789", 1, "EIRCODE");
+        db.updateCustomer(1, "Updated Name", "updated@example.com", "New Address", "987654321", 1, "EIR999");
+        ArrayList<ArrayList<String>> customers = db.selectCustomers(1);
+        assertTrue(containsValue(customers, 1, "Updated Name"), "Customer name should be updated.");
+    }
+
+    @Test
+    void testDeleteCustomer() {
+        db.insertCustomer("DeleteTest", "delete@example.com", "Some Address", "111222333", 1, "EIR001");
+        db.deleteCustomer(1);
+        ArrayList<ArrayList<String>> customers = db.selectCustomers(1);
+        assertEquals(0, customers.size(), "Deleted customer should not be found.");
+    }
+
+    @Test
+    void testUpdateAddress() {
+        db.insertAddress("Old Address", 1);
+        db.updateAddress(1, "New Address", 1);
+        ArrayList<ArrayList<String>> addresses = db.selectAddress(1);
+        assertTrue(containsValue(addresses, 1, "New Address"), "Address should be updated.");
+    }
+
+    @Test
+    void testDeleteAddress() {
+        db.insertAddress("Delete Address", 1);
+        db.deleteAddress(1);
+        ArrayList<ArrayList<String>> addresses = db.selectAddress(1);
+        assertEquals(0, addresses.size(), "Deleted address should not be found.");
+    }
+
+    @Test
+    void testUpdateDeliveryArea() {
+        db.insertDeliveryArea("Old Area", "Old Description");
+        db.updateDeliveryArea(1, "New Area", "Updated Description");
+        ArrayList<ArrayList<String>> areas = db.selectDeliveryArea(1);
+        assertTrue(containsValue(areas, 1, "New Area"), "Delivery area name should be updated.");
+    }
+
+    @Test
+    void testDeleteDeliveryArea() {
+        db.insertDeliveryArea("Delete Area", "Some Description");
+        db.deleteDeliveryArea(1);
+        ArrayList<ArrayList<String>> areas = db.selectDeliveryArea(1);
+        assertEquals(0, areas.size(), "Deleted delivery area should not be found.");
+    }
+
+    @Test
+    void testUpdateNewsAgent() {
+        db.insertNewsAgent("Old NewsAgent");
+        db.updateNewsAgent(1, "Updated NewsAgent");
+        ArrayList<ArrayList<String>> agents = db.selectNewsAgent(1);
+        assertTrue(containsValue(agents, 1, "Updated NewsAgent"), "News agent name should be updated.");
+    }
+
+    @Test
+    void testDeleteNewsAgent() {
+        db.insertNewsAgent("Delete NewsAgent");
+        db.deleteNewsAgent(1);
+        ArrayList<ArrayList<String>> agents = db.selectNewsAgent(1);
+        assertEquals(0, agents.size(), "Deleted news agent should not be found.");
+    }
+
 }

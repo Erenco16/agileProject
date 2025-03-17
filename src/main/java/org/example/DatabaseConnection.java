@@ -439,6 +439,100 @@ public class DatabaseConnection {
         return new ArrayList<>();
     }
 
+    // Updates and deletes for sprint 1 entities
+
+    // --------------------- Update and Delete Methods ---------------------
+    public void updateCustomer(int id, String name, String email, String address, String phone_number, int deliveryAreaID, String eircode) {
+        String sql = "UPDATE Customers SET name = ?, email = ?, address = ?, phone_number = ?, delivery_area_id = ?, eircode = ? WHERE id = ?";
+        try (Connection conn = getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, name);
+            pstmt.setString(2, email);
+            pstmt.setString(3, address);
+            pstmt.setString(4, phone_number);
+            pstmt.setInt(5, deliveryAreaID);
+            pstmt.setString(6, eircode);
+            pstmt.setInt(7, id);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Error updating Customers: " + e.getMessage());
+        }
+    }
+
+    public void deleteCustomer(int id) {
+        String sql = "DELETE FROM Customers WHERE id = ?";
+        try (Connection conn = getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, id);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Error deleting from Customers: " + e.getMessage());
+        }
+    }
+
+    public void updateAddress(int id, String address, Integer deliveryAreaId) {
+        String sql = "UPDATE Address SET address = ?, delivery_area_id = ? WHERE id = ?";
+        try (Connection conn = getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, address);
+            pstmt.setObject(2, deliveryAreaId, Types.INTEGER);
+            pstmt.setInt(3, id);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Error updating Address: " + e.getMessage());
+        }
+    }
+
+    public void deleteAddress(int id) {
+        String sql = "DELETE FROM Address WHERE id = ?";
+        try (Connection conn = getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, id);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Error deleting from Address: " + e.getMessage());
+        }
+    }
+
+    public void updateDeliveryArea(int id, String name, String description) {
+        String sql = "UPDATE DeliveryArea SET name = ?, description = ? WHERE id = ?";
+        try (Connection conn = getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, name);
+            pstmt.setString(2, description);
+            pstmt.setInt(3, id);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Error updating DeliveryArea: " + e.getMessage());
+        }
+    }
+
+    public void deleteDeliveryArea(int id) {
+        String sql = "DELETE FROM DeliveryArea WHERE id = ?";
+        try (Connection conn = getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, id);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Error deleting from DeliveryArea: " + e.getMessage());
+        }
+    }
+
+    public void updateNewsAgent(int id, String name) {
+        String sql = "UPDATE NewsAgent SET name = ? WHERE id = ?";
+        try (Connection conn = getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, name);
+            pstmt.setInt(2, id);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Error updating NewsAgent: " + e.getMessage());
+        }
+    }
+
+    public void deleteNewsAgent(int id) {
+        String sql = "DELETE FROM NewsAgent WHERE id = ?";
+        try (Connection conn = getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, id);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Error deleting from NewsAgent: " + e.getMessage());
+        }
+    }
+
 
     public static void main(String[] args) {
         // Insert sample data.
@@ -493,6 +587,39 @@ public class DatabaseConnection {
         System.out.println(db.selectAllDeliveryDocket());
         System.out.println("Select All Invoices: ");
         System.out.println(db.selectAllInvoice());
+
+        // updates and deletes for the sprint 1
+        System.out.println("Updating customer...");
+        db.updateCustomer(1, "John Updated", "john_updated@example.com", "Updated Address", "9876543210", 1, "EIR999");
+        System.out.println(db.selectCustomers(1));
+
+        System.out.println("Deleting customer...");
+        db.deleteCustomer(1);
+        System.out.println(db.selectAllCustomers());
+
+        System.out.println("Updating address...");
+        db.updateAddress(1, "456 New St", 1);
+        System.out.println(db.selectAddress(1));
+
+        System.out.println("Deleting address...");
+        db.deleteAddress(1);
+        System.out.println(db.selectAllAddress());
+
+        System.out.println("Updating delivery area...");
+        db.updateDeliveryArea(1, "Uptown", "Updated description");
+        System.out.println(db.selectDeliveryArea(1));
+
+        System.out.println("Deleting delivery area...");
+        db.deleteDeliveryArea(1);
+        System.out.println(db.selectAllDeliveryArea());
+
+        System.out.println("Updating news agent...");
+        db.updateNewsAgent(1, "Updated Reporter");
+        System.out.println(db.selectNewsAgent(1));
+
+        System.out.println("Deleting news agent...");
+        db.deleteNewsAgent(1);
+        System.out.println(db.selectAllNewsAgent());
     }
 
 }

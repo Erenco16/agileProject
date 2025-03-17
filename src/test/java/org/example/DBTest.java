@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class dbTest {
+public class DBTest {
 
     DatabaseConnection db = new DatabaseConnection();
     //(These are only used within the tests to search for a row in a list.
@@ -303,6 +303,64 @@ public class dbTest {
     void testSelectNonExistentOrderStatus() {
         ArrayList<ArrayList<String>> orders = db.selectOrdersStatus(999999);
         assertEquals(0, orders.size(), "Selecting a non-existent order status id should return an empty list.");
+    }
+
+    @Test
+    void testInsertDeliveryManAndSelect() {
+        String uniqueName = "DeliveryMan_" + System.currentTimeMillis();
+        db.insertDeliveryMan(uniqueName, "Active");
+
+        ArrayList<ArrayList<String>> deliveryMen = db.selectAllDeliveryMan();
+        assertTrue(containsValue(deliveryMen, 1, uniqueName), "Inserted delivery man should be found in selectAllDeliveryMan.");
+    }
+
+    @Test
+    void testSelectNonExistentDeliveryMan() {
+        ArrayList<ArrayList<String>> deliveryMen = db.selectDeliveryMan(999999);
+        assertEquals(0, deliveryMen.size(), "Selecting a non-existent delivery man should return an empty list.");
+    }
+
+    @Test
+    void testInsertDeliveryDocketAndSelect() {
+        db.insertDeliveryMan("Test Docket Man", "Active");
+
+        ArrayList<ArrayList<String>> deliveryMen = db.selectAllDeliveryMan();
+        int deliveryManId = Integer.parseInt(deliveryMen.get(deliveryMen.size() - 1).get(0));
+
+        db.insertDeliveryDocket(deliveryManId, "Pending");
+        ArrayList<ArrayList<String>> deliveryDockets = db.selectAllDeliveryDocket();
+        assertTrue(containsValue(deliveryDockets, 2, "Pending"), "Inserted delivery docket should be found in selectAllDeliveryDocket.");
+    }
+
+    @Test
+    void testSelectNonExistentDeliveryDocket() {
+        ArrayList<ArrayList<String>> deliveryDockets = db.selectAllDeliveryDocket();
+        assertFalse(containsValue(deliveryDockets, 0, "999999"), "Selecting a non-existent delivery docket should return an empty list.");
+    }
+
+    @Test
+    void testInsertInvoiceAndSelect() {
+        db.insertCustomer("Invoice Customer", "invoice@example.com", "Test Address", "1234567890", 1, "EIR1234");
+        ArrayList<ArrayList<String>> customers = db.selectAllCustomers();
+        int custId = Integer.parseInt(customers.get(customers.size() - 1).get(0));
+
+        db.insertPublication("Invoice Publication", "Test Desc", 15.99);
+        ArrayList<ArrayList<String>> publications = db.selectAllPublication();
+        int pubId = Integer.parseInt(publications.get(publications.size() - 1).get(0));
+
+        db.insertOrderStatus(custId, pubId, 2, "Pending");
+        ArrayList<ArrayList<String>> orders = db.selectAllOrdersStatus();
+        int orderId = Integer.parseInt(orders.get(orders.size() - 1).get(0));
+
+        db.insertInvoice(orderId, 31.98);
+        ArrayList<ArrayList<String>> invoices = db.selectAllInvoice();
+        assertTrue(containsValue(invoices, 2, "31.98"), "Inserted invoice should be found in selectAllInvoice.");
+    }
+
+    @Test
+    void testSelectNonExistentInvoice() {
+        ArrayList<ArrayList<String>> invoices = db.selectAllInvoice();
+        assertFalse(containsValue(invoices, 0, "999999"), "Selecting a non-existent invoice should return an empty list.");
     }
 
 }

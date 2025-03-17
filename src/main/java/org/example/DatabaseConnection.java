@@ -349,6 +349,96 @@ public class DatabaseConnection {
         return new ArrayList<>();
     }
 
+    // --------------------- DeliveryMan Table Methods ---------------------
+    public void insertDeliveryMan(String name, String employment_status) {
+        String sql = "INSERT INTO DeliveryMan (name, employment_status) VALUES (?, ?)";
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, name);
+            pstmt.setString(2, employment_status);
+            int affectedRows = pstmt.executeUpdate();
+            System.out.println("Inserted delivery man, affected rows: " + affectedRows);
+        } catch (SQLException e) {
+            System.out.println("Error inserting into DeliveryMan: " + e.getMessage());
+        }
+    }
+
+    public ArrayList<ArrayList<String>> selectDeliveryMan(int id) {
+        String sql = "SELECT * FROM DeliveryMan WHERE id = " + id;
+        try (Connection conn = getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            return getValues(rs);
+        } catch (SQLException e) {
+            System.err.println("Error selecting from DeliveryMan: " + e.getMessage());
+        }
+        return new ArrayList<>();
+    }
+
+    public ArrayList<ArrayList<String>> selectAllDeliveryMan() {
+        String sql = "SELECT * FROM DeliveryMan";
+        try (Connection conn = getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            return getValues(rs);
+        } catch (SQLException e) {
+            System.err.println("Error selecting all DeliveryMan: " + e.getMessage());
+        }
+        return new ArrayList<>();
+    }
+
+    // --------------------- DeliveryDocket Table Methods ---------------------
+    public void insertDeliveryDocket(Integer delivery_man_id, String docket_status) {
+        String sql = "INSERT INTO DeliveryDocket (delivery_man_id, docket_status) VALUES (?, ?)";
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setObject(1, delivery_man_id, Types.INTEGER);
+            pstmt.setString(2, docket_status);
+            int affectedRows = pstmt.executeUpdate();
+            System.out.println("Inserted delivery docket, affected rows: " + affectedRows);
+        } catch (SQLException e) {
+            System.out.println("Error inserting into DeliveryDocket: " + e.getMessage());
+        }
+    }
+
+    public ArrayList<ArrayList<String>> selectAllDeliveryDocket() {
+        String sql = "SELECT * FROM DeliveryDocket";
+        try (Connection conn = getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            return getValues(rs);
+        } catch (SQLException e) {
+            System.err.println("Error selecting all DeliveryDocket: " + e.getMessage());
+        }
+        return new ArrayList<>();
+    }
+
+    // --------------------- Invoice Table Methods ---------------------
+    public void insertInvoice(Integer order_id, Double total_payable_amount) {
+        String sql = "INSERT INTO Invoice (order_id, total_payable_amount) VALUES (?, ?)";
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, order_id);
+            pstmt.setDouble(2, total_payable_amount);
+            int affectedRows = pstmt.executeUpdate();
+            System.out.println("Inserted invoice, affected rows: " + affectedRows);
+        } catch (SQLException e) {
+            System.out.println("Error inserting into Invoice: " + e.getMessage());
+        }
+    }
+
+    public ArrayList<ArrayList<String>> selectAllInvoice() {
+        String sql = "SELECT * FROM Invoice";
+        try (Connection conn = getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            return getValues(rs);
+        } catch (SQLException e) {
+            System.err.println("Error selecting all Invoice: " + e.getMessage());
+        }
+        return new ArrayList<>();
+    }
+
 
     public static void main(String[] args) {
         // Insert sample data.
@@ -392,6 +482,17 @@ public class DatabaseConnection {
         System.out.println(db.selectOrdersStatus(1));
         System.out.println("Select All OrdersStatus: ");
         System.out.println(db.selectAllOrdersStatus());
+
+        db.insertDeliveryMan("Mike Johnson", "Active");
+        db.insertDeliveryDocket(1, "Pending");
+        db.insertInvoice(1, 49.99);
+
+        System.out.println("Select All Delivery Men: ");
+        System.out.println(db.selectAllDeliveryMan());
+        System.out.println("Select All Delivery Dockets: ");
+        System.out.println(db.selectAllDeliveryDocket());
+        System.out.println("Select All Invoices: ");
+        System.out.println(db.selectAllInvoice());
     }
 
 }

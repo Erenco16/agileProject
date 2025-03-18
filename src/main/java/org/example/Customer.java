@@ -318,7 +318,7 @@ public class Customer {
         }
     }
 
-    // --------------------- Update ---------------------
+    //--------------------- Update ---------------------
 
     public void customerUpdate() {
         while(true){
@@ -342,4 +342,27 @@ public class Customer {
             System.out.println(e.getMessage());
         }
     }
+
+    //--------------------- delete ---------------------
+    public void customerDelete() {
+        while(true){
+            selectAllCustomerMod();
+            System.out.println("Enter Customer ID to delete: ");
+            try {
+                int id = input.nextInt();
+                input.nextLine();
+                selectCustomerMod(String.valueOf(id));
+                System.out.println("Deleting data related to ID: " + id);
+                databaseConnection.deleteCustomer(id);
+                break;
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());            }
+        }
+    }
+
+//    public void customerDeleteDB() {
+//        int id = Integer.parseInt(inputID);
+//        databaseConnection.deleteCustomer(id);
+//    }
+
 }

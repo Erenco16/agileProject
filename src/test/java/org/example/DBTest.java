@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class dbTest {
+class dbTest {
 
     DatabaseConnection db = new DatabaseConnection();
     //(These are only used within the tests to search for a row in a list.

@@ -156,6 +156,17 @@ public class DatabaseConnection {
         }
     }
 
+    public boolean deleteCustomer(int id) {
+        String sql = "DELETE FROM Customers WHERE id = " + id;
+        try (Connection conn = getConnection();
+             Statement stmt = conn.createStatement()) {
+            int rowsAffected = stmt.executeUpdate(sql);
+            return rowsAffected > 0; // returns true if the customer was deleted
+        } catch (SQLException e) {
+            System.err.println("Error deleting customer: " + e.getMessage());
+        }
+        return false; // returns false if the deletion failed
+    }
 
     // --------------------- Address Table Methods ---------------------
 

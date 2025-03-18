@@ -285,4 +285,19 @@ class CustomerTest {
         });
         assertEquals("Input must be a number", exception.getMessage());
     }
+
+    //Test 20
+    //obj: valid in range number for Update
+    //expected output: true
+    @Test
+    void customerUpdateValid() {
+        Customer customer = new Customer();
+        boolean result = customer.selectCustomerMod("1");
+        assertTrue(result);
+    }
+    //success
+
+    //Test 21
+    //obj: invalid range number for Update
+    //expected output: true
 }

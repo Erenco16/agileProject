@@ -1,0 +1,4 @@
+id,name,email,address,phone_number,delivery_area_id,eircode
+2,Eren,testing@afterconstruct.com,asdasd,1234567890,1,N371234
+3,John Doe,john@example.com,Some address,12123123,1,N37 ASD
+4,Invoice Customer,invoice@example.com,Test Address,1234567890,1,EIR1234

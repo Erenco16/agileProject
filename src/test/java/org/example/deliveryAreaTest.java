@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class deliveryAreaTest {
 
-    deliveryArea area = new deliveryArea();
+    DeliveryArea area = new DeliveryArea();
     //Test 1
     //Obj: to test valid delivery area name input
     //Expected Output: true

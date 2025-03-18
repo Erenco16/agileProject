@@ -80,16 +80,88 @@ public class NewsAgentCreate {
             System.out.println("2.Read a Customer");
             System.out.println("3.Update a Customer");
             System.out.println("4.Delete a Customer");
-            option = getValidIntegerInput(1, 4); // Allows only 1 or 2
+            option = getValidIntegerInput(1, 4); // Allows only 1 to 4
 
 
             if (option == 1) {
                 createCustomerCLI();
-            } else {
+            } else if (option==2) {
                 readCustomerCLI();
+            } else if (option==3) {
+                updateCustomerCLI();
+            } else if (option==4) {
+                deleteCustomerCLI();
+            } else {
+                System.out.println("Invalid option");
             }
         }
 
+    }
+
+    public void createCustomerCLI(){
+        Customer v = new Customer();
+
+        v.checkName();
+        v.checkEmail();
+        v.checkAddress();
+        v.checkPhoneNumber();
+        v.checkDeliveryArea();
+        v.checkEircode();
+        v.insertCustomer();         // added to insert customer info to db
+        System.out.println("Customer Added successfully");
+        System.out.println("Taking you back to main page....");
+        mainPage();
+    }
+
+    public void readCustomerCLI() {
+        Customer v = new Customer();
+
+        while (true) {
+            System.out.println("Welcome to Customer Read!");
+            System.out.println("1.Find a Specific ID");
+            System.out.println("2.Display all Customers");
+            if (input.hasNextInt()) {
+                option = input.nextInt();
+                input.nextLine();  // Consume the newline
+
+                switch (option) {
+                    case 1:
+                        v.customerReadID();
+                        mainPage();
+                        return;
+                    case 2:
+                        v.customerReadAll();
+                        mainPage();
+                        return;
+                    default:
+                        System.out.println("Please enter a valid option 1 or 2!");
+                        break;
+                }
+            } else {
+                // If input is not an integer
+                System.out.println("Invalid input! Please enter a valid number.");
+                input.nextLine();
+            }
+        }
+    }
+
+    public void updateCustomerCLI(){
+        Customer c =  new Customer();
+        c.customerUpdate();
+        c.checkName();
+        c.checkEmail();
+        c.checkAddress();
+        c.checkPhoneNumber();
+        c.checkDeliveryArea();
+        c.checkEircode();
+        c.updateCustomerDB();
+        mainPage();
+    }
+
+    public void deleteCustomerCLI(){
+        Customer c =  new Customer();
+        c.customerDelete();
+        mainPage();
     }
 
     public void publicationPage(){
@@ -277,57 +349,6 @@ public class NewsAgentCreate {
         }
     }
 
-    public void createCustomerCLI(){
-        Customer v = new Customer();
-
-        v.checkName();
-        v.checkEmail();
-        v.checkAddress();
-        v.checkPhoneNumber();
-        v.checkDeliveryArea();
-        v.checkEircode();
-        v.insertCustomer();         // added to insert customer info to db
-        System.out.println("Customer Added successfully");
-        System.out.println("Taking you back to main page....");
-        mainPage();
-    }
-
-    public void readCustomerCLI() {
-        Customer v = new Customer();
-
-        while (true) {
-            System.out.println("Welcome to Customer Read!");
-            System.out.println("1.Find a Specific ID");
-            System.out.println("2.Display all Customers");
-            if (input.hasNextInt()) {
-                option = input.nextInt();
-                input.nextLine();  // Consume the newline
-
-                switch (option) {
-                    case 1:
-                        v.customerReadID();
-                        mainPage();
-                        return;
-                    case 2:
-                        v.customerReadAll();
-                        mainPage();
-                        return;
-                    default:
-                        System.out.println("Please enter a valid option 1 or 2!");
-                        break;
-                }
-            } else {
-                // If input is not an integer
-                System.out.println("Invalid input! Please enter a valid number.");
-                input.nextLine();
-            }
-        }
-    }
-
-    public void updateCustomerCLI(){
-        Customer c =  new Customer();
-
-    }
 
 }
 

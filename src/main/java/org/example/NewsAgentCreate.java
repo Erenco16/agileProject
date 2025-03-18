@@ -178,11 +178,17 @@ public class NewsAgentCreate {
     }
 
     public void updatePublicationCLI(){
-
+        Publication p = new Publication();
+        //p.publicationUpdate();
+        p.checkPublicationName();
+        p.checkPublicationDescription();
+        p.checkPublicationPrice();
+        mainPage();
     }
 
     public void deletePublicationCLI(){
-
+        Publication p =new Publication();
+        //p.publicationDelete();
     }
 
     public void publicationPage(){

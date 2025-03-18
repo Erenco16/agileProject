@@ -477,31 +477,7 @@ public class DatabaseConnection {
     // Updates and deletes for sprint 1 entities
 
     // --------------------- Update and Delete Methods ---------------------
-    public void updateCustomer(int id, String name, String email, String address, String phone_number, int deliveryAreaID, String eircode) {
-        String sql = "UPDATE Customers SET name = ?, email = ?, address = ?, phone_number = ?, delivery_area_id = ?, eircode = ? WHERE id = ?";
-        try (Connection conn = getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, name);
-            pstmt.setString(2, email);
-            pstmt.setString(3, address);
-            pstmt.setString(4, phone_number);
-            pstmt.setInt(5, deliveryAreaID);
-            pstmt.setString(6, eircode);
-            pstmt.setInt(7, id);
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println("Error updating Customers: " + e.getMessage());
-        }
-    }
 
-    public void deleteCustomer(int id) {
-        String sql = "DELETE FROM Customers WHERE id = ?";
-        try (Connection conn = getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setInt(1, id);
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println("Error deleting from Customers: " + e.getMessage());
-        }
-    }
 
     public void updateAddress(int id, String address, Integer deliveryAreaId) {
         String sql = "UPDATE Address SET address = ?, delivery_area_id = ? WHERE id = ?";

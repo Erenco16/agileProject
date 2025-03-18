@@ -164,6 +164,27 @@ public class NewsAgentCreate {
         mainPage();
     }
 
+    public void updateDeliveryAreaCLI(){
+        DeliveryArea da = new DeliveryArea();
+        //da.deliveryAreaUpdate();
+        da.checkAreaName();
+        da.checkAreaDescription();
+        mainPage();
+    }
+
+    public void deleteDeliveryAreaCLI(){
+        DeliveryArea da = new DeliveryArea();
+        //da.deliveryAreaDelete();
+    }
+
+    public void updatePublicationCLI(){
+
+    }
+
+    public void deletePublicationCLI(){
+
+    }
+
     public void publicationPage(){
         while (true) {
             System.out.println("Welcome to the Publication Page!");
@@ -258,7 +279,7 @@ public class NewsAgentCreate {
             System.out.println("1.View total amount of revenue by month");
             System.out.println("2.View total amount of revenue by delivery area");
             System.out.println("3.View total amount of revenue by customer");
-            option = getValidIntegerInput(1, 4); // Allows only 1 or 2
+            option = getValidIntegerInput(1, 3); // Allows only 1 or 2
 
         }
 

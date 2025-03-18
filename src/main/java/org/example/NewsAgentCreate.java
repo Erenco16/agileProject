@@ -166,7 +166,7 @@ public class NewsAgentCreate {
 
     public void updateDeliveryAreaCLI(){
         DeliveryArea da = new DeliveryArea();
-        //da.deliveryAreaUpdate();
+        da.deliveryAreaUpdate();
         da.checkAreaName();
         da.checkAreaDescription();
         mainPage();
@@ -174,7 +174,7 @@ public class NewsAgentCreate {
 
     public void deleteDeliveryAreaCLI(){
         DeliveryArea da = new DeliveryArea();
-        //da.deliveryAreaDelete();
+        da.deliveryAreaDelete();
     }
 
     public void updatePublicationCLI(){

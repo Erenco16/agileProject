@@ -552,7 +552,7 @@ public class DatabaseConnection {
         DatabaseConnection db = new DatabaseConnection();
         db.insertDeliveryArea("Downtown", "Test description");
         db.insertAddress("123 Main St", 1);     // Assuming delivery_area_id 1 exists.
-        db.insertCustomer("John Doe", "john@example.com", "Some address", "12123123", 1, "N37 ASD");
+        db.insertCustomer("John Doe", "john@example.com", "Some address", "12123123", 2, "N37 ASD");
         db.insertNewsAgent("Jane Reporter");
         db.insertPublication("test", "test", 9.99);            // Assuming customer id 1 exists.
         db.insertOrderStatus(1, 1, 2, "Pending"); // Assuming cust_id 1 and pub_id 1 exist.
@@ -601,7 +601,7 @@ public class DatabaseConnection {
 
         // updates and deletes for the sprint 1
         System.out.println("Updating customer...");
-        db.updateCustomer(1, "John Updated", "john_updated@example.com", "Updated Address", "9876543210", 1, "EIR999");
+        db.updateCustomer(3, "John Updated", "john_updated@example.com", "Updated Address", "9876543210", 2, "EIR999");
         System.out.println(db.selectCustomers(1));
 
         System.out.println("Deleting customer...");

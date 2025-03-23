@@ -98,7 +98,7 @@ public class Publication {
 //            if(price.isEmpty() || price == null){
 //                throw new IllegalArgumentException("Price must not be empty");
 //            }
-            if(price.length() > 255 ){
+            if(stock.length() > 255 ){
                 throw new IllegalArgumentException("Stock must be between 1-255 digits long");
             }
         }catch (NumberFormatException e){
@@ -186,7 +186,7 @@ public class Publication {
             System.out.println("Enter Publication Stock: ");
             publicationStock = input.nextLine();
             try {
-                validPrice(publicationStock);
+                validStock(publicationStock);
                 break;
             }catch (IllegalArgumentException e){
                 System.out.println(e.getMessage());
@@ -198,7 +198,7 @@ public class Publication {
     // insert function are accepting int values
     public void insertPublication(){
         try{
-            databaseConnection.insertPublication(publicationName, publicationDescription, Double.parseDouble(publicationPrice), Integer.parseInt(stock));
+            databaseConnection.insertPublication(publicationName, publicationDescription, Double.parseDouble(publicationPrice), Integer.parseInt(publicationStock));
         }
         catch (Exception e){
             System.out.println(e.getMessage());
@@ -224,7 +224,6 @@ public class Publication {
         selectAllPublication();
     }
 
-
     public void publicationUpdate() {
         while(true){
             System.out.println("Enter publication ID to update: ");
@@ -241,8 +240,8 @@ public class Publication {
 
     public void updatePublicationDB() {
         try {
-            databaseConnection.updatePublication(Integer.parseInt(inputID), name,  description, Double.parseDouble(price), Integer.parseInt(stock)) ;
-            System.out.println("DeliveryArea update successful, returning to main page");
+            databaseConnection.updatePublication(Integer.parseInt(inputID), publicationName,  publicationDescription, Double.parseDouble(publicationPrice), Integer.parseInt(publicationStock)) ;
+            System.out.println("Publication update successful, returning to main page");
         } catch (IllegalArgumentException e)    {
             System.out.println(e.getMessage());
         }
@@ -263,6 +262,4 @@ public class Publication {
                 System.out.println(e.getMessage());            }
         }
     }
-
-
 }

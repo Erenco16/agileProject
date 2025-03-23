@@ -483,7 +483,7 @@ public class DBTest {
         ArrayList<ArrayList<String>> orders = db.selectAllOrdersStatus();
         int id = Integer.parseInt(orders.get(orders.size() - 1).get(0));
 
-        db.updateOrder(id, 1, 1, 10, "Shipped");
+        db.updateOrder(id, "Shipped");
         ArrayList<ArrayList<String>> updatedOrder = db.selectOrdersStatus(id);
         assertTrue(containsValue(updatedOrder, 4, "Shipped"), "Order status should be updated.");
     }

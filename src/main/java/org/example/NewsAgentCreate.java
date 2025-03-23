@@ -21,6 +21,10 @@ public class NewsAgentCreate {
                         System.out.println("taking you to delivery area page.....");
                         deliveryAreaPage();
                         break;
+                    case 4:
+                        System.out.println("taking you to order page.....");
+                        orderPage();
+                        break;
                     default:
                         System.out.println("Invalid option");
                         break;
@@ -179,10 +183,12 @@ public class NewsAgentCreate {
 
     public void updatePublicationCLI(){
         Publication p = new Publication();
-        //p.publicationUpdate();
+        p.publicationUpdate();
         p.checkPublicationName();
         p.checkPublicationDescription();
         p.checkPublicationPrice();
+        p.checkPublicationStock();
+        p.updatePublicationDB();
         mainPage();
     }
 
@@ -202,8 +208,12 @@ public class NewsAgentCreate {
 
             if (option == 1) {
                 createPublicationCLI();
-            } else {
+            } else if (option == 2){
                 readPublicationCLI();
+            } else if (option == 3) {
+                updatePublicationCLI();
+            } else if (option == 4) {
+                deletePublicationCLI();
             }
 
         }
@@ -235,9 +245,79 @@ public class NewsAgentCreate {
             System.out.println("3.Update an Order");
             System.out.println("4.Delete an Order");
             option = getValidIntegerInput(1, 4); // Allows only 1 or 2
-
+            if (option == 1) {
+                createOrderCLI();
+            } else if(option==2) {
+                readOrderCLI();
+            }
+            else if(option==3) {
+                updateOrderCLI();
+            }
+            else if(option==4) {
+                deleteOrderCLI();
+            }
+            else {
+                // If input is not an integer
+                System.out.println("Invalid input! Please enter a valid number (1-4).");
+                input.nextLine();
+            }
         }
 
+    }
+
+    private void deleteOrderCLI() {
+        Order o = new Order();
+        o.deleteOrder();
+        mainPage();
+    }
+
+    private void updateOrderCLI() {
+        Order o = new Order();
+        o.updateOrder();
+        mainPage();
+    }
+
+    private void readOrderCLI() {
+        Order o = new Order();
+        while (true) {
+            System.out.println("Welcome to Order Read!");
+            System.out.println("1.Find an Order with ID");
+            System.out.println("2.Display all Orders");
+            if (input.hasNextInt()) {
+                option = input.nextInt();
+                input.nextLine();  // Consume the newline
+
+                switch (option) {
+                    case 1:
+                        o.orderReadById();
+                        mainPage();
+                        return;
+                    case 2:
+                        o.orderReadAll();
+                        mainPage();
+                        return;
+                    default:
+                        System.out.println("Please enter a valid option 1 or 2!");
+                        break;
+                }
+            } else {
+                // If input is not an integer
+                System.out.println("Invalid input! Please enter a valid number.");
+                input.nextLine();
+            }
+        }
+    }
+
+    private void createOrderCLI() {
+        Order o = new Order();
+        o.checkCustId();
+        o.checkPubId();
+        o.checkQuantity();
+        o.checkStatus();
+        o.insertOrder();
+        System.out.println("Order created successfully");
+        System.out.println("Taking you back to the main page.");
+        mainPage();
     }
 
     public void invoicePage(){
@@ -340,6 +420,7 @@ public class NewsAgentCreate {
         pv.checkPublicationName();
         pv.checkPublicationDescription();
         pv.checkPublicationPrice();
+        pv.checkPublicationStock();
         pv.insertPublication();
         mainPage();
     }

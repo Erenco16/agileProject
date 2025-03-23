@@ -266,7 +266,7 @@ public class DatabaseConnection {
 
     // Insert a record into the Publication table.
     public void insertPublication(String name, String description, double price, int stock) {
-        String sql = "INSERT INTO Publication (name, description, price, stock) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO Publication (name, description, price, stock_available) VALUES (?, ?, ?, ?)";
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, name);

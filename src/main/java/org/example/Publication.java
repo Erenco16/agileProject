@@ -7,7 +7,9 @@ public class Publication {
     private String name;
     private String description;
     private String price;
+    private String stock;
     private DatabaseConnection databaseConnection;
+    private String inputID;
 
     // Constructor to initialize the DatabaseConnection
     public Publication() {
@@ -25,6 +27,9 @@ public class Publication {
     public void setDescription(String description){
         this.description = description;
     }
+    public void stock(String stock){
+        this.stock = stock;
+    }
 
     // Getter 方法
     public String getName() {
@@ -37,6 +42,10 @@ public class Publication {
 
     public String getPrice(){
         return price;
+    }
+
+    public String getStock(){
+        return stock;
     }
 
     public boolean validName(String name){
@@ -79,6 +88,25 @@ public class Publication {
         return true;
     }
 
+    public boolean validStock(String stock){
+
+        try{
+            int dnum = Integer.parseInt(stock);
+            if (dnum < 0){
+                throw new IllegalArgumentException("Stock can not be a negative number!");
+            }
+//            if(price.isEmpty() || price == null){
+//                throw new IllegalArgumentException("Price must not be empty");
+//            }
+            if(price.length() > 255 ){
+                throw new IllegalArgumentException("Stock must be between 1-255 digits long");
+            }
+        }catch (NumberFormatException e){
+            throw new IllegalArgumentException("Stock must be an integer value");
+        }
+        return true;
+    }
+
     public boolean publicationReadByID(String id) {
         try {
             ArrayList<ArrayList<String>> publication = databaseConnection.selectPublication(Integer.parseInt(id));
@@ -110,6 +138,8 @@ public class Publication {
     private String publicationName;
     private String publicationDescription;
     private String publicationPrice;
+    private String publicationStock;
+
     Scanner input = new Scanner(System.in);
 
     public void checkPublicationName(){
@@ -151,11 +181,24 @@ public class Publication {
         }
     }
 
+    public void checkPublicationStock(){
+        while(true){
+            System.out.println("Enter Publication Stock: ");
+            publicationStock = input.nextLine();
+            try {
+                validPrice(publicationStock);
+                break;
+            }catch (IllegalArgumentException e){
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
     // currently the deliveryArea is a string value but both the db and its
     // insert function are accepting int values
     public void insertPublication(){
         try{
-            databaseConnection.insertPublication(publicationName, publicationDescription, Double.parseDouble(publicationPrice));
+            databaseConnection.insertPublication(publicationName, publicationDescription, Double.parseDouble(publicationPrice), Integer.parseInt(stock));
         }
         catch (Exception e){
             System.out.println(e.getMessage());
@@ -180,4 +223,46 @@ public class Publication {
     public void publicationReadAll() {
         selectAllPublication();
     }
+
+
+    public void publicationUpdate() {
+        while(true){
+            System.out.println("Enter publication ID to update: ");
+            try {
+                int id = input.nextInt();
+                input.nextLine();
+                publicationReadByID(String.valueOf(id));
+                inputID = String.valueOf(id);
+                break;
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());            }
+        }
+    }
+
+    public void updatePublicationDB() {
+        try {
+            databaseConnection.updatePublication(Integer.parseInt(inputID), name,  description, Double.parseDouble(price), Integer.parseInt(stock)) ;
+            System.out.println("DeliveryArea update successful, returning to main page");
+        } catch (IllegalArgumentException e)    {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    //--------------------- delete ---------------------
+    public void publicationDelete() {
+        while(true){
+            System.out.println("Enter deliveryArea ID to delete: ");
+            try {
+                int id = input.nextInt();
+                input.nextLine();
+                publicationReadByID(String.valueOf(id));
+                System.out.println("Deleting data related to ID: " + id);
+                databaseConnection.deletePublication(id);
+                break;
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());            }
+        }
+    }
+
+
 }

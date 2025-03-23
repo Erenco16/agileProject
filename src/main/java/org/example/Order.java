@@ -8,7 +8,7 @@ public class Order {
     private int pub_id;
     private int quantity;
     private String status;
-    private DatabaseConnection databaseConnection;
+    private DatabaseConnection databaseConnection;  // <== Store connection here
 
     // Initialize DatabaseConnection in the constructor
     public Order() {

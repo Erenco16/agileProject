@@ -3,13 +3,14 @@ package org.example;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class deliveryArea {
+public class DeliveryArea {
     private String name;
     private String description;
     private DatabaseConnection databaseConnection;
+    private String inputID;
 
     // Constructor to initialize the DatabaseConnection
-    public deliveryArea() {
+    public DeliveryArea() {
         this.databaseConnection = new DatabaseConnection();
     }
 
@@ -157,4 +158,49 @@ public class deliveryArea {
         }
     }
 
+    public void deliveryAreaUpdate() {
+        while(true){
+            System.out.println("Enter DeliveryArea ID to update: ");
+            try {
+                int id = input.nextInt();
+                input.nextLine();
+                deliveryReadByID(String.valueOf(id));
+                inputID = String.valueOf(id);
+                break;
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());            }
+        }
+    }
+
+    public void updatedeliveryAreaDB() {
+        try {
+            databaseConnection.updateDeliveryArea(Integer.parseInt(inputID), name,  description) ;
+            System.out.println("DeliveryArea update successful, returning to main page");
+        } catch (IllegalArgumentException e)    {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    //--------------------- delete ---------------------
+    public void deliveryAreaDelete() {
+        while(true){
+            System.out.println("Enter deliveryArea ID to delete: ");
+            try {
+                int id = input.nextInt();
+                input.nextLine();
+                deliveryReadByID(String.valueOf(id));
+                System.out.println("Deleting data related to ID: " + id);
+                databaseConnection.deleteDeliveryArea(id);
+                break;
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());            }
+        }
+    }
+
+//    public void customerDeleteDB() {
+//        int id = Integer.parseInt(inputID);
+//        databaseConnection.deleteCustomer(id);
+//    }
+
 }
+

@@ -222,4 +222,7 @@ public class Publication {
     public void publicationReadAll() {
         selectAllPublication();
     }
+
+
+
 }

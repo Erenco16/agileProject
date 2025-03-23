@@ -186,4 +186,37 @@ public class Order {
             System.out.println("Error occurred while inserting order: " + e.getMessage());
         }
     }
+
+    public void updateOrder() {
+        while (true) {
+            System.out.println("Enter Order ID: ");
+            try {
+                int input_id = input.nextInt();
+                input.nextLine(); // consume leftover newline
+
+                System.out.println("Enter new status (Pending, Shipped, Delivered, Cancelled): ");
+                String newStatus = input.nextLine().trim();
+
+                databaseConnection.updateOrder(input_id, newStatus);
+                System.out.println("Order updated successfully!");
+                break;
+            } catch (Exception e) {
+                System.out.println("Error occurred while updating order: " + e.getMessage());
+                input.nextLine(); // Clear buffer
+            }
+        }
+    }
+
+
+    public void deleteOrder() {
+        System.out.println("Enter Order ID: ");
+        try {
+            int input_id = input.nextInt();
+            input.nextLine(); // consume leftover newline
+            databaseConnection.deleteOrder(input_id);
+            System.out.println("Order deleted successfully!");
+        } catch (Exception e) {
+            System.out.println("Error occurred while deleting order: " + e.getMessage());
+        }
+    }
 }

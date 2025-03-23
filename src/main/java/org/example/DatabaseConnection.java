@@ -40,7 +40,6 @@ public class DatabaseConnection {
     public static void runSQLFile(Connection connection, String filePath) {
         File sqlFile = new File(filePath);
 
-        // Check if the SQL file exists
         if (!sqlFile.exists()) {
             System.out.println("SQL file not found: " + filePath);
             return;
@@ -54,22 +53,30 @@ public class DatabaseConnection {
 
             while ((line = reader.readLine()) != null) {
                 line = line.trim();
-                if (!line.isEmpty() && !line.startsWith("--")) { // Ignore comments and empty lines
-                    sql.append(line).append("\n");
-                    if (line.endsWith(";")) { // Execute when a full SQL command is read
-                        statement.execute(sql.toString());
-                        System.out.println("Executed: " + sql);
-                        sql.setLength(0); // Reset the StringBuilder
+                if (!line.isEmpty() && !line.startsWith("--")) {
+                    sql.append(line).append(" ");
+                    // Check if we reached the end of a full statement
+                    String currentSQL = sql.toString().trim();
+                    if (currentSQL.endsWith(";") && (currentSQL.toUpperCase().endsWith("END;") || !currentSQL.toUpperCase().contains("CREATE TRIGGER"))) {
+                        statement.execute(currentSQL);
+                        sql.setLength(0);
                     }
                 }
+            }
+
+            // Execute any remaining SQL that doesn't end with a semicolon (just in case)
+            if (sql.length() > 0) {
+                statement.execute(sql.toString());
             }
 
             System.out.println("SQL setup file executed successfully!");
 
         } catch (IOException | SQLException e) {
             System.out.println("Failed to execute SQL file: " + e.getMessage());
+            e.printStackTrace();
         }
     }
+
 
     // General method to convert a ResultSet into an ArrayList of rows.
     public ArrayList<ArrayList<String>> getValues(ResultSet rs) throws SQLException {
@@ -592,14 +599,11 @@ public class DatabaseConnection {
     }
 
     // --------------------- Orders Update and Delete Methods ---------------------
-    public void updateOrder(int id, int custId, int pubId, int quantity, String status) {
-        String sql = "UPDATE Orders SET cust_id = ?, pub_id = ?, quantity = ?, status = ? WHERE id = ?";
+    public void updateOrder(int id, String status) {
+        String sql = "UPDATE Orders SET status = ? WHERE id = ?";
         try (Connection conn = getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setInt(1, custId);
-            pstmt.setInt(2, pubId);
-            pstmt.setInt(3, quantity);
-            pstmt.setString(4, status);
-            pstmt.setInt(5, id);
+            pstmt.setString(1, status);
+            pstmt.setInt(2, id);
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println("Error updating Order: " + e.getMessage());

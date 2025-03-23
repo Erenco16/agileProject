@@ -534,6 +534,124 @@ public class DatabaseConnection {
         }
     }
 
+    // --------------------- DeliveryMan Update and Delete Methods ---------------------
+    public void updateDeliveryMan(int id, String name, String employmentStatus) {
+        String sql = "UPDATE DeliveryMan SET name = ?, employment_status = ? WHERE id = ?";
+        try (Connection conn = getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, name);
+            pstmt.setString(2, employmentStatus);
+            pstmt.setInt(3, id);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Error updating DeliveryMan: " + e.getMessage());
+        }
+    }
+
+    public void deleteDeliveryMan(int id) {
+        String sql = "DELETE FROM DeliveryMan WHERE id = ?";
+        try (Connection conn = getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, id);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Error deleting from DeliveryMan: " + e.getMessage());
+        }
+    }
+
+    // --------------------- Invoice Update and Delete Methods ---------------------
+    public void updateInvoice(int id, int orderId, double totalPayableAmount) {
+        String sql = "UPDATE Invoice SET order_id = ?, total_payable_amount = ? WHERE id = ?";
+        try (Connection conn = getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, orderId);
+            pstmt.setDouble(2, totalPayableAmount);
+            pstmt.setInt(3, id);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Error updating Invoice: " + e.getMessage());
+        }
+    }
+
+    public void deleteInvoice(int id) {
+        String sql = "DELETE FROM Invoice WHERE id = ?";
+        try (Connection conn = getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, id);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Error deleting from Invoice: " + e.getMessage());
+        }
+    }
+
+    // --------------------- Orders Update and Delete Methods ---------------------
+    public void updateOrder(int id, int custId, int pubId, int quantity, String status) {
+        String sql = "UPDATE Orders SET cust_id = ?, pub_id = ?, quantity = ?, status = ? WHERE id = ?";
+        try (Connection conn = getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, custId);
+            pstmt.setInt(2, pubId);
+            pstmt.setInt(3, quantity);
+            pstmt.setString(4, status);
+            pstmt.setInt(5, id);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Error updating Order: " + e.getMessage());
+        }
+    }
+
+    public void deleteOrder(int id) {
+        String sql = "DELETE FROM Orders WHERE id = ?";
+        try (Connection conn = getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, id);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Error deleting from Orders: " + e.getMessage());
+        }
+    }
+
+    // --------------------- DeliveryDocket Update and Delete Methods ---------------------
+    public void updateDeliveryDocket(int id, Integer deliveryManId, String docketStatus) {
+        String sql = "UPDATE DeliveryDocket SET delivery_man_id = ?, docket_status = ? WHERE id = ?";
+        try (Connection conn = getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setObject(1, deliveryManId, Types.INTEGER);
+            pstmt.setString(2, docketStatus);
+            pstmt.setInt(3, id);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Error updating DeliveryDocket: " + e.getMessage());
+        }
+    }
+
+    public void deleteDeliveryDocket(int id) {
+        String sql = "DELETE FROM DeliveryDocket WHERE id = ?";
+        try (Connection conn = getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, id);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Error deleting from DeliveryDocket: " + e.getMessage());
+        }
+    }
+
+    public void updatePublication(int id, String name, String description, double price, int stock) {
+        String sql = "UPDATE Publication SET name = ?, description = ?, price = ?, stock_available = ? WHERE id = ?";
+        try (Connection conn = getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, name);
+            pstmt.setString(2, description);
+            pstmt.setDouble(3, price);
+            pstmt.setInt(4, stock);
+            pstmt.setInt(5, id);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Error updating Publication: " + e.getMessage());
+        }
+    }
+
+    public void deletePublication(int id) {
+        String sql = "DELETE FROM Publication WHERE id = ?";
+        try (Connection conn = getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, id);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Error deleting from Publication: " + e.getMessage());
+        }
+    }
+
 
     public static void main(String[] args) {
         // Insert sample data.
@@ -624,3 +742,4 @@ public class DatabaseConnection {
     }
 
 }
+

@@ -241,7 +241,7 @@ public class Publication {
 
     public void updatePublicationDB() {
         try {
-            databaseConnection.updatePublication(Integer.parseInt(inputID), name,  description) ;
+            databaseConnection.updatePublication(Integer.parseInt(inputID), name,  description, Double.parseDouble(price), Integer.parseInt(stock)) ;
             System.out.println("DeliveryArea update successful, returning to main page");
         } catch (IllegalArgumentException e)    {
             System.out.println(e.getMessage());

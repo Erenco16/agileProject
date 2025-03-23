@@ -36,4 +36,29 @@
             <version>5.9.2</version>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <!-- JaCoCo Plugin for code coverage -->
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.7</version> <!-- Make sure to use the latest version -->
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>prepare-agent</goal> <!-- Prepares JaCoCo to run during tests -->
+                        </goals>
+                    </execution>
+                    <execution>
+                        <goals>
+                            <goal>report</goal> <!-- Generates the coverage report -->
+                        </goals>
+                        <phase>verify</phase> <!-- Runs during the verify phase of the build -->
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
 </project>

@@ -329,7 +329,7 @@ public class Customer {
                 selectCustomerMod(String.valueOf(id));
                 inputID = String.valueOf(id);
                 break;
-            } catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException e)    {
                 System.out.println(e.getMessage());            }
         }
     }

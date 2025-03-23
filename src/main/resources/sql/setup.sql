@@ -71,6 +71,19 @@ FOREIGN KEY (delivery_man_id) REFERENCES DeliveryMan(id)
 CREATE TABLE IF NOT EXISTS Invoice (
 id INTEGER PRIMARY KEY AUTOINCREMENT,
 order_id INTEGER NOT NULL,
-total_payable_amount REAL NOT NULL,
+total_payable_amount REAL,
 FOREIGN KEY (order_id) REFERENCES Orders(id) ON DELETE CASCADE
 );
+
+-- Trigger to calculate invoice's price automatically
+CREATE TRIGGER IF NOT EXISTS calculate_invoice_amount
+    BEFORE INSERT ON Invoice
+    FOR EACH ROW
+BEGIN
+    -- Retrieve quantity and price, calculate total, and set it
+    SELECT o.quantity * p.price
+        INTO NEW.total_payable_amount
+    FROM Orders o
+        JOIN Publication p ON o.pub_id = p.id
+    WHERE o.id = NEW.order_id;
+END;

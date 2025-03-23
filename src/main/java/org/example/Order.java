@@ -177,15 +177,25 @@ public class Order {
     }
 
     public void insertOrder() {
-        try {
-            // Validate publication and stock before inserting
-            validatePublicationAndStock(pub_id);
-            databaseConnection.insertOrderStatus(cust_id, pub_id, quantity, status);
-            System.out.println("Order inserted successfully!");
-        } catch (Exception e) {
-            System.out.println("Error occurred while inserting order: " + e.getMessage());
+        while (true) {
+            try {
+                // Validate publication and stock before inserting
+                validatePublicationAndStock(pub_id);
+                databaseConnection.insertOrderStatus(cust_id, pub_id, quantity, status);
+                System.out.println("Order inserted successfully!");
+                break; // Exit the loop if insertion succeeds
+            } catch (IllegalArgumentException e) {
+                System.out.println("Insufficient stock: " + e.getMessage());
+                System.out.println("Please enter a valid quantity:");
+                checkQuantity(); // Re-prompt for quantity and retry
+            } catch (Exception e) {
+                System.out.println("Error occurred while inserting order: " + e.getMessage());
+                break; // Break out on unexpected errors
+            }
         }
     }
+
+
 
     public void updateOrder() {
         while (true) {

@@ -322,7 +322,6 @@ public class NewsAgentCreate {
         o.checkQuantity();
         o.checkStatus();
         o.insertOrder();
-        System.out.println("Order created successfully");
         System.out.println("Taking you back to the main page.");
         mainPage();
     }

@@ -224,6 +224,7 @@ public class Publication {
         selectAllPublication();
     }
 
+
     public void publicationUpdate() {
         while(true){
             System.out.println("Enter publication ID to update: ");
@@ -262,4 +263,6 @@ public class Publication {
                 System.out.println(e.getMessage());            }
         }
     }
+
+
 }

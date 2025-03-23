@@ -173,12 +173,14 @@ public class NewsAgentCreate {
         da.deliveryAreaUpdate();
         da.checkAreaName();
         da.checkAreaDescription();
+        da.updatedeliveryAreaDB();
         mainPage();
     }
 
     public void deleteDeliveryAreaCLI(){
         DeliveryArea da = new DeliveryArea();
         da.deliveryAreaDelete();
+        mainPage();
     }
 
     public void updatePublicationCLI(){
@@ -194,7 +196,8 @@ public class NewsAgentCreate {
 
     public void deletePublicationCLI(){
         Publication p =new Publication();
-        //p.publicationDelete();
+        p.publicationDelete();
+        mainPage();
     }
 
     public void publicationPage(){
@@ -230,8 +233,12 @@ public class NewsAgentCreate {
 
             if (option == 1) {
                 createDeliveryAreaCLI();
-            } else{
+            } else if (option == 2){
                 readDeliveryAreaCLI();
+            } else if (option == 3){
+                updateDeliveryAreaCLI();
+            } else if (option == 4) {
+                deleteDeliveryAreaCLI();
             }
 
         }

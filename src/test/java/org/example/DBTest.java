@@ -181,9 +181,9 @@ public class DBTest {
         String pubName = "TestPublication_" + System.currentTimeMillis();
         String pubDescription = "Test Description " + System.currentTimeMillis();
         double pubPrice = (System.currentTimeMillis() % 1000) + 0.99;
-
+        int stock = 10;
         // Insert the publication using the new method signature.
-        db.insertPublication(pubName, pubDescription, pubPrice);
+        db.insertPublication(pubName, pubDescription, pubPrice, stock);
 
         // Retrieve all publications.
         ArrayList<ArrayList<String>> pubs = db.selectAllPublication();
@@ -246,7 +246,8 @@ public class DBTest {
         String pubName = "TestPublication_" + System.currentTimeMillis();
         String pubDescription = "Test Description " + System.currentTimeMillis();
         double pubPrice = (System.currentTimeMillis() % 1000) + 0.99;
-        db.insertPublication(pubName, pubDescription, pubPrice);
+        int stock = 10;
+        db.insertPublication(pubName, pubDescription, pubPrice, stock);
 
         // Retrieve the publication id.
         ArrayList<ArrayList<String>> pubs = db.selectAllPublication();
@@ -343,8 +344,9 @@ public class DBTest {
         db.insertCustomer("Invoice Customer", "invoice@example.com", "Test Address", "1234567890", 1, "EIR1234");
         ArrayList<ArrayList<String>> customers = db.selectAllCustomers();
         int custId = Integer.parseInt(customers.get(customers.size() - 1).get(0));
+        int stock = 10;
 
-        db.insertPublication("Invoice Publication", "Test Desc", 15.99);
+        db.insertPublication("Invoice Publication", "Test Desc", 15.99, stock);
         ArrayList<ArrayList<String>> publications = db.selectAllPublication();
         int pubId = Integer.parseInt(publications.get(publications.size() - 1).get(0));
 

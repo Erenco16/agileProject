@@ -7,6 +7,7 @@ public class Publication {
     private String name;
     private String description;
     private String price;
+    private String stock;
     private DatabaseConnection databaseConnection;
 
     // Constructor to initialize the DatabaseConnection
@@ -25,6 +26,9 @@ public class Publication {
     public void setDescription(String description){
         this.description = description;
     }
+    public void stock(String stock){
+        this.stock = stock;
+    }
 
     // Getter 方法
     public String getName() {
@@ -37,6 +41,10 @@ public class Publication {
 
     public String getPrice(){
         return price;
+    }
+
+    public String getStock(){
+        return stock;
     }
 
     public boolean validName(String name){
@@ -79,6 +87,25 @@ public class Publication {
         return true;
     }
 
+    public boolean validStock(String stock){
+
+        try{
+            int dnum = Integer.parseInt(stock);
+            if (dnum < 0){
+                throw new IllegalArgumentException("Stock can not be a negative number!");
+            }
+//            if(price.isEmpty() || price == null){
+//                throw new IllegalArgumentException("Price must not be empty");
+//            }
+            if(price.length() > 255 ){
+                throw new IllegalArgumentException("Stock must be between 1-255 digits long");
+            }
+        }catch (NumberFormatException e){
+            throw new IllegalArgumentException("Stock must be an integer value");
+        }
+        return true;
+    }
+
     public boolean publicationReadByID(String id) {
         try {
             ArrayList<ArrayList<String>> publication = databaseConnection.selectPublication(Integer.parseInt(id));
@@ -110,6 +137,8 @@ public class Publication {
     private String publicationName;
     private String publicationDescription;
     private String publicationPrice;
+    private String publicationStock;
+
     Scanner input = new Scanner(System.in);
 
     public void checkPublicationName(){
@@ -151,11 +180,24 @@ public class Publication {
         }
     }
 
+    public void checkPublicationStock(){
+        while(true){
+            System.out.println("Enter Publication Stock: ");
+            publicationStock = input.nextLine();
+            try {
+                validPrice(publicationStock);
+                break;
+            }catch (IllegalArgumentException e){
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
     // currently the deliveryArea is a string value but both the db and its
     // insert function are accepting int values
     public void insertPublication(){
         try{
-            databaseConnection.insertPublication(publicationName, publicationDescription, Double.parseDouble(publicationPrice));
+            databaseConnection.insertPublication(publicationName, publicationDescription, Double.parseDouble(publicationPrice), Integer.parseInt(stock));
         }
         catch (Exception e){
             System.out.println(e.getMessage());

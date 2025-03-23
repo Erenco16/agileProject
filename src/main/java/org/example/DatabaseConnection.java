@@ -300,13 +300,14 @@ public class DatabaseConnection {
     // --------------------- Publication Table Methods ---------------------
 
     // Insert a record into the Publication table.
-    public void insertPublication(String name, String description, double price) {
-        String sql = "INSERT INTO Publication (name, description, price) VALUES (?, ?, ?)";
+    public void insertPublication(String name, String description, double price, int stock) {
+        String sql = "INSERT INTO Publication (name, description, price, stock_available) VALUES (?, ?, ?, ?)";
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, name);
             pstmt.setString(2, description);
             pstmt.setDouble(3, price);
+            pstmt.setInt(4, stock);
             int affectedRows = pstmt.executeUpdate();
             System.out.println("Inserted publication, affected rows: " + affectedRows);
         } catch (SQLException e) {
@@ -554,7 +555,7 @@ public class DatabaseConnection {
         db.insertAddress("123 Main St", 1);     // Assuming delivery_area_id 1 exists.
         db.insertCustomer("John Doe", "john@example.com", "Some address", "12123123", 2, "N37 ASD");
         db.insertNewsAgent("Jane Reporter");
-        db.insertPublication("test", "test", 9.99);            // Assuming customer id 1 exists.
+        db.insertPublication("test", "test", 9.99, 10);            // Assuming customer id 1 exists.
         db.insertOrderStatus(1, 1, 2, "Pending"); // Assuming cust_id 1 and pub_id 1 exist.
 
         // Display data from each table.

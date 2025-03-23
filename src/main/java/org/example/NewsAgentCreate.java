@@ -183,10 +183,12 @@ public class NewsAgentCreate {
 
     public void updatePublicationCLI(){
         Publication p = new Publication();
-        //p.publicationUpdate();
+        p.publicationUpdate();
         p.checkPublicationName();
         p.checkPublicationDescription();
         p.checkPublicationPrice();
+        p.checkPublicationStock();
+        p.updatePublicationDB();
         mainPage();
     }
 
@@ -206,8 +208,12 @@ public class NewsAgentCreate {
 
             if (option == 1) {
                 createPublicationCLI();
-            } else {
+            } else if (option == 2){
                 readPublicationCLI();
+            } else if (option == 3) {
+                updatePublicationCLI();
+            } else if (option == 4) {
+                deletePublicationCLI();
             }
 
         }

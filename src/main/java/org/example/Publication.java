@@ -98,7 +98,7 @@ public class Publication {
 //            if(price.isEmpty() || price == null){
 //                throw new IllegalArgumentException("Price must not be empty");
 //            }
-            if(price.length() > 255 ){
+            if(stock.length() > 255 ){
                 throw new IllegalArgumentException("Stock must be between 1-255 digits long");
             }
         }catch (NumberFormatException e){
@@ -186,7 +186,7 @@ public class Publication {
             System.out.println("Enter Publication Stock: ");
             publicationStock = input.nextLine();
             try {
-                validPrice(publicationStock);
+                validStock(publicationStock);
                 break;
             }catch (IllegalArgumentException e){
                 System.out.println(e.getMessage());
@@ -198,10 +198,11 @@ public class Publication {
     // insert function are accepting int values
     public void insertPublication(){
         try{
-            databaseConnection.insertPublication(publicationName, publicationDescription, Double.parseDouble(publicationPrice), Integer.parseInt(stock));
+            databaseConnection.insertPublication(publicationName, publicationDescription,
+                    Double.parseDouble(publicationPrice), Integer.parseInt(publicationStock)); // Corrected reference
         }
         catch (Exception e){
-            System.out.println(e.getMessage());
+            System.out.println("Error inserting publication: " + e.getMessage());
         }
     }
 

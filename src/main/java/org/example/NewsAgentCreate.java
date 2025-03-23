@@ -169,26 +169,30 @@ public class NewsAgentCreate {
         da.deliveryAreaUpdate();
         da.checkAreaName();
         da.checkAreaDescription();
+        da.updatedeliveryAreaDB();
         mainPage();
     }
 
     public void deleteDeliveryAreaCLI(){
         DeliveryArea da = new DeliveryArea();
         da.deliveryAreaDelete();
+        mainPage();
     }
 
     public void updatePublicationCLI(){
         Publication p = new Publication();
-        //p.publicationUpdate();
+        p.publicationUpdate();
         p.checkPublicationName();
         p.checkPublicationDescription();
         p.checkPublicationPrice();
+        p.updatePublicationDB();
         mainPage();
     }
 
     public void deletePublicationCLI(){
         Publication p =new Publication();
-        //p.publicationDelete();
+        p.publicationDelete();
+        mainPage();
     }
 
     public void publicationPage(){
@@ -202,8 +206,12 @@ public class NewsAgentCreate {
 
             if (option == 1) {
                 createPublicationCLI();
-            } else {
+            } else if (option == 2){
                 readPublicationCLI();
+            } else if (option == 3) {
+                updatePublicationCLI();
+            } else if (option == 4) {
+                deletePublicationCLI();
             }
 
         }
@@ -220,8 +228,12 @@ public class NewsAgentCreate {
 
             if (option == 1) {
                 createDeliveryAreaCLI();
-            } else{
+            } else if (option == 2){
                 readDeliveryAreaCLI();
+            } else if (option == 3){
+                updateDeliveryAreaCLI();
+            } else if (option == 4) {
+                deleteDeliveryAreaCLI();
             }
 
         }
@@ -340,6 +352,7 @@ public class NewsAgentCreate {
         pv.checkPublicationName();
         pv.checkPublicationDescription();
         pv.checkPublicationPrice();
+        pv.checkPublicationStock();
         pv.insertPublication();
         mainPage();
     }

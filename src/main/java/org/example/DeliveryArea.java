@@ -96,7 +96,7 @@ public class DeliveryArea {
 
         while(true){
 
-            System.out.println("Enter Delivery Area: ");
+            System.out.println("Enter Delivery Area Name: ");
             areaName = input.nextLine().trim();
             try{
                 validName(areaName);
@@ -174,6 +174,9 @@ public class DeliveryArea {
 
     public void updatedeliveryAreaDB() {
         try {
+            this.name = areaName;
+            this.description = areaDescription;
+
             databaseConnection.updateDeliveryArea(Integer.parseInt(inputID), name,  description) ;
             System.out.println("DeliveryArea update successful, returning to main page");
         } catch (IllegalArgumentException e)    {

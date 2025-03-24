@@ -7,7 +7,7 @@ public class DeliveryMan {
 
     public String name;
     public String employmentStatus;
-    private DatabaseConnection databaseConnection;
+    DatabaseConnection databaseConnection;
 
     // Initialize DatabaseConnection in the constructor
     public DeliveryMan() { this.databaseConnection = new DatabaseConnection();}

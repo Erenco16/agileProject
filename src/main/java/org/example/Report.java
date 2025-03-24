@@ -4,6 +4,7 @@ import java.sql.*;
 import java.io.*;
 import java.nio.file.*;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Report {
 
@@ -56,10 +57,23 @@ public class Report {
         }
     }
 
-    public static void totalRevenueByMonthReport(int month) {
-        if (month < 1 || month > 12) {
-            throw new IllegalArgumentException("Invalid month: " + month);
+    public void totalRevenueByMonthReport() {
+        Scanner input = new Scanner(System.in);
+        int month;
+        while (true) {
+            try {
+                System.out.print("Enter the month (1-12) for the revenue report: ");
+                month = Integer.parseInt(input.nextLine().trim());
+                if (month < 1 || month > 12) {
+                    System.out.println("Invalid month. Please enter a value between 1 and 12.");
+                    continue;
+                }
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a number between 1 and 12.");
+            }
         }
+
         exportQueryResultToCSV(
                 "SELECT order_month, ROUND(SUM(total_payable_amount),2) AS total_amount FROM (" +
                         "SELECT strftime('%m', o.order_date) + 0 AS order_month, i.total_payable_amount " +
@@ -68,12 +82,26 @@ public class Report {
                 OUTPUT_PATH,
                 "revenueByMonth.csv"
         );
+        System.out.println("Revenue by month report generated.");
     }
 
-    public static void totalRevenueByDeliveryAreaReport(int deliveryArea) {
-        if (!isValidDeliveryArea(deliveryArea)) {
-            throw new IllegalArgumentException("Invalid delivery area: " + deliveryArea);
+    public void totalRevenueByDeliveryAreaReport() {
+        Scanner input = new Scanner(System.in);
+        int deliveryArea;
+        while (true) {
+            try {
+                System.out.print("Enter the Delivery Area ID for the revenue report: ");
+                deliveryArea = Integer.parseInt(input.nextLine().trim());
+                if (!isValidDeliveryArea(deliveryArea)) {
+                    System.out.println("Invalid delivery area ID. Please try again.");
+                    continue;
+                }
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a valid delivery area ID.");
+            }
         }
+
         exportQueryResultToCSV(
                 "SELECT\n" +
                         "delivery_area,\n" +
@@ -91,29 +119,45 @@ public class Report {
                 OUTPUT_PATH,
                 "revenueByDeliveryArea.csv"
         );
+        System.out.println("Revenue by delivery area report generated.");
     }
 
-    public static void totalRevenueByCustomerReport(int customerId) {
-        if (!isValidCustomer(customerId)) {
-            throw new IllegalArgumentException("Invalid customer ID: " + customerId);
+    public void totalRevenueByPublicationReport() {
+        Scanner input = new Scanner(System.in);
+        int publicationID;
+        while (true) {
+            try {
+                System.out.print("Enter the Publication ID for the revenue report: ");
+                publicationID = Integer.parseInt(input.nextLine().trim());
+                if (!isValidPublication(publicationID)) {
+                    System.out.println("Invalid publication ID. Please try again.");
+                    continue;
+                }
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a valid publication ID.");
+            }
         }
+
         exportQueryResultToCSV(
                 "SELECT\n" +
                         "customer_name,\n" +
                         "ROUND(SUM(total_payable_amount), 2) AS total_revenue\n" +
                         "FROM (\n" +
                         "SELECT\n" +
-                        "c.name AS customer_name,\n" +
+                        "p.name AS customer_name,\n" +
                         "i.total_payable_amount\n" +
                         "FROM Orders o\n" +
                         "LEFT JOIN Invoice i ON o.id = i.order_id\n" +
-                        "LEFT JOIN Customers c ON o.cust_id = c.id\n" +
-                        "WHERE c.id = " + customerId + ")\n" +
+                        "LEFT JOIN Publication p ON o.pub_id = p.id\n" +
+                        "WHERE p.id = " + publicationID + ")\n" +
                         "GROUP BY customer_name",
                 OUTPUT_PATH,
-                "revenueByCustomer.csv"
+                "revenueByPublication.csv"
         );
+        System.out.println("Revenue by publication report generated.");
     }
+
 
     public static boolean isValidDeliveryArea(int deliveryArea) {
         ArrayList<ArrayList<String>> values = selectDeliveryArea(deliveryArea);
@@ -123,6 +167,11 @@ public class Report {
     public static boolean isValidCustomer(int customerId) {
         ArrayList<ArrayList<String>> values = selectCustomers(customerId);
         return values.stream().anyMatch(row -> row.get(0).equals(String.valueOf(customerId)));
+    }
+
+    public static boolean isValidPublication(int publicationID) {
+        ArrayList<ArrayList<String>> values = selectPublication(publicationID);
+        return values.stream().anyMatch(row -> row.get(0).equals(String.valueOf(publicationID)));
     }
 
     public static ArrayList<ArrayList<String>> getValues(ResultSet rs) throws SQLException {
@@ -152,6 +201,18 @@ public class Report {
         return new ArrayList<>();
     }
 
+    public static ArrayList<ArrayList<String>> selectPublication(int id) {
+        String sql = "SELECT * FROM Publication WHERE id = " + id;
+        try (Connection conn = getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            return getValues(rs);
+        } catch (SQLException e) {
+            System.err.println("Error selecting from Publications: " + e.getMessage());
+        }
+        return new ArrayList<>();
+    }
+
     // Select a record from the DeliveryArea table by id.
     public static ArrayList<ArrayList<String>> selectDeliveryArea(int id) {
         String sql = "SELECT * FROM DeliveryArea WHERE id = " + id;
@@ -165,9 +226,4 @@ public class Report {
         return new ArrayList<>();
     }
 
-    public static void main(String[] args) {
-        totalRevenueByMonthReport(3);
-        totalRevenueByDeliveryAreaReport(2);
-        totalRevenueByCustomerReport(2);
-    }
 }

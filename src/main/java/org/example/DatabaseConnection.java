@@ -668,6 +668,7 @@ public class DatabaseConnection {
     }
 
 
+
     public static void main(String[] args) {
         // Insert sample data.
         // Note: The order of insertion matters due to foreign key constraints.

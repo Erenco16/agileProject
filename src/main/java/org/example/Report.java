@@ -165,9 +165,9 @@ public class Report {
         return new ArrayList<>();
     }
 
-    public static void main(String[] args) {
-        totalRevenueByMonthReport(3);
-        totalRevenueByDeliveryAreaReport(2);
-        totalRevenueByCustomerReport(2);
-    }
+//    public static void main(String[] args) {
+//        totalRevenueByMonthReport(3);
+//        totalRevenueByDeliveryAreaReport(2);
+//        totalRevenueByCustomerReport(2);
+//    }
 }

@@ -345,15 +345,19 @@ public class NewsAgentCreate {
     public void invoicePage(){
         while (true) {
             System.out.println("Welcome to the Invoice Page!");
-            System.out.println("1.Create an Invoice");
-            System.out.println("2.Read an Invoice");
-            System.out.println("3.Update an Invoice");
-            System.out.println("4.Delete an Invoice");
-            option = getValidIntegerInput(1, 4); // Allows only 1 or 2
-
+            System.out.println("1.Generate an Invoice for a Customer");
+            option = getValidIntegerInput(1,1);
+            if (option == 1){
+                generateInvoiceCLI();
+            }
         }
 
     }
+
+    public void generateInvoiceCLI(){
+        Invoice i = new Invoice();
+    }
+
 
     //integrate this part as well, ensure all is working
 
@@ -457,10 +461,32 @@ public class NewsAgentCreate {
             System.out.println("1.View total amount of revenue by month");
             System.out.println("2.View total amount of revenue by delivery area");
             System.out.println("3.View total amount of revenue by customer");
-            option = getValidIntegerInput(1, 3); // Allows only 1 or 2
+            option = getValidIntegerInput(1, 3);
+
+            if (option == 1){
+
+            }
 
         }
 
+    }
+
+    public void revenueByMonthCLI(){
+        Report r = new Report();
+        r.totalRevenueByMonthReport();
+        mainPage();
+    }
+
+    public void revenueByDeliveryAreaCLI(){
+        Report r = new Report();
+        r.totalRevenueByDeliveryAreaReport();
+        mainPage();
+    }
+
+    public void revenueByCustomerCLI(){
+        Report r = new Report();
+        r.totalRevenueByCustomerReport();
+        mainPage();
     }
 
     public void createDeliveryAreaCLI(){

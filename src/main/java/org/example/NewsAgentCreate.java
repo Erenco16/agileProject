@@ -119,11 +119,19 @@ public class NewsAgentCreate {
             }
         }
 
+    public void checkForQuit(String userInput) {
+        if (userInput.equalsIgnoreCase("!q")) {
+            System.out.println("Returning to the main page...");
+            mainPage();
+        }
+    }
 
     public int getValidIntegerInput(int min, int max) {
         while (true) {
             System.out.print("Enter your option: ");
             String userInput = input.nextLine().trim(); // Read input as a string
+
+            checkForQuit(userInput);
 
             if (userInput.isEmpty()) {
                 System.out.println("Input cannot be empty. Please enter a number.");
@@ -174,7 +182,6 @@ public class NewsAgentCreate {
             System.out.println("4.Delete a Customer");
             option = getValidIntegerInput(1, 4); // Allows only 1 to 4
 
-
             if (option == 1) {
                 createCustomerCLI();
             } else if (option==2) {
@@ -212,6 +219,7 @@ public class NewsAgentCreate {
             System.out.println("Welcome to Customer Read!");
             System.out.println("1.Find a Specific ID");
             System.out.println("2.Display all Customers");
+
             if (input.hasNextInt()) {
                 option = input.nextInt();
                 input.nextLine();  // Consume the newline
@@ -558,7 +566,7 @@ public class NewsAgentCreate {
             System.out.println("Welcome to the Report Page!");
             System.out.println("1.View total amount of revenue by month");
             System.out.println("2.View total amount of revenue by delivery area");
-            System.out.println("3.View total amount of revenue by customer");
+            System.out.println("3.View total amount of revenue by publication");
             option = getValidIntegerInput(1, 3);
 
             if (option == 1){
@@ -589,7 +597,7 @@ public class NewsAgentCreate {
 
     public void revenueByPublicationCLI(){
         Report r = new Report();
-        //r.totalRevenueByPublicationReport();
+        r.totalRevenueByPublicationReport();
         mainPage();
     }
 

@@ -122,20 +122,20 @@ public class Report {
         System.out.println("Revenue by delivery area report generated.");
     }
 
-    public void totalRevenueByCustomerReport() {
+    public void totalRevenueByPublicationReport() {
         Scanner input = new Scanner(System.in);
-        int customerId;
+        int publicationID;
         while (true) {
             try {
-                System.out.print("Enter the Customer ID for the revenue report: ");
-                customerId = Integer.parseInt(input.nextLine().trim());
-                if (!isValidCustomer(customerId)) {
-                    System.out.println("Invalid customer ID. Please try again.");
+                System.out.print("Enter the Publication ID for the revenue report: ");
+                publicationID = Integer.parseInt(input.nextLine().trim());
+                if (!isValidPublication(publicationID)) {
+                    System.out.println("Invalid publication ID. Please try again.");
                     continue;
                 }
                 break;
             } catch (NumberFormatException e) {
-                System.out.println("Invalid input. Please enter a valid customer ID.");
+                System.out.println("Invalid input. Please enter a valid publication ID.");
             }
         }
 
@@ -145,17 +145,17 @@ public class Report {
                         "ROUND(SUM(total_payable_amount), 2) AS total_revenue\n" +
                         "FROM (\n" +
                         "SELECT\n" +
-                        "c.name AS customer_name,\n" +
+                        "p.name AS customer_name,\n" +
                         "i.total_payable_amount\n" +
                         "FROM Orders o\n" +
                         "LEFT JOIN Invoice i ON o.id = i.order_id\n" +
-                        "LEFT JOIN Customers c ON o.cust_id = c.id\n" +
-                        "WHERE c.id = " + customerId + ")\n" +
+                        "LEFT JOIN Publication p ON o.pub_id = p.id\n" +
+                        "WHERE p.id = " + publicationID + ")\n" +
                         "GROUP BY customer_name",
                 OUTPUT_PATH,
-                "revenueByCustomer.csv"
+                "revenueByPublication.csv"
         );
-        System.out.println("Revenue by customer report generated.");
+        System.out.println("Revenue by publication report generated.");
     }
 
 
@@ -167,6 +167,11 @@ public class Report {
     public static boolean isValidCustomer(int customerId) {
         ArrayList<ArrayList<String>> values = selectCustomers(customerId);
         return values.stream().anyMatch(row -> row.get(0).equals(String.valueOf(customerId)));
+    }
+
+    public static boolean isValidPublication(int publicationID) {
+        ArrayList<ArrayList<String>> values = selectPublication(publicationID);
+        return values.stream().anyMatch(row -> row.get(0).equals(String.valueOf(publicationID)));
     }
 
     public static ArrayList<ArrayList<String>> getValues(ResultSet rs) throws SQLException {
@@ -192,6 +197,18 @@ public class Report {
             return getValues(rs);
         } catch (SQLException e) {
             System.err.println("Error selecting from Customers: " + e.getMessage());
+        }
+        return new ArrayList<>();
+    }
+
+    public static ArrayList<ArrayList<String>> selectPublication(int id) {
+        String sql = "SELECT * FROM Publication WHERE id = " + id;
+        try (Connection conn = getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            return getValues(rs);
+        } catch (SQLException e) {
+            System.err.println("Error selecting from Publications: " + e.getMessage());
         }
         return new ArrayList<>();
     }

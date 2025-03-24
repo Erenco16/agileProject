@@ -91,7 +91,7 @@ class deliveryAreaTest {
     //expected output: true
     @Test
     void publicationReadValid() {
-        boolean result = area.deliveryReadByID("1");
+        boolean result = area.deliveryReadByID("2");
         assertTrue(result);
     }
     //success

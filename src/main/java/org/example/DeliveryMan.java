@@ -42,7 +42,7 @@ public class DeliveryMan {
 
     public void checkName(){
         while(true){
-            System.out.println("Enter Customer Name: ");
+            System.out.println("Enter Delivery Man Name: ");
             this.name = input.nextLine().trim();
             try{
                 validateName(this.name);
@@ -76,11 +76,11 @@ public class DeliveryMan {
             try {
                 int id = input.nextInt();
                 input.nextLine(); // consume leftover newline
-                ArrayList<ArrayList<String>> order = databaseConnection.selectOrdersStatus(id);
-                if (order.isEmpty()) {
-                    System.out.println("No order found with ID: " + id);
+                ArrayList<ArrayList<String>> deliveryMan = databaseConnection.selectDeliveryMan(id);
+                if (deliveryMan.isEmpty()) {
+                    System.out.println("No Delivery Man found with ID: " + id);
                 } else {
-                    System.out.println("Order found: " + order);
+                    System.out.println("Delivery Man found: " + deliveryMan);
                 }
                 break;
             } catch (Exception e) {
@@ -92,8 +92,8 @@ public class DeliveryMan {
 
     public void deliveryManReadAll() {
         try {
-            ArrayList<ArrayList<String>> allOrders = databaseConnection.selectAllOrdersStatus();
-            System.out.println("Displaying all orders: " + allOrders);
+            ArrayList<ArrayList<String>> allDeliveryMan = databaseConnection.selectAllDeliveryMan();
+            System.out.println("Displaying all Deliver Men: " + allDeliveryMan);
         } catch (Exception e) {
             System.out.println("Error occurred: " + e.getMessage());
         }
@@ -103,16 +103,12 @@ public class DeliveryMan {
         while (true) {
             try {
                 // Validate publication and stock before inserting
-                validatePublicationAndStock(pub_id);
-                databaseConnection.insertOrderStatus(cust_id, pub_id, quantity, status);
-                System.out.println("Order inserted successfully!");
+                validateName(name);
+                databaseConnection.insertDeliveryMan(name, employmentStatus);
+                System.out.println("Delivery Man inserted successfully!");
                 break; // Exit the loop if insertion succeeds
-            } catch (IllegalArgumentException e) {
-                System.out.println("Insufficient stock: " + e.getMessage());
-                System.out.println("Please enter a valid quantity:");
-                checkQuantity(); // Re-prompt for quantity and retry
             } catch (Exception e) {
-                System.out.println("Error occurred while inserting order: " + e.getMessage());
+                System.out.println("Error occurred while inserting Delivery Man: " + e.getMessage());
                 break; // Break out on unexpected errors
             }
         }
@@ -122,19 +118,19 @@ public class DeliveryMan {
 
     public void updateDeliveryMan() {
         while (true) {
-            System.out.println("Enter Order ID: ");
+            System.out.println("Enter Delivery Man ID: ");
             try {
                 int input_id = input.nextInt();
                 input.nextLine(); // consume leftover newline
 
-                System.out.println("Enter new status (Pending, Shipped, Delivered, Cancelled): ");
+                System.out.println("Enter new status (Active, Inactive): ");
                 String newStatus = input.nextLine().trim();
 
-                databaseConnection.updateOrder(input_id, newStatus);
-                System.out.println("Order updated successfully!");
+                databaseConnection.updateDeliveryMan(input_id, newStatus);
+                System.out.println("Delivery Man updated successfully!");
                 break;
             } catch (Exception e) {
-                System.out.println("Error occurred while updating order: " + e.getMessage());
+                System.out.println("Error occurred while updating Delivery man: " + e.getMessage());
                 input.nextLine(); // Clear buffer
             }
         }
@@ -142,12 +138,12 @@ public class DeliveryMan {
 
 
     public void deleteDeliveryMan() {
-        System.out.println("Enter Order ID: ");
+        System.out.println("Enter Delivery Man ID: ");
         try {
             int input_id = input.nextInt();
             input.nextLine(); // consume leftover newline
-            databaseConnection.deleteOrder(input_id);
-            System.out.println("Order deleted successfully!");
+            databaseConnection.deleteDeliveryMan(input_id);
+            System.out.println("Delivery Man deleted successfully!");
         } catch (Exception e) {
             System.out.println("Error occurred while deleting order: " + e.getMessage());
         }

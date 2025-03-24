@@ -553,12 +553,11 @@ public class DatabaseConnection {
     }
 
     // --------------------- DeliveryMan Update and Delete Methods ---------------------
-    public void updateDeliveryMan(int id, String name, String employmentStatus) {
-        String sql = "UPDATE DeliveryMan SET name = ?, employment_status = ? WHERE id = ?";
+    public void updateDeliveryMan(int id, String employmentStatus) {
+        String sql = "UPDATE DeliveryMan SET employment_status = ? WHERE id = ?";
         try (Connection conn = getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, name);
-            pstmt.setString(2, employmentStatus);
-            pstmt.setInt(3, id);
+            pstmt.setString(1, employmentStatus);
+            pstmt.setInt(2, id);
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println("Error updating DeliveryMan: " + e.getMessage());
@@ -666,6 +665,7 @@ public class DatabaseConnection {
             System.out.println("Error deleting from Publication: " + e.getMessage());
         }
     }
+
 
 
     public static void main(String[] args) {

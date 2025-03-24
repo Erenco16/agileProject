@@ -104,7 +104,6 @@ public class DeliveryMan {
             try {
                 // Validate publication and stock before inserting
                 validateName(name);
-                checkEmploymentStatus();
                 databaseConnection.insertDeliveryMan(name, employmentStatus);
                 System.out.println("Delivery Man inserted successfully!");
                 break; // Exit the loop if insertion succeeds
@@ -127,7 +126,7 @@ public class DeliveryMan {
                 System.out.println("Enter new status (Active, Inactive): ");
                 String newStatus = input.nextLine().trim();
 
-                databaseConnection.updateDeliveryArea(input_id, name, newStatus);
+                databaseConnection.updateDeliveryMan(input_id, newStatus);
                 System.out.println("Delivery Man updated successfully!");
                 break;
             } catch (Exception e) {

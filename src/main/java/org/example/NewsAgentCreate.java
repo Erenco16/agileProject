@@ -348,7 +348,37 @@ public class NewsAgentCreate {
             System.out.println("4.Delete a Delivery Man");
             option = getValidIntegerInput(1, 4); // Allows only 1 or 2
 
+            if (option == 1){
+                createDeliveryManCLI();
+            } else if (option == 2){
+                readDeliveryManCLI();
+            } else if (option == 3){
+                updateDeliveryManCLI();
+            } else if (option == 4) {
+                deleteDeliveryManCLI();
+            } else {
+                // If input is not an integer
+                System.out.println("Invalid input! Please enter a valid number (1-4).");
+                input.nextLine();
+            }
+
         }
+
+    }
+
+    public void createDeliveryManCLI(){
+        DeliveryMan dm = new DeliveryMan();
+    }
+
+    public void readDeliveryManCLI(){
+
+    }
+
+    public void updateDeliveryManCLI(){
+
+    }
+
+    public void deleteDeliveryManCLI(){
 
     }
 

@@ -25,6 +25,22 @@ public class NewsAgentCreate {
                         System.out.println("taking you to order page.....");
                         orderPage();
                         break;
+                    case 5:
+                        System.out.println("taking you to invoice page.....");
+                        invoicePage();
+                        break;
+                    case 6:
+                        System.out.println("taking you to delivery man page......");
+                        deliveryManPage();
+                        break;
+                    case 7:
+                        System.out.println("taking you to delivery docket page.....");
+                        deliveryDocketPage();
+                        break;
+                    case 8:
+                        System.out.println("taking you to reports page.....");
+                        reportPage();
+                        break;
                     default:
                         System.out.println("Invalid option");
                         break;
@@ -339,6 +355,8 @@ public class NewsAgentCreate {
 
     }
 
+    //integrate this part as well, ensure all is working
+
     public void deliveryManPage(){
         while (true) {
             System.out.println("Welcome to the Delivery Man Page!");
@@ -348,8 +366,76 @@ public class NewsAgentCreate {
             System.out.println("4.Delete a Delivery Man");
             option = getValidIntegerInput(1, 4); // Allows only 1 or 2
 
+            if (option == 1){
+                createDeliveryManCLI();
+            } else if (option == 2){
+                readDeliveryManCLI();
+            } else if (option == 3){
+                updateDeliveryManCLI();
+            } else if (option == 4) {
+                deleteDeliveryManCLI();
+            } else {
+                // If input is not an integer
+                System.out.println("Invalid input! Please enter a valid number (1-4).");
+                input.nextLine();
+            }
+
         }
 
+    }
+
+    public void createDeliveryManCLI(){
+        DeliveryMan dm = new DeliveryMan();
+        dm.checkName();
+        dm.checkEmploymentStatus();
+        dm.insertDeliveryMan();
+        System.out.println("Taking you back to the main page.");
+        mainPage();
+
+    }
+
+    public void readDeliveryManCLI(){
+        DeliveryMan dm = new DeliveryMan();
+        while (true) {
+            System.out.println("Welcome to Delivery Man Read!");
+            System.out.println("1.Find a Delivery Man with ID");
+            System.out.println("2.Display all Delivery Man");
+            if (input.hasNextInt()) {
+                option = input.nextInt();
+                input.nextLine();  // Consume the newline
+
+                switch (option) {
+                    case 1:
+                        dm.deliveryManReadById();
+                        mainPage();
+                        return;
+                    case 2:
+                        dm.deliveryManReadAll();
+                        mainPage();
+                        return;
+                    default:
+                        System.out.println("Please enter a valid option 1 or 2!");
+                        break;
+                }
+            } else {
+                // If input is not an integer
+                System.out.println("Invalid input! Please enter a valid number.");
+                input.nextLine();
+            }
+        }
+
+    }
+
+    public void updateDeliveryManCLI(){
+        DeliveryMan dm = new DeliveryMan();
+        dm.updateDeliveryMan();
+        mainPage();
+    }
+
+    public void deleteDeliveryManCLI(){
+        DeliveryMan dm = new DeliveryMan();
+        dm.deleteDeliveryMan();
+        mainPage();
     }
 
     public void deliveryDocketPage(){

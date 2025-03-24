@@ -1,5 +1,6 @@
 package org.example;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -70,6 +71,26 @@ public class DeliveryDocket {
         return true;
     }
 
+    public boolean selectDocketIdValidation(String docketID) {
+        if (docketID == null || docketID.isEmpty()) {
+            throw new IllegalArgumentException("Please make a selection");
+        }
+        try {
+            boolean id = databaseConnection.DeliveryDocketRead(Integer.parseInt(docketID));
+            if (!id) {
+                throw new IllegalArgumentException("No delivery docket ID found");
+            } else {
+                inputId = Integer.parseInt(docketID);
+            }
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Input must be a number");
+        } catch (Exception e) {
+            // Handle other exceptions (e.g., database connection issues, item no exist in DB)
+            throw new IllegalArgumentException("Error occurred: " + e.getMessage());
+        }
+        return true;
+    }
+
     // -------------------- Create --------------------
     String inputStatus;
     String inputDeliveryManId;
@@ -112,6 +133,69 @@ public class DeliveryDocket {
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());            }
         }
+    }
+
+    //------------------ update --------------------
+    int inputId;
+
+    public void checkDocketId() {
+        while (true) {
+            selectAllDocket();
+            System.out.print("Please docket ID:");
+            try {
+                int id = input.nextInt();
+                docketStatusValidation(String.valueOf(id));
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    //--------------------delete----------------------
+    public void docketDelete() {
+        while(true){
+            selectAllDocket();
+            System.out.println("Enter docket ID to delete: ");
+            try {
+                int id = input.nextInt();
+                input.nextLine();
+                docketStatusValidation(String.valueOf(id));
+                System.out.println("Deleting data related to ID: " + id);
+                databaseConnection.deleteDocket(id);
+                break;
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    //---------------------DB Method ------------------
+    public void insertDocketDB() {
+        try{
+            databaseConnection.insertDeliveryDocket(Integer.parseInt(inputDeliveryManId), inputStatus);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void updateDocketDB() {
+        try {
+            databaseConnection.updateDocket(inputId, Integer.parseInt(inputDeliveryManId), inputStatus);
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public boolean selectAllDocket() {
+        try{
+            ArrayList<ArrayList<String>> allDockets = databaseConnection.selectAllDeliveryDocket();
+            System.out.println("Displaying all customers: " + allDockets);
+        }
+        catch (Exception e){
+            throw new IllegalArgumentException("Error occurred: " + e.getMessage());
+        }
+        return true;
     }
 
     // -------------------- setters&getters------------------

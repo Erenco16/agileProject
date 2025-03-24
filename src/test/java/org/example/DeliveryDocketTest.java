@@ -128,4 +128,45 @@ class DeliveryDocketTest {
         boolean result = deliveryDocket.selectDocketID("1");
         assertTrue(result);
     }
+    //success
+
+    //test 10
+    //testing non-existed Read ID
+    //expecting result: Error occurred: No delivery docket ID found
+    @Test
+    void testInvalidNonExistIdRead() {
+        deliveryDocket = new DeliveryDocket();
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            deliveryDocket.selectDocketID("999");
+        });
+        assertEquals("Error occurred: No delivery docket ID found", exception.getMessage());
+    }
+    //success
+
+    //test11
+    //testing non-numerical Read ID
+    //expecting result: Error occurred: Input must be a number
+    @Test
+    void testInvalidNonNumericalIdRead() {
+        deliveryDocket = new DeliveryDocket();
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            deliveryDocket.selectDocketID("ABC");
+        });
+        assertEquals("Input must be a number", exception.getMessage());
+    }
+    //success
+
+    //test 12
+    //testing empty Read ID
+    //expecting result: Please make a selection
+    @Test
+    void testInvalidEmptyIdRead() {
+        deliveryDocket = new DeliveryDocket();
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            deliveryDocket.selectDocketID("");
+        });
+        assertEquals("Please make a selection", exception.getMessage());
+    }
+
+
 }

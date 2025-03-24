@@ -541,6 +541,34 @@ public class DatabaseConnection {
         }
     }
 
+    public void updateDocket(int id, int deliveryManID, String status) {
+        String sql = "UPDATE DeliveryDocket SET delivery_man_id = ?, docket_status = ? WHERE id = ?";
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, deliveryManID);
+            pstmt.setString(2, status);
+            pstmt.setInt(3, id);
+
+            int affectedRows = pstmt.executeUpdate();
+            if (affectedRows > 0) {
+                System.out.println("Docket updated successfully.");
+            } else {
+                System.out.println("No Docket found with the given ID.");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error updating Docket: " + e.getMessage());
+        }
+    }
+
+    public void deleteDocket(int id) {
+        String sql = "DELETE FROM DeliveryDocket WHERE id = ?";
+        try (Connection conn = getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, id);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Error deleting from DeliveryArea: " + e.getMessage());
+        }
+    }
 
     // --------------------- Invoice Table Methods ---------------------
     public void insertInvoice(Integer order_id, Double total_payable_amount) {

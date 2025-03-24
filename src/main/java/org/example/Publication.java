@@ -9,6 +9,7 @@ public class Publication {
     private String price;
     private String stock;
     private DatabaseConnection databaseConnection;
+    private String inputID;
 
     // Constructor to initialize the DatabaseConnection
     public Publication() {
@@ -97,7 +98,7 @@ public class Publication {
 //            if(price.isEmpty() || price == null){
 //                throw new IllegalArgumentException("Price must not be empty");
 //            }
-            if(price.length() > 255 ){
+            if(stock.length() > 255 ){
                 throw new IllegalArgumentException("Stock must be between 1-255 digits long");
             }
         }catch (NumberFormatException e){
@@ -185,7 +186,7 @@ public class Publication {
             System.out.println("Enter Publication Stock: ");
             publicationStock = input.nextLine();
             try {
-                validPrice(publicationStock);
+                validStock(publicationStock);
                 break;
             }catch (IllegalArgumentException e){
                 System.out.println(e.getMessage());
@@ -197,7 +198,7 @@ public class Publication {
     // insert function are accepting int values
     public void insertPublication(){
         try{
-            databaseConnection.insertPublication(publicationName, publicationDescription, Double.parseDouble(publicationPrice), Integer.parseInt(stock));
+            databaseConnection.insertPublication(publicationName, publicationDescription, Double.parseDouble(publicationPrice), Integer.parseInt(publicationStock));
         }
         catch (Exception e){
             System.out.println(e.getMessage());
@@ -222,4 +223,46 @@ public class Publication {
     public void publicationReadAll() {
         selectAllPublication();
     }
+
+
+    public void publicationUpdate() {
+        while(true){
+            System.out.println("Enter publication ID to update: ");
+            try {
+                int id = input.nextInt();
+                input.nextLine();
+                publicationReadByID(String.valueOf(id));
+                inputID = String.valueOf(id);
+                break;
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());            }
+        }
+    }
+
+    public void updatePublicationDB() {
+        try {
+            databaseConnection.updatePublication(Integer.parseInt(inputID), publicationName,  publicationDescription, Double.parseDouble(publicationPrice), Integer.parseInt(publicationStock)) ;
+            System.out.println("Publication update successful, returning to main page");
+        } catch (IllegalArgumentException e)    {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    //--------------------- delete ---------------------
+    public void publicationDelete() {
+        while(true){
+            System.out.println("Enter deliveryArea ID to delete: ");
+            try {
+                int id = input.nextInt();
+                input.nextLine();
+                publicationReadByID(String.valueOf(id));
+                System.out.println("Deleting data related to ID: " + id);
+                databaseConnection.deletePublication(id);
+                break;
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());            }
+        }
+    }
+
+
 }

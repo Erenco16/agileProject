@@ -432,4 +432,125 @@ public class DBTest {
         assertEquals(0, agents.size(), "Deleted news agent should not be found.");
     }
 
+    @Test
+    void testUpdateDeliveryMan() {
+        String name = "DeliveryManTest_" + System.currentTimeMillis();
+        db.insertDeliveryMan(name, "Active");
+        ArrayList<ArrayList<String>> deliveryMen = db.selectAllDeliveryMan();
+        int id = Integer.parseInt(deliveryMen.get(deliveryMen.size() - 1).get(0));
+
+        db.updateDeliveryMan(id, "UpdatedDeliveryMan", "Inactive");
+        ArrayList<ArrayList<String>> updatedDeliveryMan = db.selectDeliveryMan(id);
+        assertTrue(containsValue(updatedDeliveryMan, 1, "UpdatedDeliveryMan"), "Delivery man name should be updated.");
+    }
+
+    @Test
+    void testDeleteDeliveryMan() {
+        db.insertDeliveryMan("DeleteDeliveryMan", "Active");
+        ArrayList<ArrayList<String>> deliveryMen = db.selectAllDeliveryMan();
+        int id = Integer.parseInt(deliveryMen.get(deliveryMen.size() - 1).get(0));
+
+        db.deleteDeliveryMan(id);
+        ArrayList<ArrayList<String>> deletedDeliveryMan = db.selectDeliveryMan(id);
+        assertEquals(0, deletedDeliveryMan.size(), "Deleted delivery man should not be found.");
+    }
+
+    @Test
+    void testUpdateInvoice() {
+        db.insertInvoice(1, 100.50);
+        ArrayList<ArrayList<String>> invoices = db.selectAllInvoice();
+        int id = Integer.parseInt(invoices.get(invoices.size() - 1).get(0));
+
+        db.updateInvoice(id, 1, 200.75);
+        ArrayList<ArrayList<String>> updatedInvoice = db.selectAllInvoice();
+        assertTrue(containsValue(updatedInvoice, 2, "200.75"), "Invoice amount should be updated.");
+    }
+
+    @Test
+    void testDeleteInvoice() {
+        db.insertInvoice(1, 150.00);
+        ArrayList<ArrayList<String>> invoices = db.selectAllInvoice();
+        int id = Integer.parseInt(invoices.get(invoices.size() - 1).get(0));
+
+        db.deleteInvoice(id);
+        ArrayList<ArrayList<String>> deletedInvoice = db.selectAllInvoice();
+        assertFalse(containsValue(deletedInvoice, 0, String.valueOf(id)), "Deleted invoice should not be found.");
+    }
+
+    @Test
+    void testUpdateOrder() {
+        db.insertOrderStatus(1, 1, 5, "Pending");
+        ArrayList<ArrayList<String>> orders = db.selectAllOrdersStatus();
+        int id = Integer.parseInt(orders.get(orders.size() - 1).get(0));
+
+        db.updateOrder(id, "Shipped");
+        ArrayList<ArrayList<String>> updatedOrder = db.selectOrdersStatus(id);
+        assertTrue(containsValue(updatedOrder, 4, "Shipped"), "Order status should be updated.");
+    }
+
+    @Test
+    void testDeleteOrder() {
+        db.insertOrderStatus(1, 1, 2, "Pending");
+        ArrayList<ArrayList<String>> orders = db.selectAllOrdersStatus();
+        int id = Integer.parseInt(orders.get(orders.size() - 1).get(0));
+
+        db.deleteOrder(id);
+        ArrayList<ArrayList<String>> deletedOrder = db.selectOrdersStatus(id);
+        assertEquals(0, deletedOrder.size(), "Deleted order should not be found.");
+    }
+
+    @Test
+    void testUpdateDeliveryDocket() {
+        db.insertDeliveryMan("DocketUpdateMan", "Active");
+        ArrayList<ArrayList<String>> deliveryMen = db.selectAllDeliveryMan();
+        int deliveryManId = Integer.parseInt(deliveryMen.get(deliveryMen.size() - 1).get(0));
+
+        db.insertDeliveryDocket(deliveryManId, "Pending");
+        ArrayList<ArrayList<String>> dockets = db.selectAllDeliveryDocket();
+        int docketId = Integer.parseInt(dockets.get(dockets.size() - 1).get(0));
+
+        db.updateDeliveryDocket(docketId, deliveryManId, "Completed");
+        ArrayList<ArrayList<String>> updatedDocket = db.selectAllDeliveryDocket();
+        assertTrue(containsValue(updatedDocket, 2, "Completed"), "Docket status should be updated.");
+    }
+
+    @Test
+    void testDeleteDeliveryDocket() {
+        db.insertDeliveryMan("DocketDeleteMan", "Active");
+        ArrayList<ArrayList<String>> deliveryMen = db.selectAllDeliveryMan();
+        int deliveryManId = Integer.parseInt(deliveryMen.get(deliveryMen.size() - 1).get(0));
+
+        db.insertDeliveryDocket(deliveryManId, "Pending");
+        ArrayList<ArrayList<String>> dockets = db.selectAllDeliveryDocket();
+        int docketId = Integer.parseInt(dockets.get(dockets.size() - 1).get(0));
+
+        db.deleteDeliveryDocket(docketId);
+        ArrayList<ArrayList<String>> deletedDocket = db.selectAllDeliveryDocket();
+        assertFalse(containsValue(deletedDocket, 0, String.valueOf(docketId)), "Deleted delivery docket should not be found.");
+    }
+
+    @Test
+    void testUpdatePublication() {
+        String pubName = "PublicationTest_" + System.currentTimeMillis();
+        db.insertPublication(pubName, "Test Description", 20.0, 50);
+        ArrayList<ArrayList<String>> publications = db.selectAllPublication();
+        int id = Integer.parseInt(publications.get(publications.size() - 1).get(0));
+
+        db.updatePublication(id, "UpdatedPublication", "Updated Description", 30.0, 100);
+        ArrayList<ArrayList<String>> updatedPublication = db.selectPublication(id);
+        assertTrue(containsValue(updatedPublication, 1, "UpdatedPublication"), "Publication name should be updated.");
+    }
+
+    @Test
+    void testDeletePublication() {
+        String pubName = "DeletePublication_" + System.currentTimeMillis();
+        db.insertPublication(pubName, "Test Description", 20.0, 50);
+        ArrayList<ArrayList<String>> publications = db.selectAllPublication();
+        int id = Integer.parseInt(publications.get(publications.size() - 1).get(0));
+
+        db.deletePublication(id);
+        ArrayList<ArrayList<String>> deletedPublication = db.selectPublication(id);
+        assertEquals(0, deletedPublication.size(), "Deleted publication should not be found.");
+    }
+
 }

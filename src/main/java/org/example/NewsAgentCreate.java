@@ -21,6 +21,26 @@ public class NewsAgentCreate {
                         System.out.println("taking you to delivery area page.....");
                         deliveryAreaPage();
                         break;
+                    case 4:
+                        System.out.println("taking you to order page.....");
+                        orderPage();
+                        break;
+                    case 5:
+                        System.out.println("taking you to invoice page.....");
+                        invoicePage();
+                        break;
+                    case 6:
+                        System.out.println("taking you to delivery man page......");
+                        deliveryManPage();
+                        break;
+                    case 7:
+                        System.out.println("taking you to delivery docket page.....");
+                        deliveryDocketPage();
+                        break;
+                    case 8:
+                        System.out.println("taking you to reports page.....");
+                        reportPage();
+                        break;
                     default:
                         System.out.println("Invalid option");
                         break;
@@ -169,26 +189,31 @@ public class NewsAgentCreate {
         da.deliveryAreaUpdate();
         da.checkAreaName();
         da.checkAreaDescription();
+        da.updatedeliveryAreaDB();
         mainPage();
     }
 
     public void deleteDeliveryAreaCLI(){
         DeliveryArea da = new DeliveryArea();
         da.deliveryAreaDelete();
+        mainPage();
     }
 
     public void updatePublicationCLI(){
         Publication p = new Publication();
-        //p.publicationUpdate();
+        p.publicationUpdate();
         p.checkPublicationName();
         p.checkPublicationDescription();
         p.checkPublicationPrice();
+        p.checkPublicationStock();
+        p.updatePublicationDB();
         mainPage();
     }
 
     public void deletePublicationCLI(){
         Publication p =new Publication();
-        //p.publicationDelete();
+        p.publicationDelete();
+        mainPage();
     }
 
     public void publicationPage(){
@@ -202,8 +227,12 @@ public class NewsAgentCreate {
 
             if (option == 1) {
                 createPublicationCLI();
-            } else {
+            } else if (option == 2){
                 readPublicationCLI();
+            } else if (option == 3) {
+                updatePublicationCLI();
+            } else if (option == 4) {
+                deletePublicationCLI();
             }
 
         }
@@ -220,8 +249,12 @@ public class NewsAgentCreate {
 
             if (option == 1) {
                 createDeliveryAreaCLI();
-            } else{
+            } else if (option == 2){
                 readDeliveryAreaCLI();
+            } else if (option == 3){
+                updateDeliveryAreaCLI();
+            } else if (option == 4) {
+                deleteDeliveryAreaCLI();
             }
 
         }
@@ -235,9 +268,78 @@ public class NewsAgentCreate {
             System.out.println("3.Update an Order");
             System.out.println("4.Delete an Order");
             option = getValidIntegerInput(1, 4); // Allows only 1 or 2
-
+            if (option == 1) {
+                createOrderCLI();
+            } else if(option==2) {
+                readOrderCLI();
+            }
+            else if(option==3) {
+                updateOrderCLI();
+            }
+            else if(option==4) {
+                deleteOrderCLI();
+            }
+            else {
+                // If input is not an integer
+                System.out.println("Invalid input! Please enter a valid number (1-4).");
+                input.nextLine();
+            }
         }
 
+    }
+
+    private void deleteOrderCLI() {
+        Order o = new Order();
+        o.deleteOrder();
+        mainPage();
+    }
+
+    private void updateOrderCLI() {
+        Order o = new Order();
+        o.updateOrder();
+        mainPage();
+    }
+
+    private void readOrderCLI() {
+        Order o = new Order();
+        while (true) {
+            System.out.println("Welcome to Order Read!");
+            System.out.println("1.Find an Order with ID");
+            System.out.println("2.Display all Orders");
+            if (input.hasNextInt()) {
+                option = input.nextInt();
+                input.nextLine();  // Consume the newline
+
+                switch (option) {
+                    case 1:
+                        o.orderReadById();
+                        mainPage();
+                        return;
+                    case 2:
+                        o.orderReadAll();
+                        mainPage();
+                        return;
+                    default:
+                        System.out.println("Please enter a valid option 1 or 2!");
+                        break;
+                }
+            } else {
+                // If input is not an integer
+                System.out.println("Invalid input! Please enter a valid number.");
+                input.nextLine();
+            }
+        }
+    }
+
+    private void createOrderCLI() {
+        Order o = new Order();
+        o.checkCustId();
+        o.checkPubId();
+        o.checkQuantity();
+        o.checkStatus();
+        o.insertOrder();
+        System.out.println("Taking you back to the main page.");
+        mainPage();
     }
 
     public void invoicePage(){
@@ -253,6 +355,8 @@ public class NewsAgentCreate {
 
     }
 
+    //integrate this part as well, ensure all is working
+
     public void deliveryManPage(){
         while (true) {
             System.out.println("Welcome to the Delivery Man Page!");
@@ -262,8 +366,76 @@ public class NewsAgentCreate {
             System.out.println("4.Delete a Delivery Man");
             option = getValidIntegerInput(1, 4); // Allows only 1 or 2
 
+            if (option == 1){
+                createDeliveryManCLI();
+            } else if (option == 2){
+                readDeliveryManCLI();
+            } else if (option == 3){
+                updateDeliveryManCLI();
+            } else if (option == 4) {
+                deleteDeliveryManCLI();
+            } else {
+                // If input is not an integer
+                System.out.println("Invalid input! Please enter a valid number (1-4).");
+                input.nextLine();
+            }
+
         }
 
+    }
+
+    public void createDeliveryManCLI(){
+        DeliveryMan dm = new DeliveryMan();
+        dm.checkName();
+        dm.checkEmploymentStatus();
+        dm.insertDeliveryMan();
+        System.out.println("Taking you back to the main page.");
+        mainPage();
+
+    }
+
+    public void readDeliveryManCLI(){
+        DeliveryMan dm = new DeliveryMan();
+        while (true) {
+            System.out.println("Welcome to Delivery Man Read!");
+            System.out.println("1.Find a Delivery Man with ID");
+            System.out.println("2.Display all Delivery Man");
+            if (input.hasNextInt()) {
+                option = input.nextInt();
+                input.nextLine();  // Consume the newline
+
+                switch (option) {
+                    case 1:
+                        dm.deliveryManReadById();
+                        mainPage();
+                        return;
+                    case 2:
+                        dm.deliveryManReadAll();
+                        mainPage();
+                        return;
+                    default:
+                        System.out.println("Please enter a valid option 1 or 2!");
+                        break;
+                }
+            } else {
+                // If input is not an integer
+                System.out.println("Invalid input! Please enter a valid number.");
+                input.nextLine();
+            }
+        }
+
+    }
+
+    public void updateDeliveryManCLI(){
+        DeliveryMan dm = new DeliveryMan();
+        dm.updateDeliveryMan();
+        mainPage();
+    }
+
+    public void deleteDeliveryManCLI(){
+        DeliveryMan dm = new DeliveryMan();
+        dm.deleteDeliveryMan();
+        mainPage();
     }
 
     public void deliveryDocketPage(){
@@ -340,6 +512,7 @@ public class NewsAgentCreate {
         pv.checkPublicationName();
         pv.checkPublicationDescription();
         pv.checkPublicationPrice();
+        pv.checkPublicationStock();
         pv.insertPublication();
         mainPage();
     }

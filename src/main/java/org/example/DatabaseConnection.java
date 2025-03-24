@@ -512,6 +512,13 @@ public class DatabaseConnection {
         // Path for the CSV file, named based on docketId
         String csvFilePath = "src/main/resources/docket/docket_" + docketId + ".csv";
 
+        // Check if the file already exists
+        File file = new File(csvFilePath);
+        if (file.exists()) {
+            System.out.println("The file " + csvFilePath + " already exists. Aborting the creation of a duplicate.");
+            return; // Exit the method to avoid creating the file
+        }
+
         // Try-with-resources to handle resources automatically
         try (Connection conn = DriverManager.getConnection(DB_URL);
              PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -560,6 +567,98 @@ public class DatabaseConnection {
             e.printStackTrace();
         }
     }
+
+    public void deliveryDocketToCsvDeliveryMan() {
+        // Query to get the latest (highest) docket ID from the DeliveryDocket table
+        String latestDocketSql = "SELECT MAX(id) AS latestDocket FROM DeliveryDocket";
+        int latestDocket = 0;
+
+        // Get the latest docket ID
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             PreparedStatement pstmt = conn.prepareStatement(latestDocketSql);
+             ResultSet rs = pstmt.executeQuery()) {
+
+            if (rs.next()) {
+                latestDocket = rs.getInt("latestDocket");
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Error fetching latest docket ID: " + e.getMessage());
+        }
+
+        // Define the SQL query to select rows where the status is 'Pending'
+        String sql = "SELECT o.id AS order_id, " +
+                "c.name AS cust_name, " +
+                "da.name AS delivery_area_name, " +
+                "c.address, " +
+                "p.name AS pub_name, " +
+                "o.quantity, " +
+                "o.status AS order_status " +
+                "FROM Orders o " +
+                "JOIN Customers c ON o.cust_id = c.id " +
+                "JOIN DeliveryArea da ON c.delivery_area_id = da.id " +
+                "JOIN Publication p ON o.pub_id = p.id " +
+                "WHERE o.status = 'Pending'";
+
+        // Path for the CSV file, named based on the latest docket ID
+        String csvFilePath = "src/main/resources/docket/docket_" + latestDocket + ".csv";
+
+        // Check if the file already exists
+        File file = new File(csvFilePath);
+        if (file.exists()) {
+            System.out.println("The file " + csvFilePath + " already exists. Aborting the creation of a duplicate.");
+            return; // Exit the method to avoid creating the file
+        }
+
+        // Try-with-resources to handle resources automatically
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery();
+             BufferedWriter writer = new BufferedWriter(new FileWriter(csvFilePath))) {
+
+            // Write the CSV header (column names)
+            String header = "order_id,cust_name,delivery_area_name,address,pub_name,quantity,order_status";
+            writer.write(header);
+            writer.newLine();
+
+            // Check if the ResultSet contains data
+            boolean hasData = false;
+
+            // Write the rows to CSV
+            while (rs.next()) {
+                int orderId = rs.getInt("order_id");
+                String custName = rs.getString("cust_name");
+                String deliveryAreaName = rs.getString("delivery_area_name");
+                String address = rs.getString("address");
+                String pubName = rs.getString("pub_name");
+                int quantity = rs.getInt("quantity");
+                String orderStatus = rs.getString("order_status");
+
+                // Debugging: Print each row to the console
+                System.out.println("Row: " + orderId + ", " + custName + ", " + deliveryAreaName + ", " + address + ", " + pubName + ", " + quantity + ", " + orderStatus);
+
+                // Write the data for each row into the CSV file
+                String row = orderId + "," + custName + "," + deliveryAreaName + "," + address + "," + pubName + "," + quantity + "," + orderStatus;
+                writer.write(row);
+                writer.newLine();
+
+                // Mark that we have data
+                hasData = true;
+            }
+
+            // If no data was found, print a message to the console
+            if (!hasData) {
+                System.out.println("No rows found with status 'Pending'");
+            } else {
+                System.out.println("CSV file created successfully at: " + csvFilePath);
+            }
+
+        } catch (SQLException | IOException e) {
+            // Handle exceptions
+            e.printStackTrace();
+        }
+    }
+
 
     public void updateDocket(int id, int deliveryManID, String status) {
         String sql = "UPDATE DeliveryDocket SET delivery_man_id = ?, docket_status = ? WHERE id = ?";

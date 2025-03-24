@@ -67,7 +67,8 @@ public class NewsAgentCreate {
     }
 
     public void deliveryManPrintDeliveryDocket(){
-        // add method to print delivery docket to csv here
+        DatabaseConnection db = new DatabaseConnection();
+        db.deliveryDocketToCsvDeliveryMan();
         deliveryManMainEntryPage();
     }
 

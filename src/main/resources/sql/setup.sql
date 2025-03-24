@@ -75,6 +75,21 @@ total_payable_amount REAL,
 FOREIGN KEY (order_id) REFERENCES Orders(id) ON DELETE CASCADE
 );
 
+-- trigger to create an Invoice for the order automatically
+CREATE TRIGGER IF NOT EXISTS create_invoice_after_order
+    AFTER INSERT ON Orders
+    FOR EACH ROW
+BEGIN
+    INSERT INTO Invoice (order_id, total_payable_amount)
+    VALUES (
+               NEW.id,
+               (SELECT NEW.quantity * p.price
+                FROM Publication p
+                WHERE p.id = NEW.pub_id)
+           );
+END;
+
+
 -- Trigger to calculate invoice's price automatically
 CREATE TRIGGER IF NOT EXISTS calculate_invoice_amount
     AFTER INSERT ON Invoice

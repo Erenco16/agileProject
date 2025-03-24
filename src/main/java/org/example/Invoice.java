@@ -1,10 +1,10 @@
 package org.example;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 import static org.example.Report.exportQueryResultToCSV;
 import static org.example.Report.isValidCustomer;
+
 
 public class Invoice {
     private static final String DB_PATH = "database_files/agile_project.db"; // Store inside project folder
@@ -29,8 +29,9 @@ public class Invoice {
         return true;
     }
 
+
     // report query method
-    public static void totalRevenueByCustomerReport() {
+    public void totalRevenueByCustomerReport() {
         Scanner input = new Scanner(System.in);
         int customerId;
         while (true) {

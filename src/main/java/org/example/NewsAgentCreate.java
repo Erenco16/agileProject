@@ -67,11 +67,11 @@ public class NewsAgentCreate {
     }
 
     public void deliveryManPrintDeliveryDocket(){
-        //put method to call in here
         deliveryManMainEntryPage();
     }
 
 
+    // ------------------main page-------------------
     public void mainPage(){
         while (true) {
             option = mainPageOptions();
@@ -173,6 +173,7 @@ public class NewsAgentCreate {
         return option;
     }
 
+    //--------------------customer----------------------
     public void customerPage(){
         while (true) {
             System.out.println("Welcome to Create Customer!");
@@ -181,6 +182,7 @@ public class NewsAgentCreate {
             System.out.println("3.Update a Customer");
             System.out.println("4.Delete a Customer");
             option = getValidIntegerInput(1, 4); // Allows only 1 to 4
+
 
             if (option == 1) {
                 createCustomerCLI();
@@ -264,6 +266,29 @@ public class NewsAgentCreate {
         mainPage();
     }
 
+    //------------------deliveryArea----------------
+    public void deliveryAreaPage(){
+        while (true) {
+            System.out.println("Welcome to the Delivery Area Page!");
+            System.out.println("1.Create a Delivery Area");
+            System.out.println("2.Read a Delivery Area");
+            System.out.println("3.Update a Delivery Area");
+            System.out.println("4.Delete a Delivery Area");
+            option = getValidIntegerInput(1, 4); // Allows only 1 or 2
+
+            if (option == 1) {
+                createDeliveryAreaCLI();
+            } else if (option == 2){
+                readDeliveryAreaCLI();
+            } else if (option == 3){
+                updateDeliveryAreaCLI();
+            } else if (option == 4) {
+                deleteDeliveryAreaCLI();
+            }
+
+        }
+    }
+
     public void updateDeliveryAreaCLI(){
         DeliveryArea da = new DeliveryArea();
         da.deliveryAreaUpdate();
@@ -278,7 +303,50 @@ public class NewsAgentCreate {
         da.deliveryAreaDelete();
         mainPage();
     }
+    public void createDeliveryAreaCLI(){
+        DeliveryArea dv = new DeliveryArea();
+        System.out.println("Welcome to Create Delivery Area Page!");
+        dv.checkAreaName();
+        dv.checkAreaDescription();
+        dv.insertDeliveryArea();
+        System.out.println("Delivery Area Added successfully!");
+        System.out.println("Taking you back to the main page!");
+        mainPage();
+    }
 
+    public void readDeliveryAreaCLI(){
+        DeliveryArea da = new DeliveryArea();
+
+        while (true) {
+            System.out.println("Welcome to Delivery Area Read!");
+            System.out.println("1.Find a Specific ID");
+            System.out.println("2.Display all Delivery Areas");
+            if (input.hasNextInt()) {
+                option = input.nextInt();
+                input.nextLine();  // Consume the newline
+
+                switch (option) {
+                    case 1:
+                        da.deliveryAreaReadID();
+                        mainPage();
+                        return;
+                    case 2:
+                        da.deliveryAreaReadAll();
+                        mainPage();
+                        return;
+                    default:
+                        System.out.println("Please enter a valid option 1 or 2!");
+                        break;
+                }
+            } else {
+                // If input is not an integer
+                System.out.println("Invalid input! Please enter a valid number.");
+                input.nextLine();
+            }
+        }
+    }
+
+    //---------------publication------------------
     public void updatePublicationCLI(){
         Publication p = new Publication();
         p.publicationUpdate();
@@ -295,6 +363,7 @@ public class NewsAgentCreate {
         p.publicationDelete();
         mainPage();
     }
+
 
     public void publicationPage(){
         while (true) {
@@ -318,28 +387,50 @@ public class NewsAgentCreate {
         }
     }
 
-    public void deliveryAreaPage(){
+    public void createPublicationCLI(){
+        Publication pv = new Publication();
+        System.out.println("Welcome to Create Publication Page!");
+        pv.checkPublicationName();
+        pv.checkPublicationDescription();
+        pv.checkPublicationPrice();
+        pv.checkPublicationStock();
+        pv.insertPublication();
+        mainPage();
+    }
+
+    public void readPublicationCLI(){
+        Publication p = new Publication();
+
         while (true) {
-            System.out.println("Welcome to the Delivery Area Page!");
-            System.out.println("1.Create a Delivery Area");
-            System.out.println("2.Read a Delivery Area");
-            System.out.println("3.Update a Delivery Area");
-            System.out.println("4.Delete a Delivery Area");
-            option = getValidIntegerInput(1, 4); // Allows only 1 or 2
+            System.out.println("Welcome to Publication Read!");
+            System.out.println("1.Find a Specific ID");
+            System.out.println("2.Display all Publications");
+            if (input.hasNextInt()) {
+                option = input.nextInt();
+                input.nextLine();  // Consume the newline
 
-            if (option == 1) {
-                createDeliveryAreaCLI();
-            } else if (option == 2){
-                readDeliveryAreaCLI();
-            } else if (option == 3){
-                updateDeliveryAreaCLI();
-            } else if (option == 4) {
-                deleteDeliveryAreaCLI();
+                switch (option) {
+                    case 1:
+                        p.publicationReadID();
+                        mainPage();
+                        return;
+                    case 2:
+                        p.publicationReadAll();
+                        mainPage();
+                        return;
+                    default:
+                        System.out.println("Please enter a valid option 1 or 2!");
+                        break;
+                }
+            } else {
+                // If input is not an integer
+                System.out.println("Invalid input! Please enter a valid number.");
+                input.nextLine();
             }
-
         }
     }
 
+    //-----------------order-----------------
     public void orderPage(){
         while (true) {
             System.out.println("Welcome to the Order Page!");
@@ -434,6 +525,7 @@ public class NewsAgentCreate {
 
     }
 
+    //------------------deliveryMan-----------------------
     public void generateInvoiceCLI(){
         Invoice i = new Invoice();
         i.totalRevenueByCustomerReport();
@@ -523,6 +615,7 @@ public class NewsAgentCreate {
         mainPage();
     }
 
+    //------------------deliveryDocket--------------------
     public void deliveryDocketPage(){
         while (true) {
             System.out.println("Welcome to the Delivery Docket Page!");
@@ -551,16 +644,36 @@ public class NewsAgentCreate {
 
     public void createDeliveryDocketCLI(){
         DeliveryDocket dd = new DeliveryDocket();
-
+        dd.checkDeliveryManId();
+        dd.checkDocketStatus();
+        dd.insertDocketDB();
+        mainPage();
     }
 
-    public void readDeliveryDocketCLI(){}
+    public void readDeliveryDocketCLI(){
+        DeliveryDocket dd = new DeliveryDocket();
+        dd.deliveryDocketReadId();
+        mainPage();
+    }
 
-    public void updateDeliveryDocketCLI(){}
+    public void updateDeliveryDocketCLI(){
+        DeliveryDocket dd = new DeliveryDocket();
+        dd.checkDocketId();
+        dd.checkDeliveryManId();
+        dd.checkDocketStatus();
+        dd.updateDocketDB();
+        dd.selectAllDocket();
+        mainPage();
+    }
 
-    public void deleteDeliveryDocketCLI(){}
+    public void deleteDeliveryDocketCLI(){
+        DeliveryDocket dd = new DeliveryDocket();
+        dd.docketDelete();
+        mainPage();
+    }
 
 
+    //----------------report-------------------
     public void reportPage(){
         while (true) {
             System.out.println("Welcome to the Report Page!");
@@ -600,93 +713,6 @@ public class NewsAgentCreate {
         r.totalRevenueByPublicationReport();
         mainPage();
     }
-
-    public void createDeliveryAreaCLI(){
-        DeliveryArea dv = new DeliveryArea();
-        System.out.println("Welcome to Create Delivery Area Page!");
-        dv.checkAreaName();
-        dv.checkAreaDescription();
-        dv.insertDeliveryArea();
-        System.out.println("Delivery Area Added successfully!");
-        System.out.println("Taking you back to the main page!");
-        mainPage();
-    }
-
-    public void readDeliveryAreaCLI(){
-        DeliveryArea da = new DeliveryArea();
-
-        while (true) {
-            System.out.println("Welcome to Delivery Area Read!");
-            System.out.println("1.Find a Specific ID");
-            System.out.println("2.Display all Delivery Areas");
-            if (input.hasNextInt()) {
-                option = input.nextInt();
-                input.nextLine();  // Consume the newline
-
-                switch (option) {
-                    case 1:
-                        da.deliveryAreaReadID();
-                        mainPage();
-                        return;
-                    case 2:
-                        da.deliveryAreaReadAll();
-                        mainPage();
-                        return;
-                    default:
-                        System.out.println("Please enter a valid option 1 or 2!");
-                        break;
-                }
-            } else {
-                // If input is not an integer
-                System.out.println("Invalid input! Please enter a valid number.");
-                input.nextLine();
-            }
-        }
-    }
-
-    public void createPublicationCLI(){
-        Publication pv = new Publication();
-        System.out.println("Welcome to Create Publication Page!");
-        pv.checkPublicationName();
-        pv.checkPublicationDescription();
-        pv.checkPublicationPrice();
-        pv.checkPublicationStock();
-        pv.insertPublication();
-        mainPage();
-    }
-
-    public void readPublicationCLI(){
-        Publication p = new Publication();
-
-        while (true) {
-            System.out.println("Welcome to Publication Read!");
-            System.out.println("1.Find a Specific ID");
-            System.out.println("2.Display all Publications");
-            if (input.hasNextInt()) {
-                option = input.nextInt();
-                input.nextLine();  // Consume the newline
-
-                switch (option) {
-                    case 1:
-                        p.publicationReadID();
-                        mainPage();
-                        return;
-                    case 2:
-                        p.publicationReadAll();
-                        mainPage();
-                        return;
-                    default:
-                        System.out.println("Please enter a valid option 1 or 2!");
-                        break;
-                }
-            } else {
-                // If input is not an integer
-                System.out.println("Invalid input! Please enter a valid number.");
-                input.nextLine();
-            }
-        }
-    }
-
 
 }
 

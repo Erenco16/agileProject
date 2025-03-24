@@ -181,6 +181,7 @@ public class NewsAgentCreate {
             System.out.println("2.Read a Customer");
             System.out.println("3.Update a Customer");
             System.out.println("4.Delete a Customer");
+            System.out.println("Enter !q to quit to the Main Page");
             option = getValidIntegerInput(1, 4); // Allows only 1 to 4
 
 
@@ -274,6 +275,7 @@ public class NewsAgentCreate {
             System.out.println("2.Read a Delivery Area");
             System.out.println("3.Update a Delivery Area");
             System.out.println("4.Delete a Delivery Area");
+            System.out.println("Enter !q to quit to the Main Page");
             option = getValidIntegerInput(1, 4); // Allows only 1 or 2
 
             if (option == 1) {
@@ -372,6 +374,7 @@ public class NewsAgentCreate {
             System.out.println("2.Read a Publication");
             System.out.println("3.Update a Publication");
             System.out.println("4.Delete a Publication");
+            System.out.println("Enter !q to quit to the Main Page");
             option = getValidIntegerInput(1, 4); // Allows only 1 or 2
 
             if (option == 1) {
@@ -438,6 +441,7 @@ public class NewsAgentCreate {
             System.out.println("2.Read an Order");
             System.out.println("3.Update an Order");
             System.out.println("4.Delete an Order");
+            System.out.println("Enter !q to quit to the Main Page");
             option = getValidIntegerInput(1, 4); // Allows only 1 or 2
             if (option == 1) {
                 createOrderCLI();
@@ -517,6 +521,7 @@ public class NewsAgentCreate {
         while (true) {
             System.out.println("Welcome to the Invoice Page!");
             System.out.println("1.Generate an Invoice for a Customer");
+            System.out.println("Enter !q to quit to the Main Page");
             option = getValidIntegerInput(1,1);
             if (option == 1){
                 generateInvoiceCLI();
@@ -541,6 +546,7 @@ public class NewsAgentCreate {
             System.out.println("2.Read a Delivery Man");
             System.out.println("3.Update a Delivery Man");
             System.out.println("4.Delete a Delivery Man");
+            System.out.println("Enter !q to quit to the Main Page");
             option = getValidIntegerInput(1, 4); // Allows only 1 or 2
 
             if (option == 1){
@@ -623,6 +629,7 @@ public class NewsAgentCreate {
             System.out.println("2.Read a Delivery Docket");
             System.out.println("3.Update a Delivery Docket");
             System.out.println("4.Delete a Delivery Docket");
+            System.out.println("Enter !q to quit to the Main Page");
             option = getValidIntegerInput(1, 4); // Allows only 1 or 2
 
             if (option == 1){
@@ -680,6 +687,7 @@ public class NewsAgentCreate {
             System.out.println("1.View total amount of revenue by month");
             System.out.println("2.View total amount of revenue by delivery area");
             System.out.println("3.View total amount of revenue by publication");
+            System.out.println("Enter !q to quit to the Main Page");
             option = getValidIntegerInput(1, 3);
 
             if (option == 1){

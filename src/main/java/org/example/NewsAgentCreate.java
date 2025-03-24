@@ -486,7 +486,7 @@ public class NewsAgentCreate {
             System.out.println("Welcome to the Report Page!");
             System.out.println("1.View total amount of revenue by month");
             System.out.println("2.View total amount of revenue by delivery area");
-            System.out.println("3.View total amount of revenue by customer");
+            System.out.println("3.View total amount of revenue by publication");
             option = getValidIntegerInput(1, 3);
 
             if (option == 1){
@@ -517,7 +517,7 @@ public class NewsAgentCreate {
 
     public void revenueByPublicationCLI(){
         Report r = new Report();
-        //r.totalRevenueByPublicationReport();
+        r.totalRevenueByPublicationReport();
         mainPage();
     }
 

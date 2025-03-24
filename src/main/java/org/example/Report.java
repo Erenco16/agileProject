@@ -122,7 +122,7 @@ public class Report {
         System.out.println("Revenue by delivery area report generated.");
     }
 
-    public void totalRevenueByCustomerReport() {
+    public void totalRevenueByPublicationReport() {
         Scanner input = new Scanner(System.in);
         int publicationID;
         while (true) {

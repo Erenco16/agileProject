@@ -230,7 +230,7 @@ class CustomerTest {
     @Test
     void customerReadValid() {
         Customer customer = new Customer();
-        boolean result = customer.selectCustomerMod("1");
+        boolean result = customer.selectCustomerMod("2");
         assertTrue(result);
     }
     // success

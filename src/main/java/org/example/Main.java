@@ -7,7 +7,7 @@ public class Main {
     public static void main(String[] args) {
         try (Connection conn = DatabaseConnection.getConnection()) {
             System.out.println("Connected to SQLite successfully!");
-            new NewsAgentCreate().mainPage();
+            new NewsAgentCreate().loginPage();
         } catch (SQLException e) {
             System.out.println("Connection failed: " + e.getMessage());
         }

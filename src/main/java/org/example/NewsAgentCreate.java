@@ -5,6 +5,73 @@ public class NewsAgentCreate {
     Scanner input = new Scanner(System.in);
     private int option;
 
+    public void loginPage() {
+        while (true) {
+            System.out.println("Welcome to the Login Page!");
+            System.out.println("1. Login as Newsagent");
+            System.out.println("2. Login as Delivery Man");
+            System.out.print("Enter your option: ");
+
+            int choice = getValidIntegerInput(1, 2); // Validate input
+
+            if (choice == 1) {
+                System.out.print("Enter Newsagent Password: ");
+                String password = input.nextLine().trim();
+
+                if (password.equals("admin")) {
+                    System.out.println("Login successful! Redirecting to the main page...");
+                    mainPage();
+                    break; // Exit the login loop after successful login
+                } else {
+                    System.out.println("Incorrect password. Please try again.");
+                }
+            } else if (choice == 2) {
+                System.out.print("Enter Delivery Man Password: ");
+                String password = input.nextLine().trim();
+
+                if (password.equals("pizza")) {
+                    System.out.println("Login successful! Redirecting to Delivery Main Entry Page...");
+                    deliveryManMainEntryPage();
+                    break;
+                } else {
+                    System.out.println("Incorrect password. Please try again.");
+                }
+            }
+        }
+    }
+
+    public void deliveryManMainEntryPage(){
+        while (true) {
+            System.out.println("Welcome Delivery Man!");
+            System.out.println("1. Print out today's delivery docket");
+            System.out.println("2. Update an Order status");
+            System.out.println("3. Logout");
+            option = getValidIntegerInput(1, 3);
+
+            if (option == 1 ){
+                deliveryManPrintDeliveryDocket();
+            } else if (option == 2) {
+                deliveryManUpdateOrderStatus();
+            } else if (option == 3) {
+                loginPage();
+            } else {
+                System.out.println("Please enter a valid option 1 or 3!");
+            }
+        }
+    }
+
+    public void deliveryManUpdateOrderStatus(){
+        Order o = new Order();
+        o.updateOrder();
+        deliveryManMainEntryPage();
+    }
+
+    public void deliveryManPrintDeliveryDocket(){
+        //put method to call in here
+        deliveryManMainEntryPage();
+    }
+
+
     public void mainPage(){
         while (true) {
             option = mainPageOptions();
@@ -40,6 +107,10 @@ public class NewsAgentCreate {
                     case 8:
                         System.out.println("taking you to reports page.....");
                         reportPage();
+                        break;
+                    case 9:
+                        System.out.println("Logging Out.....");
+                        loginPage();
                         break;
                     default:
                         System.out.println("Invalid option");
@@ -88,7 +159,8 @@ public class NewsAgentCreate {
         System.out.println("6. Delivery Man page");
         System.out.println("7. Delivery Docket page");
         System.out.println("8. Report page ");
-        option = getValidIntegerInput(1, 8);
+        System.out.println("9. Logout");
+        option = getValidIntegerInput(1, 9);
 
         return option;
     }

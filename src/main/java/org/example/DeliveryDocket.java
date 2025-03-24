@@ -22,11 +22,16 @@ public class DeliveryDocket {
         if (deliveryManId == null || deliveryManId.isEmpty()) {
             throw new IllegalArgumentException("delivery Man ID cannot be empty");
         }
-
         try{
             int deliveryManIdInt = Integer.parseInt(deliveryManId);
+            ArrayList<ArrayList<String>> dm = databaseConnection.selectDeliveryMan(deliveryManIdInt);
+
             if (deliveryManIdInt < 1 ) {
                 throw new IllegalArgumentException("Please enter a valid deliveryMan ID");
+            } else if (dm.isEmpty()) {
+                throw new IllegalArgumentException("No Delivery Man found with ID: " + deliveryManIdInt);
+            } else {
+                System.out.println("Delivery Man found with id: " + deliveryManIdInt);
             }
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("Input must be a number");
@@ -40,8 +45,23 @@ public class DeliveryDocket {
         }
         try {
             int docketStatusInt = Integer.parseInt(docketStatus);
-            if (docketStatusInt != 1 && docketStatusInt != 2 ) {
+            if (docketStatusInt != 1 && docketStatusInt != 2 && docketStatusInt != 3 && docketStatusInt != 4 ) {
                 throw new IllegalArgumentException("Please enter a valid docket status");
+            } else {
+                switch (docketStatusInt) {
+                    case 1:
+                        this.docketStatus = "Pending";
+                        break;
+                    case 2:
+                        this.docketStatus = "Completed";
+                        break;
+                    case 3:
+                        this.docketStatus = "On Delivery";
+                        break;
+                    case 4:
+                        this.docketStatus = "Cancelled";
+                        break;
+                }
             }
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("Input must be a number");
@@ -58,6 +78,8 @@ public class DeliveryDocket {
             if (!id) {
                 throw new IllegalArgumentException("No delivery docket ID found");
             } else {
+                ArrayList<ArrayList<String>> Docket = databaseConnection.selectDeliveryDocket(Integer.parseInt(docketID));
+                System.out.println("Displaying Docket: " + Docket);
                 System.out.println("Docket found! Printing docket to CSV...");
                 databaseConnection.deliveryDocketToCsv(Integer.parseInt(docketID));
             }
@@ -110,12 +132,12 @@ public class DeliveryDocket {
 
     public void checkDocketStatus() {
             while (true) {
-                System.out.print("Please select docket status:\n1. Pending\n2. Delivered");
+                System.out.println("Please select docket status:\n1. Pending\n2. Completed\n3. On Delivery\n4. Cancelled");
                 inputStatus = input.nextLine().trim();
                 try {
                     docketStatusValidation(inputStatus);
                     break;
-                } catch (NumberFormatException e) {
+                } catch (IllegalArgumentException e) {
                     System.out.println(e.getMessage());
                 }
             }
@@ -141,10 +163,10 @@ public class DeliveryDocket {
     public void checkDocketId() {
         while (true) {
             selectAllDocket();
-            System.out.print("Please docket ID:");
+            System.out.println("Please docket ID:");
             try {
                 int id = input.nextInt();
-                docketStatusValidation(String.valueOf(id));
+                selectDocketIdValidation(String.valueOf(id));
                 break;
             } catch (NumberFormatException e) {
                 System.out.println(e.getMessage());
@@ -173,7 +195,7 @@ public class DeliveryDocket {
     //---------------------DB Method ------------------
     public void insertDocketDB() {
         try{
-            databaseConnection.insertDeliveryDocket(Integer.parseInt(inputDeliveryManId), inputStatus);
+            databaseConnection.insertDeliveryDocket(Integer.parseInt(inputDeliveryManId), docketStatus);
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
@@ -181,7 +203,7 @@ public class DeliveryDocket {
 
     public void updateDocketDB() {
         try {
-            databaseConnection.updateDocket(inputId, Integer.parseInt(inputDeliveryManId), inputStatus);
+            databaseConnection.updateDocket(inputId, Integer.parseInt(inputDeliveryManId), docketStatus);
         } catch (Exception e){
             System.out.println(e.getMessage());
         }

@@ -527,9 +527,52 @@ public class NewsAgentCreate {
             System.out.println("4.Delete a Delivery Docket");
             option = getValidIntegerInput(1, 4); // Allows only 1 or 2
 
+            if (option == 1){
+                createDeliveryDocketCLI();
+            } else if (option == 2){
+                readDeliveryDocketCLI();
+            }else if (option == 3){
+                updateDeliveryDocketCLI();
+            }else if (option == 4){
+                deleteDeliveryDocketCLI();
+            }else {
+                System.out.println("Invalid input! Please enter a valid number (1-4).");
+            }
+
+
         }
 
     }
+
+    public void createDeliveryDocketCLI(){
+        DeliveryDocket dd = new DeliveryDocket();
+        dd.checkDeliveryManId();
+        dd.checkDocketStatus();
+        dd.insertDocketDB();
+        mainPage();
+    }
+
+    public void readDeliveryDocketCLI(){
+        DeliveryDocket dd = new DeliveryDocket();
+        dd.deliveryDocketReadId();
+        mainPage();
+    }
+
+    public void updateDeliveryDocketCLI(){
+        DeliveryDocket dd = new DeliveryDocket();
+        dd.checkDocketId();
+        dd.checkDeliveryManId();
+        dd.checkDocketStatus();
+        dd.updateDocketDB();
+        mainPage();
+    }
+
+    public void deleteDeliveryDocketCLI(){
+        DeliveryDocket dd = new DeliveryDocket();
+        dd.docketDelete();
+        mainPage();
+    }
+
 
     //----------------report-------------------
     public void reportPage(){

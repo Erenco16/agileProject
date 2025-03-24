@@ -454,6 +454,18 @@ public class DatabaseConnection {
              ResultSet rs = stmt.executeQuery(sql)) {
             return getValues(rs);
         } catch (SQLException e) {
+            System.err.println("Error selecting DeliveryDocket: " + e.getMessage());
+        }
+        return new ArrayList<>();
+    }
+
+    public ArrayList<ArrayList<String>> selectDeliveryDocket(int id) {
+        String sql = "SELECT * FROM DeliveryDocket WHERE id = " + id;
+        try (Connection conn = getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            return getValues(rs);
+        } catch (SQLException e) {
             System.err.println("Error selecting all DeliveryDocket: " + e.getMessage());
         }
         return new ArrayList<>();

@@ -439,7 +439,7 @@ public class DBTest {
         ArrayList<ArrayList<String>> deliveryMen = db.selectAllDeliveryMan();
         int id = Integer.parseInt(deliveryMen.get(deliveryMen.size() - 1).get(0));
 
-        db.updateDeliveryMan(id, "UpdatedDeliveryMan", "Inactive");
+        db.updateDeliveryMan(id,  "Inactive");
         ArrayList<ArrayList<String>> updatedDeliveryMan = db.selectDeliveryMan(id);
         assertTrue(containsValue(updatedDeliveryMan, 1, "UpdatedDeliveryMan"), "Delivery man name should be updated.");
     }

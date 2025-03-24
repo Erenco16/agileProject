@@ -118,4 +118,14 @@ class DeliveryDocketTest {
         assertEquals("Input must be a number", exception.getMessage());
     }
     //success
+
+    //test 9
+    //testing Read ID
+    //expecting result: true
+    @Test
+    void testValidIdRead() {
+        deliveryDocket = new DeliveryDocket();
+        boolean result = deliveryDocket.selectDocketID("1");
+        assertTrue(result);
+    }
 }

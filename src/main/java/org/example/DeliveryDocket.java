@@ -1,5 +1,8 @@
 package org.example;
 
+import java.util.ArrayList;
+import java.util.Scanner;
+
 public class DeliveryDocket {
     public String date;
     public String deliveryManId;
@@ -9,6 +12,8 @@ public class DeliveryDocket {
     public DeliveryDocket() {
         this.databaseConnection = new DatabaseConnection();
     }
+
+    Scanner input = new Scanner(System.in);
 
     // ------------------ validation ----------------
 
@@ -43,7 +48,71 @@ public class DeliveryDocket {
         return true;
     }
 
-    //
+    public boolean selectDocketID(String docketID) {
+        if (docketID == null || docketID.isEmpty()) {
+            throw new IllegalArgumentException("Please make a selection");
+        }
+        try {
+            boolean id = databaseConnection.DeliveryDocketRead(Integer.parseInt(docketID));
+            if (!id) {
+                throw new IllegalArgumentException("No delivery docket ID found");
+            } else {
+                System.out.println("Docket found! Printing docket to CSV...");
+                databaseConnection.deliveryDocketToCsv(Integer.parseInt(docketID));
+            }
+
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Input must be a number");
+        } catch (Exception e) {
+            // Handle other exceptions (e.g., database connection issues, item no exist in DB)
+            throw new IllegalArgumentException("Error occurred: " + e.getMessage());
+        }
+        return true;
+    }
+
+    // -------------------- Create --------------------
+    String inputStatus;
+    String inputDeliveryManId;
+
+    public void checkDeliveryManId() {
+        while (true) {
+            System.out.println("Please enter a deliveryMan ID:");
+            inputDeliveryManId = input.nextLine().trim();
+            try {
+                deliveryManIdValidation(inputDeliveryManId);
+                break;
+            } catch(IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    public void checkDocketStatus() {
+            while (true) {
+                System.out.print("Please select docket status:\n1. Pending\n2. Delivered");
+                inputStatus = input.nextLine().trim();
+                try {
+                    docketStatusValidation(inputStatus);
+                    break;
+                } catch (NumberFormatException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+    }
+
+    //------------------Read-----------------
+    public void deliveryDocketReadId() {
+        while(true){
+            System.out.println("Enter delivery docket ID: ");
+            try {
+                int id = input.nextInt();
+                input.nextLine();
+                selectDocketID(String.valueOf(id));
+                break;
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());            }
+        }
+    }
 
     // -------------------- setters&getters------------------
     public String getDate() {

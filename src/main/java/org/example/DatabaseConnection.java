@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -449,6 +451,97 @@ public class DatabaseConnection {
         return new ArrayList<>();
     }
 
+    public boolean DeliveryDocketRead(int docketId) {
+        String sql = "SELECT EXISTS(SELECT 1 FROM DeliveryDocket WHERE id = ?)";
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            // Set the docketId parameter for the query
+            pstmt.setInt(1, docketId);
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    // The query returns '1' if the row exists, '0' if not
+                    return rs.getInt(1) == 1;
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error checking if DeliveryDocket exists: " + e.getMessage());
+        }
+
+        // Return false if any exception occurs or no result found
+        return false;
+    }
+
+    public void deliveryDocketToCsv(int docketId) {
+        // Define the SQL query to select rows where the status is 'Pending'
+        String sql = "SELECT o.id AS order_id, " +
+                "c.name AS cust_name, " +
+                "da.name AS delivery_area_name, " +
+                "c.address, " +
+                "p.name AS pub_name, " +
+                "o.quantity, " +
+                "o.status AS order_status " +
+                "FROM Orders o " +
+                "JOIN Customers c ON o.cust_id = c.id " +
+                "JOIN DeliveryArea da ON c.delivery_area_id = da.id " +
+                "JOIN Publication p ON o.pub_id = p.id " +
+                "WHERE o.status = 'Pending'";
+
+        // Path for the CSV file, named based on docketId
+        String csvFilePath = "src/main/resources/docket/docket_" + docketId + ".csv";
+
+        // Try-with-resources to handle resources automatically
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery();
+             BufferedWriter writer = new BufferedWriter(new FileWriter(csvFilePath))) {
+
+            // Write the CSV header (column names)
+            String header = "order_id,cust_name,delivery_area_name,address,pub_name,quantity,order_status";
+            writer.write(header);
+            writer.newLine();
+
+            // Check if the ResultSet contains data
+            boolean hasData = false;
+
+            // Write the rows to CSV
+            while (rs.next()) {
+                int orderId = rs.getInt("order_id");
+                String custName = rs.getString("cust_name");
+                String deliveryAreaName = rs.getString("delivery_area_name");
+                String address = rs.getString("address");
+                String pubName = rs.getString("pub_name");
+                int quantity = rs.getInt("quantity");
+                String orderStatus = rs.getString("order_status");
+
+                // Debugging: Print each row to the console
+                System.out.println("Row: " + orderId + ", " + custName + ", " + deliveryAreaName + ", " + address + ", " + pubName + ", " + quantity + ", " + orderStatus);
+
+                // Write the data for each row into the CSV file
+                String row = orderId + "," + custName + "," + deliveryAreaName + "," + address + "," + pubName + "," + quantity + "," + orderStatus;
+                writer.write(row);
+                writer.newLine();
+
+                // Mark that we have data
+                hasData = true;
+            }
+
+            // If no data was found, print a message to the console
+            if (!hasData) {
+                System.out.println("No rows found with status 'Pending'");
+            } else {
+                System.out.println("CSV file created successfully at: " + csvFilePath);
+            }
+
+        } catch (SQLException | IOException e) {
+            // Handle exceptions
+            e.printStackTrace();
+        }
+    }
+
+
     // --------------------- Invoice Table Methods ---------------------
     public void insertInvoice(Integer order_id, Double total_payable_amount) {
         String sql = "INSERT INTO Invoice (order_id, total_payable_amount) VALUES (?, ?)";
@@ -544,7 +637,6 @@ public class DatabaseConnection {
             System.out.println("Error deleting from NewsAgent: " + e.getMessage());
         }
     }
-
 
     public static void main(String[] args) {
         // Insert sample data.

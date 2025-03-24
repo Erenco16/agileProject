@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -40,6 +42,7 @@ public class DatabaseConnection {
     public static void runSQLFile(Connection connection, String filePath) {
         File sqlFile = new File(filePath);
 
+        // Check if the SQL file exists
         if (!sqlFile.exists()) {
             System.out.println("SQL file not found: " + filePath);
             return;
@@ -451,9 +454,140 @@ public class DatabaseConnection {
              ResultSet rs = stmt.executeQuery(sql)) {
             return getValues(rs);
         } catch (SQLException e) {
+            System.err.println("Error selecting DeliveryDocket: " + e.getMessage());
+        }
+        return new ArrayList<>();
+    }
+
+    public ArrayList<ArrayList<String>> selectDeliveryDocket(int id) {
+        String sql = "SELECT * FROM DeliveryDocket WHERE id = " + id;
+        try (Connection conn = getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            return getValues(rs);
+        } catch (SQLException e) {
             System.err.println("Error selecting all DeliveryDocket: " + e.getMessage());
         }
         return new ArrayList<>();
+    }
+
+    public boolean DeliveryDocketRead(int docketId) {
+        String sql = "SELECT EXISTS(SELECT 1 FROM DeliveryDocket WHERE id = ?)";
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            // Set the docketId parameter for the query
+            pstmt.setInt(1, docketId);
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    // The query returns '1' if the row exists, '0' if not
+                    return rs.getInt(1) == 1;
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error checking if DeliveryDocket exists: " + e.getMessage());
+        }
+
+        // Return false if any exception occurs or no result found
+        return false;
+    }
+
+    public void deliveryDocketToCsv(int docketId) {
+        // Define the SQL query to select rows where the status is 'Pending'
+        String sql = "SELECT o.id AS order_id, " +
+                "c.name AS cust_name, " +
+                "da.name AS delivery_area_name, " +
+                "c.address, " +
+                "p.name AS pub_name, " +
+                "o.quantity, " +
+                "o.status AS order_status " +
+                "FROM Orders o " +
+                "JOIN Customers c ON o.cust_id = c.id " +
+                "JOIN DeliveryArea da ON c.delivery_area_id = da.id " +
+                "JOIN Publication p ON o.pub_id = p.id " +
+                "WHERE o.status = 'Pending'";
+
+        // Path for the CSV file, named based on docketId
+        String csvFilePath = "src/main/resources/docket/docket_" + docketId + ".csv";
+
+        // Try-with-resources to handle resources automatically
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery();
+             BufferedWriter writer = new BufferedWriter(new FileWriter(csvFilePath))) {
+
+            // Write the CSV header (column names)
+            String header = "order_id,cust_name,delivery_area_name,address,pub_name,quantity,order_status";
+            writer.write(header);
+            writer.newLine();
+
+            // Check if the ResultSet contains data
+            boolean hasData = false;
+
+            // Write the rows to CSV
+            while (rs.next()) {
+                int orderId = rs.getInt("order_id");
+                String custName = rs.getString("cust_name");
+                String deliveryAreaName = rs.getString("delivery_area_name");
+                String address = rs.getString("address");
+                String pubName = rs.getString("pub_name");
+                int quantity = rs.getInt("quantity");
+                String orderStatus = rs.getString("order_status");
+
+                // Debugging: Print each row to the console
+                System.out.println("Row: " + orderId + ", " + custName + ", " + deliveryAreaName + ", " + address + ", " + pubName + ", " + quantity + ", " + orderStatus);
+
+                // Write the data for each row into the CSV file
+                String row = orderId + "," + custName + "," + deliveryAreaName + "," + address + "," + pubName + "," + quantity + "," + orderStatus;
+                writer.write(row);
+                writer.newLine();
+
+                // Mark that we have data
+                hasData = true;
+            }
+
+            // If no data was found, print a message to the console
+            if (!hasData) {
+                System.out.println("No rows found with status 'Pending'");
+            } else {
+                System.out.println("CSV file created successfully at: " + csvFilePath);
+            }
+
+        } catch (SQLException | IOException e) {
+            // Handle exceptions
+            e.printStackTrace();
+        }
+    }
+
+    public void updateDocket(int id, int deliveryManID, String status) {
+        String sql = "UPDATE DeliveryDocket SET delivery_man_id = ?, docket_status = ? WHERE id = ?";
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, deliveryManID);
+            pstmt.setString(2, status);
+            pstmt.setInt(3, id);
+
+            int affectedRows = pstmt.executeUpdate();
+            if (affectedRows > 0) {
+                System.out.println("Docket updated successfully.");
+            } else {
+                System.out.println("No Docket found with the given ID.");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error updating Docket: " + e.getMessage());
+        }
+    }
+
+    public void deleteDocket(int id) {
+        String sql = "DELETE FROM DeliveryDocket WHERE id = ?";
+        try (Connection conn = getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, id);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Error deleting from DeliveryArea: " + e.getMessage());
+        }
     }
 
     // --------------------- Invoice Table Methods ---------------------
@@ -664,6 +798,96 @@ public class DatabaseConnection {
         } catch (SQLException e) {
             System.out.println("Error deleting from Publication: " + e.getMessage());
         }
+    }
+
+
+
+    public static void main(String[] args) {
+        // Insert sample data.
+        // Note: The order of insertion matters due to foreign key constraints.
+
+        DatabaseConnection db = new DatabaseConnection();
+        db.insertDeliveryArea("Downtown", "Test description");
+        db.insertAddress("123 Main St", 1);     // Assuming delivery_area_id 1 exists.
+        db.insertCustomer("John Doe", "john@example.com", "Some address", "12123123", 2, "N37 ASD");
+        db.insertNewsAgent("Jane Reporter");
+        db.insertPublication("test", "test", 9.99, 10);            // Assuming customer id 1 exists.
+        db.insertOrderStatus(1, 1, 2, "Pending"); // Assuming cust_id 1 and pub_id 1 exist.
+
+        // Display data from each table.
+        System.out.println("Select Customer with id 1: ");
+        System.out.println(db.selectCustomers(1));
+        System.out.println("Select All Customers: ");
+        System.out.println(db.selectAllCustomers());
+
+        System.out.println("Select Address with id 1: ");
+        System.out.println(db.selectAddress(123));
+        System.out.println("Select All Addresses: ");
+        System.out.println(db.selectAllAddress());
+
+        System.out.println("Select DeliveryArea with id 1: ");
+        System.out.println(db.selectDeliveryArea(1));
+        System.out.println("Select All DeliveryAreas: ");
+        System.out.println(db.selectAllDeliveryArea());
+
+        System.out.println("Select NewsAgent with id 1: ");
+        System.out.println(db.selectNewsAgent(1));
+        System.out.println("Select All NewsAgents: ");
+        System.out.println(db.selectAllNewsAgent());
+
+        System.out.println("Select Publication with id 1: ");
+        System.out.println(db.selectPublication(1));
+        System.out.println("Select All Publications: ");
+        System.out.println(db.selectAllPublication());
+
+        System.out.println("Select OrdersStatus with id 1: ");
+        System.out.println(db.selectOrdersStatus(1));
+        System.out.println("Select All OrdersStatus: ");
+        System.out.println(db.selectAllOrdersStatus());
+
+        db.insertDeliveryMan("Mike Johnson", "Active");
+        db.insertDeliveryDocket(1, "Pending");
+        db.insertInvoice(1, 49.99);
+
+        System.out.println("Select All Delivery Men: ");
+        System.out.println(db.selectAllDeliveryMan());
+        System.out.println("Select All Delivery Dockets: ");
+        System.out.println(db.selectAllDeliveryDocket());
+        System.out.println("Select All Invoices: ");
+        System.out.println(db.selectAllInvoice());
+
+        // updates and deletes for the sprint 1
+        System.out.println("Updating customer...");
+        db.updateCustomer(3, "John Updated", "john_updated@example.com", "Updated Address", "9876543210", 2, "EIR999");
+        System.out.println(db.selectCustomers(1));
+
+        System.out.println("Deleting customer...");
+        db.deleteCustomer(1);
+        System.out.println(db.selectAllCustomers());
+
+        System.out.println("Updating address...");
+        db.updateAddress(1, "456 New St", 1);
+        System.out.println(db.selectAddress(1));
+
+        System.out.println("Deleting address...");
+        db.deleteAddress(1);
+        System.out.println(db.selectAllAddress());
+
+        System.out.println("Updating delivery area...");
+        db.updateDeliveryArea(1, "Uptown", "Updated description");
+        System.out.println(db.selectDeliveryArea(1));
+
+        System.out.println("Deleting delivery area...");
+        db.deleteDeliveryArea(1);
+        System.out.println(db.selectAllDeliveryArea());
+
+        System.out.println("Updating news agent...");
+        db.updateNewsAgent(1, "Updated Reporter");
+        System.out.println(db.selectNewsAgent(1));
+
+        System.out.println("Deleting news agent...");
+        db.deleteNewsAgent(1);
+        System.out.println(db.selectAllNewsAgent());
     }
 
 }

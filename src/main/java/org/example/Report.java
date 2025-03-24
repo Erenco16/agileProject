@@ -4,6 +4,7 @@ import java.sql.*;
 import java.io.*;
 import java.nio.file.*;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Report {
 
@@ -56,10 +57,23 @@ public class Report {
         }
     }
 
-    public static void totalRevenueByMonthReport(int month) {
-        if (month < 1 || month > 12) {
-            throw new IllegalArgumentException("Invalid month: " + month);
+    public static void totalRevenueByMonthReport() {
+        Scanner input = new Scanner(System.in);
+        int month;
+        while (true) {
+            try {
+                System.out.print("Enter the month (1-12) for the revenue report: ");
+                month = Integer.parseInt(input.nextLine().trim());
+                if (month < 1 || month > 12) {
+                    System.out.println("Invalid month. Please enter a value between 1 and 12.");
+                    continue;
+                }
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a number between 1 and 12.");
+            }
         }
+
         exportQueryResultToCSV(
                 "SELECT order_month, ROUND(SUM(total_payable_amount),2) AS total_amount FROM (" +
                         "SELECT strftime('%m', o.order_date) + 0 AS order_month, i.total_payable_amount " +
@@ -68,12 +82,26 @@ public class Report {
                 OUTPUT_PATH,
                 "revenueByMonth.csv"
         );
+        System.out.println("Revenue by month report generated.");
     }
 
-    public static void totalRevenueByDeliveryAreaReport(int deliveryArea) {
-        if (!isValidDeliveryArea(deliveryArea)) {
-            throw new IllegalArgumentException("Invalid delivery area: " + deliveryArea);
+    public static void totalRevenueByDeliveryAreaReport() {
+        Scanner input = new Scanner(System.in);
+        int deliveryArea;
+        while (true) {
+            try {
+                System.out.print("Enter the Delivery Area ID for the revenue report: ");
+                deliveryArea = Integer.parseInt(input.nextLine().trim());
+                if (!isValidDeliveryArea(deliveryArea)) {
+                    System.out.println("Invalid delivery area ID. Please try again.");
+                    continue;
+                }
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a valid delivery area ID.");
+            }
         }
+
         exportQueryResultToCSV(
                 "SELECT\n" +
                         "delivery_area,\n" +
@@ -91,12 +119,26 @@ public class Report {
                 OUTPUT_PATH,
                 "revenueByDeliveryArea.csv"
         );
+        System.out.println("Revenue by delivery area report generated.");
     }
 
-    public static void totalRevenueByCustomerReport(int customerId) {
-        if (!isValidCustomer(customerId)) {
-            throw new IllegalArgumentException("Invalid customer ID: " + customerId);
+    public static void totalRevenueByCustomerReport() {
+        Scanner input = new Scanner(System.in);
+        int customerId;
+        while (true) {
+            try {
+                System.out.print("Enter the Customer ID for the revenue report: ");
+                customerId = Integer.parseInt(input.nextLine().trim());
+                if (!isValidCustomer(customerId)) {
+                    System.out.println("Invalid customer ID. Please try again.");
+                    continue;
+                }
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a valid customer ID.");
+            }
         }
+
         exportQueryResultToCSV(
                 "SELECT\n" +
                         "customer_name,\n" +
@@ -113,7 +155,9 @@ public class Report {
                 OUTPUT_PATH,
                 "revenueByCustomer.csv"
         );
+        System.out.println("Revenue by customer report generated.");
     }
+
 
     public static boolean isValidDeliveryArea(int deliveryArea) {
         ArrayList<ArrayList<String>> values = selectDeliveryArea(deliveryArea);
@@ -165,9 +209,9 @@ public class Report {
         return new ArrayList<>();
     }
 
-//    public static void main(String[] args) {
-//        totalRevenueByMonthReport(3);
-//        totalRevenueByDeliveryAreaReport(2);
-//        totalRevenueByCustomerReport(2);
-//    }
+    public static void main(String[] args) {
+        totalRevenueByMonthReport();
+        totalRevenueByDeliveryAreaReport();
+        totalRevenueByCustomerReport();
+    }
 }

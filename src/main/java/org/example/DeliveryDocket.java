@@ -5,12 +5,6 @@ public class DeliveryDocket {
     public String deliveryManId;
     public String docketStatus;
 
-    public DeliveryDocket(String date, String deliveryManId, String docketStatus) {
-        this.date = date;
-        this.deliveryManId = deliveryManId;
-        this.docketStatus = docketStatus;
-    }
-
     public String getDate() {
         return date;
     }

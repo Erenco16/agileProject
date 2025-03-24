@@ -451,9 +451,34 @@ public class NewsAgentCreate {
             System.out.println("4.Delete a Delivery Docket");
             option = getValidIntegerInput(1, 4); // Allows only 1 or 2
 
+            if (option == 1){
+                createDeliveryDocketCLI();
+            } else if (option == 2){
+                readDeliveryDocketCLI();
+            }else if (option == 3){
+                updateDeliveryDocketCLI();
+            }else if (option == 4){
+                deleteDeliveryDocketCLI();
+            }else {
+                System.out.println("Invalid input! Please enter a valid number (1-4).");
+            }
+
+
         }
 
     }
+
+    public void createDeliveryDocketCLI(){
+        DeliveryDocket dd = new DeliveryDocket();
+
+    }
+
+    public void readDeliveryDocketCLI(){}
+
+    public void updateDeliveryDocketCLI(){}
+
+    public void deleteDeliveryDocketCLI(){}
+
 
     public void reportPage(){
         while (true) {

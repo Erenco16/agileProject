@@ -356,6 +356,7 @@ public class NewsAgentCreate {
 
     public void generateInvoiceCLI(){
         Invoice i = new Invoice();
+        i.totalRevenueByCustomerReport();
     }
 
 
@@ -489,7 +490,13 @@ public class NewsAgentCreate {
             option = getValidIntegerInput(1, 3);
 
             if (option == 1){
-
+                revenueByMonthCLI();
+            } else if (option == 2){
+                revenueByDeliveryAreaCLI();
+            } else if (option == 3) {
+                revenueByPublicationCLI();
+            } else {
+                System.out.println("Invalid input! Please enter a valid number (1-3).");
             }
 
         }
@@ -508,9 +515,9 @@ public class NewsAgentCreate {
         mainPage();
     }
 
-    public void revenueByCustomerCLI(){
+    public void revenueByPublicationCLI(){
         Report r = new Report();
-        r.totalRevenueByCustomerReport();
+        //r.totalRevenueByPublicationReport();
         mainPage();
     }
 

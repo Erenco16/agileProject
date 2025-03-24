@@ -31,7 +31,7 @@ public class Invoice {
     }
 
     // report query method
-    public static void totalRevenueByCustomerReport() {
+    public void totalRevenueByCustomerReport() {
         Scanner input = new Scanner(System.in);
         int customerId;
         while (true) {

@@ -57,7 +57,7 @@ public class Report {
         }
     }
 
-    public static void totalRevenueByMonthReport() {
+    public void totalRevenueByMonthReport() {
         Scanner input = new Scanner(System.in);
         int month;
         while (true) {
@@ -85,7 +85,7 @@ public class Report {
         System.out.println("Revenue by month report generated.");
     }
 
-    public static void totalRevenueByDeliveryAreaReport() {
+    public void totalRevenueByDeliveryAreaReport() {
         Scanner input = new Scanner(System.in);
         int deliveryArea;
         while (true) {
@@ -122,7 +122,7 @@ public class Report {
         System.out.println("Revenue by delivery area report generated.");
     }
 
-    public static void totalRevenueByCustomerReport() {
+    public void totalRevenueByCustomerReport() {
         Scanner input = new Scanner(System.in);
         int customerId;
         while (true) {
@@ -209,9 +209,4 @@ public class Report {
         return new ArrayList<>();
     }
 
-    public static void main(String[] args) {
-        totalRevenueByMonthReport();
-        totalRevenueByDeliveryAreaReport();
-        totalRevenueByCustomerReport();
-    }
 }

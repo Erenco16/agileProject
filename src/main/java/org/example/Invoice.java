@@ -11,6 +11,7 @@ public class Invoice {
     private static final String DB_URL = "jdbc:sqlite:" + DB_PATH;
     private static final String OUTPUT_PATH = "src/main/resources/invoices/";
 
+    public String orderid;
     public String total_payable_amount_due;
 
     public String getTotal_payable_amount_due() {

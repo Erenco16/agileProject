@@ -57,7 +57,7 @@ public class Report {
         }
     }
 
-    public static void totalRevenueByMonthReport() {
+    public void totalRevenueByMonthReport() {
         Scanner input = new Scanner(System.in);
         int month;
         while (true) {
@@ -122,7 +122,7 @@ public class Report {
         System.out.println("Revenue by delivery area report generated.");
     }
 
-    public static void totalRevenueByPublicationReport() {
+    public void totalRevenueByCustomerReport() {
         Scanner input = new Scanner(System.in);
         int publicationID;
         while (true) {
@@ -130,12 +130,12 @@ public class Report {
                 System.out.print("Enter the Publication ID for the revenue report: ");
                 publicationID = Integer.parseInt(input.nextLine().trim());
                 if (!isValidPublication(publicationID)) {
-                    System.out.println("Invalid customer ID. Please try again.");
+                    System.out.println("Invalid publication ID. Please try again.");
                     continue;
                 }
                 break;
             } catch (NumberFormatException e) {
-                System.out.println("Invalid input. Please enter a valid customer ID.");
+                System.out.println("Invalid input. Please enter a valid publication ID.");
             }
         }
 
@@ -225,4 +225,5 @@ public class Report {
         }
         return new ArrayList<>();
     }
+
 }

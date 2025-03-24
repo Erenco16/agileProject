@@ -345,15 +345,20 @@ public class NewsAgentCreate {
     public void invoicePage(){
         while (true) {
             System.out.println("Welcome to the Invoice Page!");
-            System.out.println("1.Create an Invoice");
-            System.out.println("2.Read an Invoice");
-            System.out.println("3.Update an Invoice");
-            System.out.println("4.Delete an Invoice");
-            option = getValidIntegerInput(1, 4); // Allows only 1 or 2
-
+            System.out.println("1.Generate an Invoice for a Customer");
+            option = getValidIntegerInput(1,1);
+            if (option == 1){
+                generateInvoiceCLI();
+            }
         }
 
     }
+
+    public void generateInvoiceCLI(){
+        Invoice i = new Invoice();
+        i.totalRevenueByCustomerReport();
+    }
+
 
     //integrate this part as well, ensure all is working
 
@@ -482,10 +487,38 @@ public class NewsAgentCreate {
             System.out.println("1.View total amount of revenue by month");
             System.out.println("2.View total amount of revenue by delivery area");
             System.out.println("3.View total amount of revenue by customer");
-            option = getValidIntegerInput(1, 3); // Allows only 1 or 2
+            option = getValidIntegerInput(1, 3);
+
+            if (option == 1){
+                revenueByMonthCLI();
+            } else if (option == 2){
+                revenueByDeliveryAreaCLI();
+            } else if (option == 3) {
+                revenueByPublicationCLI();
+            } else {
+                System.out.println("Invalid input! Please enter a valid number (1-3).");
+            }
 
         }
 
+    }
+
+    public void revenueByMonthCLI(){
+        Report r = new Report();
+        r.totalRevenueByMonthReport();
+        mainPage();
+    }
+
+    public void revenueByDeliveryAreaCLI(){
+        Report r = new Report();
+        r.totalRevenueByDeliveryAreaReport();
+        mainPage();
+    }
+
+    public void revenueByPublicationCLI(){
+        Report r = new Report();
+        //r.totalRevenueByPublicationReport();
+        mainPage();
     }
 
     public void createDeliveryAreaCLI(){
